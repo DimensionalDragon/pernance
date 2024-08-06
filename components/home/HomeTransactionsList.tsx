@@ -22,9 +22,6 @@ export default function HomeTransactionsList({transactions}: HomeTransactionsLis
 
 const styles = StyleSheet.create({
     container: {
-        width: '80%',
         alignItems: 'center',
-        borderColor: 'red',
-        borderWidth: 2,
     },
 });
