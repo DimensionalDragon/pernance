@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet } from "react-native";
 import HomeCategory from "./HomeCategory";
 
-import type { Category } from "./HomeCategory";
+import Category from "@/models/Category";
 
 type HomeCategoriesListProps = {
     categories: Array<Category>;

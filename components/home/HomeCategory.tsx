@@ -1,11 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 
-import { MaterialIcons } from "@expo/vector-icons";
+import Category from "@/models/Category";
 
-export type Category = {
-    name: string,
-    icon: string,
-}
+import { MaterialIcons } from "@expo/vector-icons";
 
 type HomeCategoryProps = {
     category: Category;
