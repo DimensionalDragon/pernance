@@ -5,10 +5,19 @@ import { LineChart } from 'react-native-gifted-charts';
 import HomeTransactionsList from '@/components/home/HomeTransactionsList';
 import HomeCategoriesList from '@/components/home/HomeCategoriesList';
 
+import Category from '@/models/Category'; // Dummy, delete later
+import { useRealm } from '@realm/react'; // Also dummy
+
 export default function home() {
+    const realm = useRealm();
+
     const chartDummyData = [{ value: 50 }, { value: 80 }, { value: 90 }, { value: 70 }];
     const transactionsDummyData = [{ name: "T1", amount: 10 }, { name: "T2", amount: 20 }, { name: "T3", amount: 30 }];
-    const categoriesDummyData = [{ name: "Category 1", icon: "icon1" }, { name: "Category 2", icon: "icon2" }, { name: "Category 3", icon: "icon3" }, { name: "Category 4", icon: "icon4" }, { name: "Category 5", icon: "icon5" }, { name: "Category 6", icon: "icon6" },];
+    const categoriesDummyData: Category[] = new Array(10).fill(0).map((_, i) => realm.create<Category>('Category', {
+        name: `Category ${i}`,
+        budget: 100000,
+        transactions: [],
+      }));
 
     return (
         <SafeAreaView style={styles.container}>

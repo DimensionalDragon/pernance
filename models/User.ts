@@ -1,16 +1,21 @@
-import Realm from "realm";
+import Realm, {BSON} from "realm";
 
 class User extends Realm.Object {
-    static schema = {
-      name: "User",
-      properties: {
-        _id: "objectId", // Primary key
-        firebase_uid: "string",
-        name: "string",
-        email: "string",
-      },
-      primaryKey: "_id",
-    };
+  _id!: BSON.ObjectId;
+  firebaseUID!: string;
+  name!: string;
+  email!: string;
+
+  static schema = {
+    name: "User",
+    properties: {
+      _id: "objectId",
+      firebaseUID: "string",
+      name: "string",
+      email: "string",
+    },
+    primaryKey: "_id",
+  };
 }
 
 export default User
