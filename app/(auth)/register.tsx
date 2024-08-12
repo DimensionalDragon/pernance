@@ -19,8 +19,8 @@ export default function register() {
             // TODO: Create error screen and activate it here
             return;
         // 2. Send registration data to your backend API (e.g., using fetch or axios)
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
         try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
             const user = userCredential.user;
             await updateProfile(user, {displayName: name})
             const jwt = user.getIdToken();

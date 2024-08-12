@@ -1,11 +1,91 @@
-import { Text, View, SafeAreaView } from 'react-native';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useState } from 'react';
+import { Text, View, StyleSheet, TextInput } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import validator from 'validator'
 
 export default function login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const auth = getAuth();
+
+    const handleRegistration = async () => {
+        // 1. Validate form data (e.g., check for empty fields, valid email format)
+        if (!validator.isEmail(email))
+            // TODO: Create error screen and activate it here
+            return;
+        // 2. Send registration data to your backend API (e.g., using fetch or axios)
+        try {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+          const jwt = user.getIdToken();
+          // TODO: store in SecureStore
+        } catch (error) {
+          console.log(error);
+        }
+                
+        // 3. Handle success (e.g., navigate to the login screen) or error (e.g., display error message)
+    };
+
     return (
         <SafeAreaView>
-          <View>
-            <Text>Login</Text>
-          </View>
+            <View style={styles.container}>
+                <Text style={styles.label}>Email: <Text style={styles.required}>*</Text></Text>
+                <TextInput
+                    style={styles.input}
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType="email-address"
+                />
+                
+                <Text style={styles.label}>Password: <Text style={styles.required}>*</Text></Text>
+                <TextInput
+                    style={styles.input}
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry 
+                />
+                
+                <TouchableOpacity style={styles.button} onPress={handleRegistration} disabled={!email || !password}>
+                    <Text style={styles.buttonText}>Register</Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 20,
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 10,
+        marginBottom: 15,
+        borderRadius: 5,
+    },
+    required: {
+        color: 'red',
+    },
+    button: {
+        backgroundColor: '#007bff', // Example blue color
+        padding: 15,
+        borderRadius: 8,
+        alignItems: 'center', 
+        marginTop: 20, // Add some spacing
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+});
