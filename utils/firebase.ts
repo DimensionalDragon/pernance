@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
+import { deleteItemAsync, setItemAsync } from "expo-secure-store";
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
-import { getAuth } from "firebase/auth";
+import { getAuth, onIdTokenChanged } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -19,5 +20,16 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
+
+onIdTokenChanged(auth, async (user) => {
+  if (user) {
+    // User is signed in or token was refreshed
+    const newJwt = await user.getIdToken();
+    await setItemAsync('userToken', newJwt); 
+  } else {
+    // User is signed out
+    await deleteItemAsync('userToken');
+  }
+});
 
 export default app;

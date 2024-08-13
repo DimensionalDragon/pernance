@@ -4,32 +4,37 @@ import { Text, View, StyleSheet, TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import validator from 'validator'
+import { setItemAsync } from 'expo-secure-store';
+import validator from 'validator';
 
 export default function register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
 
+    const [error, setError] = useState('');
+
     const auth = getAuth();
 
     const handleRegistration = async () => {
         // 1. Validate form data (e.g., check for empty fields, valid email format)
-        if (!validator.isEmail(email))
-            // TODO: Create error screen and activate it here
+        if (!validator.isEmail(email)) {
+            setError('Invalid email, please enter a valid email address');
             return;
-        // 2. Send registration data to your backend API (e.g., using fetch or axios)
+        }
         try {
+            // 2. Send registration data to your backend API (e.g., using fetch or axios)
             const userCredential = await createUserWithEmailAndPassword(auth, email, password)
             const user = userCredential.user;
-            await updateProfile(user, {displayName: name})
-            const jwt = user.getIdToken();
-            // TODO: store in SecureStorage
+            await updateProfile(user, {displayName: name});
+
+            // 3. Handle success (e.g., navigate to the login screen) or error (e.g., display error message)
+            const jwt = await user.getIdToken();
+            await setItemAsync('userToken', jwt);
         } catch (error) {
-            console.log(error);
-        }
-                
-        // 3. Handle success (e.g., navigate to the login screen) or error (e.g., display error message)
+            if (error instanceof Error)
+                setError(error.message);
+        }          
     };
 
     return (
@@ -57,6 +62,12 @@ export default function register() {
                     value={name}
                     onChangeText={setName}
                 />
+
+                {error && (
+                    <View style={styles.errorContainer}>
+                        <Text>{error}</Text>
+                    </View>
+                )}
                 
                 <TouchableOpacity style={styles.button} onPress={handleRegistration} disabled={!email || !password || !name}>
                     <Text style={styles.buttonText}>Register</Text>
@@ -97,4 +108,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     },
+    errorContainer: {
+        width: '100%',
+        textAlign: 'center',
+        borderRadius: 2,
+        backgroundColor: 'red',
+        padding: 5,
+    }
 });
