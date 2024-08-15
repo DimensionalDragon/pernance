@@ -24,7 +24,7 @@ export default function register() {
         }
         try {
             // 2. Send registration data to your backend API (e.g., using fetch or axios)
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             await updateProfile(user, {displayName: name});
 
