@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { setItemAsync } from 'expo-secure-store';
 import validator from 'validator'
+import { Link } from 'expo-router';
 
 export default function login() {
     const [email, setEmail] = useState('');
@@ -27,7 +28,7 @@ export default function login() {
           const user = userCredential.user;
 
           // 3. Handle success (e.g., navigate to the login screen) or error (e.g., display error message)
-          const jwt = user.getIdToken();
+          const jwt = await user.getIdToken();
           await setItemAsync('userToken', jwt);
         } catch (error) {
           if (error instanceof Error)
@@ -64,6 +65,12 @@ export default function login() {
                 <TouchableOpacity style={styles.button} onPress={handleRegistration} disabled={!email || !password}>
                     <Text style={styles.buttonText}>Register</Text>
                 </TouchableOpacity>
+                <View>
+                    <Text>Don't have an account?</Text>
+                    <Link href="./register">
+                        <Text>Register</Text>
+                    </Link>
+                </View>
             </View>
         </SafeAreaView>
     );
