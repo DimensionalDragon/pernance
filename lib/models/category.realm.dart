@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'category.dart';
 
 // **************************************************************************
 // RealmObjectGenerator
 // **************************************************************************
 
 // ignore_for_file: type=lint
-class User extends $User with RealmEntity, RealmObjectBase, RealmObject {
-  User(
+class Category extends $Category
+    with RealmEntity, RealmObjectBase, RealmObject {
+  Category(
     ObjectId id,
-    String firebaseUID,
     String name,
-    String email,
-  ) {
+    int budget, {
+    User? user,
+  }) {
     RealmObjectBase.set(this, '_id', id);
-    RealmObjectBase.set(this, 'firebaseUID', firebaseUID);
+    RealmObjectBase.set(this, 'user', user);
     RealmObjectBase.set(this, 'name', name);
-    RealmObjectBase.set(this, 'email', email);
+    RealmObjectBase.set(this, 'budget', budget);
   }
 
-  User._();
+  Category._();
 
   @override
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
@@ -28,11 +29,9 @@ class User extends $User with RealmEntity, RealmObjectBase, RealmObject {
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
 
   @override
-  String get firebaseUID =>
-      RealmObjectBase.get<String>(this, 'firebaseUID') as String;
+  User? get user => RealmObjectBase.get<User>(this, 'user') as User?;
   @override
-  set firebaseUID(String value) =>
-      RealmObjectBase.set(this, 'firebaseUID', value);
+  set user(covariant User? value) => RealmObjectBase.set(this, 'user', value);
 
   @override
   String get name => RealmObjectBase.get<String>(this, 'name') as String;
@@ -40,59 +39,59 @@ class User extends $User with RealmEntity, RealmObjectBase, RealmObject {
   set name(String value) => RealmObjectBase.set(this, 'name', value);
 
   @override
-  String get email => RealmObjectBase.get<String>(this, 'email') as String;
+  int get budget => RealmObjectBase.get<int>(this, 'budget') as int;
   @override
-  set email(String value) => RealmObjectBase.set(this, 'email', value);
+  set budget(int value) => RealmObjectBase.set(this, 'budget', value);
 
   @override
-  Stream<RealmObjectChanges<User>> get changes =>
-      RealmObjectBase.getChanges<User>(this);
+  Stream<RealmObjectChanges<Category>> get changes =>
+      RealmObjectBase.getChanges<Category>(this);
 
   @override
-  Stream<RealmObjectChanges<User>> changesFor([List<String>? keyPaths]) =>
-      RealmObjectBase.getChangesFor<User>(this, keyPaths);
+  Stream<RealmObjectChanges<Category>> changesFor([List<String>? keyPaths]) =>
+      RealmObjectBase.getChangesFor<Category>(this, keyPaths);
 
   @override
-  User freeze() => RealmObjectBase.freezeObject<User>(this);
+  Category freeze() => RealmObjectBase.freezeObject<Category>(this);
 
   EJsonValue toEJson() {
     return <String, dynamic>{
       '_id': id.toEJson(),
-      'firebaseUID': firebaseUID.toEJson(),
+      'user': user.toEJson(),
       'name': name.toEJson(),
-      'email': email.toEJson(),
+      'budget': budget.toEJson(),
     };
   }
 
-  static EJsonValue _toEJson(User value) => value.toEJson();
-  static User _fromEJson(EJsonValue ejson) {
+  static EJsonValue _toEJson(Category value) => value.toEJson();
+  static Category _fromEJson(EJsonValue ejson) {
     if (ejson is! Map<String, dynamic>) return raiseInvalidEJson(ejson);
     return switch (ejson) {
       {
         '_id': EJsonValue id,
-        'firebaseUID': EJsonValue firebaseUID,
         'name': EJsonValue name,
-        'email': EJsonValue email,
+        'budget': EJsonValue budget,
       } =>
-        User(
+        Category(
           fromEJson(id),
-          fromEJson(firebaseUID),
           fromEJson(name),
-          fromEJson(email),
+          fromEJson(budget),
+          user: fromEJson(ejson['user']),
         ),
       _ => raiseInvalidEJson(ejson),
     };
   }
 
   static final schema = () {
-    RealmObjectBase.registerFactory(User._);
+    RealmObjectBase.registerFactory(Category._);
     register(_toEJson, _fromEJson);
-    return const SchemaObject(ObjectType.realmObject, User, 'User', [
+    return const SchemaObject(ObjectType.realmObject, Category, 'Category', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
-      SchemaProperty('firebaseUID', RealmPropertyType.string),
+      SchemaProperty('user', RealmPropertyType.object,
+          optional: true, linkTarget: 'User'),
       SchemaProperty('name', RealmPropertyType.string),
-      SchemaProperty('email', RealmPropertyType.string),
+      SchemaProperty('budget', RealmPropertyType.int),
     ]);
   }();
 
