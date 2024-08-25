@@ -14,7 +14,7 @@ part of 'routes.dart';
 class HomeRoute extends PageRouteInfo<HomeRouteArgs> {
   HomeRoute({
     Key? key,
-    required String title,
+    String title = 'Home',
     List<PageRouteInfo>? children,
   }) : super(
           HomeRoute.name,
@@ -30,7 +30,8 @@ class HomeRoute extends PageRouteInfo<HomeRouteArgs> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<HomeRouteArgs>();
+      final args =
+          data.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
       return HomeScreen(
         key: args.key,
         title: args.title,
@@ -42,7 +43,7 @@ class HomeRoute extends PageRouteInfo<HomeRouteArgs> {
 class HomeRouteArgs {
   const HomeRouteArgs({
     this.key,
-    required this.title,
+    this.title = 'Home',
   });
 
   final Key? key;
