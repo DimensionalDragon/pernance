@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:pernance/routes/guard.dart';
 
 import 'home.dart';
+import 'dashboard.dart';
 
 part 'routes.gr.dart';
 
@@ -16,10 +18,14 @@ class AppRouter extends RootStackRouter {
     // HomeScreen is generated as HomeRoute because
     // of the replaceInRouteName property
     AutoRoute(
-      path: '/',
       page: HomeRoute.page,
       initial: true,
     ),
+    AutoRoute(
+      path: '/dashboard',
+      page: DashboardRoute.page,
+      guards: [AuthGuard()],
+    )
   ];
 
   @override
