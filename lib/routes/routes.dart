@@ -2,8 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:pernance/routes/guard.dart';
 
-import 'home.dart';
-import 'dashboard.dart';
+import 'package:pernance/screens/home.dart';
+import 'package:pernance/screens/dashboard.dart';
+import 'package:pernance/screens/login.dart';
+import 'package:pernance/screens/register.dart';
 
 part 'routes.gr.dart';
 
@@ -25,7 +27,15 @@ class AppRouter extends RootStackRouter {
       path: '/dashboard',
       page: DashboardRoute.page,
       guards: [AuthGuard()],
-    )
+    ),
+    AutoRoute(
+      path: '/auth/login',
+      page: LoginRoute.page,
+    ),
+    AutoRoute(
+      path: '/auth/register',
+      page: RegisterRoute.page,
+    ),
   ];
 
   @override

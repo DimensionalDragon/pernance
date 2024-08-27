@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pernance/routes/home.dart';
+import 'package:pernance/screens/home.dart';
 
 Future<bool> isUserAuthenticated() {
   // Simulate authentication check
