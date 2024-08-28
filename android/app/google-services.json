@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "125677002130",
+    "project_id": "pernance-app-dev",
+    "storage_bucket": "pernance-app-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125677002130:android:ce2d8dc54c96a7a256f54b",
+        "android_client_info": {
+          "package_name": "com.dimensionaldragon.pernance"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1W78YFKFvaEmrDZL5psXJKNvXi9-HJbs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

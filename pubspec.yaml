@@ -38,6 +38,7 @@ dependencies:
   realm: ^3.4.1
   auto_route: ^9.2.2
   envied: ^0.5.4+1
+  firebase_core: ^2.24.2
 
 dev_dependencies:
   flutter_test:
