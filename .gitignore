@@ -32,6 +32,7 @@ lib/env/env.g.dart
 .pub-cache/
 .pub/
 /build/
+android/app/google-services.json
 
 # Symbolication related
 app.*.symbols
