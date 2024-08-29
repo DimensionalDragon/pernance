@@ -65,6 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: const Text('To Dashboard')
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    AutoRouter.of(context).push(const LoginRoute());
+                  },
+                  child: const Text('To Login')
+                ),
               ],
             )
           ),
