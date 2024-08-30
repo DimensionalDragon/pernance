@@ -7,18 +7,15 @@ import 'subtransaction.dart';
 part 'transaction.realm.dart';
 
 @RealmModel()
-class $Transaction {
+class $FinancialTransaction {
   @PrimaryKey()
   @MapTo('_id')
   late ObjectId id;
   
-  @RealmModel()
-  late $User? user;
+  late $AppUser? user;
   late String name;
-  @RealmModel()
   late $Category? category;
   late int price;
   late DateTime date;
-  @RealmModel()
-  late List<$Subtransaction> subtransactions;
+  late List<$FinancialSubtransaction> subtransactions;
 }

@@ -7,13 +7,13 @@ part of 'subtransaction.dart';
 // **************************************************************************
 
 // ignore_for_file: type=lint
-class Subtransaction extends $Subtransaction
+class FinancialSubtransaction extends $FinancialSubtransaction
     with RealmEntity, RealmObjectBase, RealmObject {
-  Subtransaction(
+  FinancialSubtransaction(
     ObjectId id,
     String name,
     int price, {
-    Transaction? transaction,
+    FinancialTransaction? transaction,
   }) {
     RealmObjectBase.set(this, '_id', id);
     RealmObjectBase.set(this, 'transaction', transaction);
@@ -21,7 +21,7 @@ class Subtransaction extends $Subtransaction
     RealmObjectBase.set(this, 'price', price);
   }
 
-  Subtransaction._();
+  FinancialSubtransaction._();
 
   @override
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
@@ -29,10 +29,11 @@ class Subtransaction extends $Subtransaction
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
 
   @override
-  Transaction? get transaction =>
-      RealmObjectBase.get<Transaction>(this, 'transaction') as Transaction?;
+  FinancialTransaction? get transaction =>
+      RealmObjectBase.get<FinancialTransaction>(this, 'transaction')
+          as FinancialTransaction?;
   @override
-  set transaction(covariant Transaction? value) =>
+  set transaction(covariant FinancialTransaction? value) =>
       RealmObjectBase.set(this, 'transaction', value);
 
   @override
@@ -46,16 +47,17 @@ class Subtransaction extends $Subtransaction
   set price(int value) => RealmObjectBase.set(this, 'price', value);
 
   @override
-  Stream<RealmObjectChanges<Subtransaction>> get changes =>
-      RealmObjectBase.getChanges<Subtransaction>(this);
+  Stream<RealmObjectChanges<FinancialSubtransaction>> get changes =>
+      RealmObjectBase.getChanges<FinancialSubtransaction>(this);
 
   @override
-  Stream<RealmObjectChanges<Subtransaction>> changesFor(
+  Stream<RealmObjectChanges<FinancialSubtransaction>> changesFor(
           [List<String>? keyPaths]) =>
-      RealmObjectBase.getChangesFor<Subtransaction>(this, keyPaths);
+      RealmObjectBase.getChangesFor<FinancialSubtransaction>(this, keyPaths);
 
   @override
-  Subtransaction freeze() => RealmObjectBase.freezeObject<Subtransaction>(this);
+  FinancialSubtransaction freeze() =>
+      RealmObjectBase.freezeObject<FinancialSubtransaction>(this);
 
   EJsonValue toEJson() {
     return <String, dynamic>{
@@ -66,8 +68,8 @@ class Subtransaction extends $Subtransaction
     };
   }
 
-  static EJsonValue _toEJson(Subtransaction value) => value.toEJson();
-  static Subtransaction _fromEJson(EJsonValue ejson) {
+  static EJsonValue _toEJson(FinancialSubtransaction value) => value.toEJson();
+  static FinancialSubtransaction _fromEJson(EJsonValue ejson) {
     if (ejson is! Map<String, dynamic>) return raiseInvalidEJson(ejson);
     return switch (ejson) {
       {
@@ -75,7 +77,7 @@ class Subtransaction extends $Subtransaction
         'name': EJsonValue name,
         'price': EJsonValue price,
       } =>
-        Subtransaction(
+        FinancialSubtransaction(
           fromEJson(id),
           fromEJson(name),
           fromEJson(price),
@@ -86,14 +88,14 @@ class Subtransaction extends $Subtransaction
   }
 
   static final schema = () {
-    RealmObjectBase.registerFactory(Subtransaction._);
+    RealmObjectBase.registerFactory(FinancialSubtransaction._);
     register(_toEJson, _fromEJson);
-    return const SchemaObject(
-        ObjectType.realmObject, Subtransaction, 'Subtransaction', [
+    return const SchemaObject(ObjectType.realmObject, FinancialSubtransaction,
+        'FinancialSubtransaction', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('transaction', RealmPropertyType.object,
-          optional: true, linkTarget: 'Transaction'),
+          optional: true, linkTarget: 'FinancialTransaction'),
       SchemaProperty('name', RealmPropertyType.string),
       SchemaProperty('price', RealmPropertyType.int),
     ]);

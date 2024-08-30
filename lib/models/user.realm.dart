@@ -7,8 +7,8 @@ part of 'user.dart';
 // **************************************************************************
 
 // ignore_for_file: type=lint
-class User extends $User with RealmEntity, RealmObjectBase, RealmObject {
-  User(
+class AppUser extends $AppUser with RealmEntity, RealmObjectBase, RealmObject {
+  AppUser(
     ObjectId id,
     String firebaseUID,
     String name,
@@ -20,7 +20,7 @@ class User extends $User with RealmEntity, RealmObjectBase, RealmObject {
     RealmObjectBase.set(this, 'email', email);
   }
 
-  User._();
+  AppUser._();
 
   @override
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
@@ -45,15 +45,15 @@ class User extends $User with RealmEntity, RealmObjectBase, RealmObject {
   set email(String value) => RealmObjectBase.set(this, 'email', value);
 
   @override
-  Stream<RealmObjectChanges<User>> get changes =>
-      RealmObjectBase.getChanges<User>(this);
+  Stream<RealmObjectChanges<AppUser>> get changes =>
+      RealmObjectBase.getChanges<AppUser>(this);
 
   @override
-  Stream<RealmObjectChanges<User>> changesFor([List<String>? keyPaths]) =>
-      RealmObjectBase.getChangesFor<User>(this, keyPaths);
+  Stream<RealmObjectChanges<AppUser>> changesFor([List<String>? keyPaths]) =>
+      RealmObjectBase.getChangesFor<AppUser>(this, keyPaths);
 
   @override
-  User freeze() => RealmObjectBase.freezeObject<User>(this);
+  AppUser freeze() => RealmObjectBase.freezeObject<AppUser>(this);
 
   EJsonValue toEJson() {
     return <String, dynamic>{
@@ -64,8 +64,8 @@ class User extends $User with RealmEntity, RealmObjectBase, RealmObject {
     };
   }
 
-  static EJsonValue _toEJson(User value) => value.toEJson();
-  static User _fromEJson(EJsonValue ejson) {
+  static EJsonValue _toEJson(AppUser value) => value.toEJson();
+  static AppUser _fromEJson(EJsonValue ejson) {
     if (ejson is! Map<String, dynamic>) return raiseInvalidEJson(ejson);
     return switch (ejson) {
       {
@@ -74,7 +74,7 @@ class User extends $User with RealmEntity, RealmObjectBase, RealmObject {
         'name': EJsonValue name,
         'email': EJsonValue email,
       } =>
-        User(
+        AppUser(
           fromEJson(id),
           fromEJson(firebaseUID),
           fromEJson(name),
@@ -85,9 +85,9 @@ class User extends $User with RealmEntity, RealmObjectBase, RealmObject {
   }
 
   static final schema = () {
-    RealmObjectBase.registerFactory(User._);
+    RealmObjectBase.registerFactory(AppUser._);
     register(_toEJson, _fromEJson);
-    return const SchemaObject(ObjectType.realmObject, User, 'User', [
+    return const SchemaObject(ObjectType.realmObject, AppUser, 'AppUser', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('firebaseUID', RealmPropertyType.string),

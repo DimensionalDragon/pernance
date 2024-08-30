@@ -7,16 +7,16 @@ part of 'transaction.dart';
 // **************************************************************************
 
 // ignore_for_file: type=lint
-class Transaction extends $Transaction
+class FinancialTransaction extends $FinancialTransaction
     with RealmEntity, RealmObjectBase, RealmObject {
-  Transaction(
+  FinancialTransaction(
     ObjectId id,
     String name,
     int price,
     DateTime date, {
-    User? user,
+    AppUser? user,
     Category? category,
-    Iterable<Subtransaction> subtransactions = const [],
+    Iterable<FinancialSubtransaction> subtransactions = const [],
   }) {
     RealmObjectBase.set(this, '_id', id);
     RealmObjectBase.set(this, 'user', user);
@@ -24,11 +24,11 @@ class Transaction extends $Transaction
     RealmObjectBase.set(this, 'category', category);
     RealmObjectBase.set(this, 'price', price);
     RealmObjectBase.set(this, 'date', date);
-    RealmObjectBase.set<RealmList<Subtransaction>>(
-        this, 'subtransactions', RealmList<Subtransaction>(subtransactions));
+    RealmObjectBase.set<RealmList<FinancialSubtransaction>>(this,
+        'subtransactions', RealmList<FinancialSubtransaction>(subtransactions));
   }
 
-  Transaction._();
+  FinancialTransaction._();
 
   @override
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
@@ -36,9 +36,10 @@ class Transaction extends $Transaction
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
 
   @override
-  User? get user => RealmObjectBase.get<User>(this, 'user') as User?;
+  AppUser? get user => RealmObjectBase.get<AppUser>(this, 'user') as AppUser?;
   @override
-  set user(covariant User? value) => RealmObjectBase.set(this, 'user', value);
+  set user(covariant AppUser? value) =>
+      RealmObjectBase.set(this, 'user', value);
 
   @override
   String get name => RealmObjectBase.get<String>(this, 'name') as String;
@@ -63,24 +64,25 @@ class Transaction extends $Transaction
   set date(DateTime value) => RealmObjectBase.set(this, 'date', value);
 
   @override
-  RealmList<Subtransaction> get subtransactions =>
-      RealmObjectBase.get<Subtransaction>(this, 'subtransactions')
-          as RealmList<Subtransaction>;
+  RealmList<FinancialSubtransaction> get subtransactions =>
+      RealmObjectBase.get<FinancialSubtransaction>(this, 'subtransactions')
+          as RealmList<FinancialSubtransaction>;
   @override
-  set subtransactions(covariant RealmList<Subtransaction> value) =>
+  set subtransactions(covariant RealmList<FinancialSubtransaction> value) =>
       throw RealmUnsupportedSetError();
 
   @override
-  Stream<RealmObjectChanges<Transaction>> get changes =>
-      RealmObjectBase.getChanges<Transaction>(this);
+  Stream<RealmObjectChanges<FinancialTransaction>> get changes =>
+      RealmObjectBase.getChanges<FinancialTransaction>(this);
 
   @override
-  Stream<RealmObjectChanges<Transaction>> changesFor(
+  Stream<RealmObjectChanges<FinancialTransaction>> changesFor(
           [List<String>? keyPaths]) =>
-      RealmObjectBase.getChangesFor<Transaction>(this, keyPaths);
+      RealmObjectBase.getChangesFor<FinancialTransaction>(this, keyPaths);
 
   @override
-  Transaction freeze() => RealmObjectBase.freezeObject<Transaction>(this);
+  FinancialTransaction freeze() =>
+      RealmObjectBase.freezeObject<FinancialTransaction>(this);
 
   EJsonValue toEJson() {
     return <String, dynamic>{
@@ -94,8 +96,8 @@ class Transaction extends $Transaction
     };
   }
 
-  static EJsonValue _toEJson(Transaction value) => value.toEJson();
-  static Transaction _fromEJson(EJsonValue ejson) {
+  static EJsonValue _toEJson(FinancialTransaction value) => value.toEJson();
+  static FinancialTransaction _fromEJson(EJsonValue ejson) {
     if (ejson is! Map<String, dynamic>) return raiseInvalidEJson(ejson);
     return switch (ejson) {
       {
@@ -104,7 +106,7 @@ class Transaction extends $Transaction
         'price': EJsonValue price,
         'date': EJsonValue date,
       } =>
-        Transaction(
+        FinancialTransaction(
           fromEJson(id),
           fromEJson(name),
           fromEJson(price),
@@ -118,21 +120,21 @@ class Transaction extends $Transaction
   }
 
   static final schema = () {
-    RealmObjectBase.registerFactory(Transaction._);
+    RealmObjectBase.registerFactory(FinancialTransaction._);
     register(_toEJson, _fromEJson);
     return const SchemaObject(
-        ObjectType.realmObject, Transaction, 'Transaction', [
+        ObjectType.realmObject, FinancialTransaction, 'FinancialTransaction', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('user', RealmPropertyType.object,
-          optional: true, linkTarget: 'User'),
+          optional: true, linkTarget: 'AppUser'),
       SchemaProperty('name', RealmPropertyType.string),
       SchemaProperty('category', RealmPropertyType.object,
           optional: true, linkTarget: 'Category'),
       SchemaProperty('price', RealmPropertyType.int),
       SchemaProperty('date', RealmPropertyType.timestamp),
       SchemaProperty('subtransactions', RealmPropertyType.object,
-          linkTarget: 'Subtransaction',
+          linkTarget: 'FinancialSubtransaction',
           collectionType: RealmCollectionType.list),
     ]);
   }();

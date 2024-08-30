@@ -13,12 +13,15 @@ class Category extends $Category
     ObjectId id,
     String name,
     int budget, {
-    User? user,
+    AppUser? user,
+    Iterable<FinancialTransaction> transactions = const [],
   }) {
     RealmObjectBase.set(this, '_id', id);
     RealmObjectBase.set(this, 'user', user);
     RealmObjectBase.set(this, 'name', name);
     RealmObjectBase.set(this, 'budget', budget);
+    RealmObjectBase.set<RealmList<FinancialTransaction>>(
+        this, 'transactions', RealmList<FinancialTransaction>(transactions));
   }
 
   Category._();
@@ -29,9 +32,10 @@ class Category extends $Category
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
 
   @override
-  User? get user => RealmObjectBase.get<User>(this, 'user') as User?;
+  AppUser? get user => RealmObjectBase.get<AppUser>(this, 'user') as AppUser?;
   @override
-  set user(covariant User? value) => RealmObjectBase.set(this, 'user', value);
+  set user(covariant AppUser? value) =>
+      RealmObjectBase.set(this, 'user', value);
 
   @override
   String get name => RealmObjectBase.get<String>(this, 'name') as String;
@@ -42,6 +46,14 @@ class Category extends $Category
   int get budget => RealmObjectBase.get<int>(this, 'budget') as int;
   @override
   set budget(int value) => RealmObjectBase.set(this, 'budget', value);
+
+  @override
+  RealmList<FinancialTransaction> get transactions =>
+      RealmObjectBase.get<FinancialTransaction>(this, 'transactions')
+          as RealmList<FinancialTransaction>;
+  @override
+  set transactions(covariant RealmList<FinancialTransaction> value) =>
+      throw RealmUnsupportedSetError();
 
   @override
   Stream<RealmObjectChanges<Category>> get changes =>
@@ -60,6 +72,7 @@ class Category extends $Category
       'user': user.toEJson(),
       'name': name.toEJson(),
       'budget': budget.toEJson(),
+      'transactions': transactions.toEJson(),
     };
   }
 
@@ -77,6 +90,7 @@ class Category extends $Category
           fromEJson(name),
           fromEJson(budget),
           user: fromEJson(ejson['user']),
+          transactions: fromEJson(ejson['transactions']),
         ),
       _ => raiseInvalidEJson(ejson),
     };
@@ -89,9 +103,12 @@ class Category extends $Category
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('user', RealmPropertyType.object,
-          optional: true, linkTarget: 'User'),
+          optional: true, linkTarget: 'AppUser'),
       SchemaProperty('name', RealmPropertyType.string),
       SchemaProperty('budget', RealmPropertyType.int),
+      SchemaProperty('transactions', RealmPropertyType.object,
+          linkTarget: 'FinancialTransaction',
+          collectionType: RealmCollectionType.list),
     ]);
   }();
 

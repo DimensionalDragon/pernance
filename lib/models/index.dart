@@ -1,6 +1,15 @@
-import 'package:realm/realm.dart' as realm_dart;
+import 'package:realm/realm.dart';
 
 import 'package:pernance/models/user.dart';
+import 'package:pernance/models/subtransaction.dart';
+import 'package:pernance/models/transaction.dart';
+import 'package:pernance/models/category.dart';
 
-var config = realm_dart.Configuration.local([User.schema]);
-var realm = realm_dart.Realm(config);
+
+var config = Configuration.local([
+  AppUser.schema,
+  FinancialTransaction.schema,
+  FinancialSubtransaction.schema,
+  Category.schema,
+]);
+var realm = Realm(config);
