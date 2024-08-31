@@ -18,14 +18,14 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 40),
               child: LoginForm(),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 const Text("Don't have an account?"),
                 TextButton(
                   onPressed: () {
@@ -66,7 +66,6 @@ class LoginFormState extends State<LoginForm> {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          // Add TextFormFields and ElevatedButton here.
           TextFormField(
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
@@ -88,8 +87,6 @@ class LoginFormState extends State<LoginForm> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
-              } else if (value.length < 8) {
-                return 'Password is too short, please enter more than 8 characters';
               }
               return null;
             },
