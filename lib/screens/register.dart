@@ -2,9 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:pernance/models/index.dart';
+import 'package:pernance/models/user.dart';
 
 import 'package:pernance/routes/routes.dart';
-import 'package:pernance/utils/storage.dart';
+import 'package:realm/realm.dart';
 
 @RoutePage()
 class RegisterScreen extends StatelessWidget {
@@ -142,13 +144,23 @@ class RegisterFormState extends State<RegisterForm> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         try {
+                          // Register
                           final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
                             email: _emailController.text,
                             password: _passwordController.text,
                           );
                           await credential.user!.updateDisplayName(_displayNameController.text);
-                          await storage.write(key: 'firebase_id', value: credential.user!.uid);
-                          router.push(const DashboardRoute());
+                          await realm.writeAsync(() {
+                            realm.add(
+                              AppUser(
+                                ObjectId(),
+                                credential.user!.uid,
+                                credential.user!.displayName!,
+                                credential.user!.email!,
+                              )
+                            );
+                          });
+                          router.push(const LoginRoute());
                         } on FirebaseAuthException catch (_) {
                           _errorMessage = 'Something bad happened, please try again later';
                         }
