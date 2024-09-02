@@ -104,10 +104,7 @@ class LoginFormState extends State<LoginForm> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        try {
-                          // Activate offline login persistence
-                          await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
-                          
+                        try {                     
                           // Login
                           final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
                             email: _emailController.text,
@@ -118,7 +115,7 @@ class LoginFormState extends State<LoginForm> {
                           await storage.write(key: 'firebase_uid', value: credential.user!.uid);
                           
                           // Redirect to dashboard
-                          router.push(const DashboardRoute());
+                          router.replace(const DashboardRoute());
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-credential') {
                             setState(() {

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pernance/routes/routes.dart';
 
@@ -61,6 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     AutoRouter.of(context).push(const LoginRoute());
                   },
                   child: const Text('To Login')
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                  child: const Text('Force Logout')
                 ),
               ],
             )

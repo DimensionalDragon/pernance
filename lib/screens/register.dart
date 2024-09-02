@@ -160,7 +160,7 @@ class RegisterFormState extends State<RegisterForm> {
                               )
                             );
                           });
-                          router.push(const LoginRoute());
+                          router.replace(const LoginRoute());
                         } on FirebaseAuthException catch (_) {
                           _errorMessage = 'Something bad happened, please try again later';
                         }

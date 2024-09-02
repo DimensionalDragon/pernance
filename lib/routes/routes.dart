@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:pernance/routes/guard.dart';
+import 'package:pernance/routes/guards/auth_guard.dart';
 
 import 'package:pernance/screens/home.dart';
 import 'package:pernance/screens/dashboard.dart';
@@ -31,6 +31,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(
       path: '/auth/login',
       page: LoginRoute.page,
+      guards: [AuthGuard()],
     ),
     AutoRoute(
       path: '/auth/register',
@@ -40,6 +41,6 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRouteGuard> get guards => [
-    // optionally add root guards here
+    // AuthGuard(), 
   ];
 }
