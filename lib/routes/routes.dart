@@ -17,8 +17,6 @@ class AppRouter extends RootStackRouter {
   
   @override
   List<AutoRoute> get routes => [
-    // HomeScreen is generated as HomeRoute because
-    // of the replaceInRouteName property
     AutoRoute(
       page: HomeRoute.page,
       initial: true,
@@ -26,12 +24,10 @@ class AppRouter extends RootStackRouter {
     AutoRoute(
       path: '/dashboard',
       page: DashboardRoute.page,
-      guards: [AuthGuard()],
     ),
     AutoRoute(
       path: '/auth/login',
       page: LoginRoute.page,
-      guards: [AuthGuard()],
     ),
     AutoRoute(
       path: '/auth/register',
@@ -41,6 +37,6 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRouteGuard> get guards => [
-    // AuthGuard(), 
+    AuthGuard(),   
   ];
 }

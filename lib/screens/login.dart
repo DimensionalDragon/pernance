@@ -111,8 +111,9 @@ class LoginFormState extends State<LoginForm> {
                             password: _passwordController.text,
                           );
 
-                          // Store UID
+                          // Store UID and refresh token
                           await storage.write(key: 'firebase_uid', value: credential.user!.uid);
+                          await storage.write(key: 'firebase_refresh', value: credential.user!.refreshToken);
                           
                           // Redirect to dashboard
                           router.replace(const DashboardRoute());
