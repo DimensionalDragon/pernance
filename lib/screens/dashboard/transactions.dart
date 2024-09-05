@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:pernance/widgets/transactions_list_per_day.dart';
 
 @RoutePage()
 class TransactionsScreen extends StatelessWidget {
@@ -15,7 +16,8 @@ class TransactionsScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: Column(
                 children: [
-                  const SearchBar(),
+                  // const SearchBar(),
+                  const SizedBox(height: 7),
                   OutlinedButton(
                     style: ButtonStyle(
                       shape: WidgetStateProperty.all(
@@ -35,8 +37,13 @@ class TransactionsScreen extends StatelessWidget {
                   ),
                 ]),
             ),
-            const Expanded(
-              child: Center(child: Text('List of Transactions')),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                child: Column(
+                  children: [TransactionsListPerDay()],
+                ),
+              )
             )
           ],
         ),
