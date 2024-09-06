@@ -20,4 +20,7 @@ abstract class Env {
     static const String firebaseWebAppID = _Env.firebaseWebAppID;
     @EnviedField(varName: 'FIREBASE_ANDROID_APP_ID')
     static const String firebaseAndroidAppID = _Env.firebaseAndroidAppID;
+
+    @EnviedField(varName: 'REALM_APP_ID')
+    static const String realmAppID = _Env.realmAppID;
 }

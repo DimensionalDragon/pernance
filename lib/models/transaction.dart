@@ -1,6 +1,5 @@
 import 'package:realm/realm.dart';
 
-import 'user.dart';
 import 'category.dart';
 import 'subtransaction.dart';
 
@@ -12,7 +11,6 @@ class $FinancialTransaction {
   @MapTo('_id')
   late ObjectId id;
   
-  late $AppUser? user;
   late String name;
   late $Category? category;
   late int price;

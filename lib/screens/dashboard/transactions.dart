@@ -13,7 +13,7 @@ class TransactionsScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
                 children: [
                   // const SearchBar(),

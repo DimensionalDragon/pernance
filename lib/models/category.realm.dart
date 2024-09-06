@@ -13,11 +13,9 @@ class Category extends $Category
     ObjectId id,
     String name,
     int budget, {
-    AppUser? user,
     Iterable<FinancialTransaction> transactions = const [],
   }) {
     RealmObjectBase.set(this, '_id', id);
-    RealmObjectBase.set(this, 'user', user);
     RealmObjectBase.set(this, 'name', name);
     RealmObjectBase.set(this, 'budget', budget);
     RealmObjectBase.set<RealmList<FinancialTransaction>>(
@@ -30,12 +28,6 @@ class Category extends $Category
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
   @override
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
-
-  @override
-  AppUser? get user => RealmObjectBase.get<AppUser>(this, 'user') as AppUser?;
-  @override
-  set user(covariant AppUser? value) =>
-      RealmObjectBase.set(this, 'user', value);
 
   @override
   String get name => RealmObjectBase.get<String>(this, 'name') as String;
@@ -69,7 +61,6 @@ class Category extends $Category
   EJsonValue toEJson() {
     return <String, dynamic>{
       '_id': id.toEJson(),
-      'user': user.toEJson(),
       'name': name.toEJson(),
       'budget': budget.toEJson(),
       'transactions': transactions.toEJson(),
@@ -89,7 +80,6 @@ class Category extends $Category
           fromEJson(id),
           fromEJson(name),
           fromEJson(budget),
-          user: fromEJson(ejson['user']),
           transactions: fromEJson(ejson['transactions']),
         ),
       _ => raiseInvalidEJson(ejson),
@@ -102,8 +92,6 @@ class Category extends $Category
     return const SchemaObject(ObjectType.realmObject, Category, 'Category', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
-      SchemaProperty('user', RealmPropertyType.object,
-          optional: true, linkTarget: 'AppUser'),
       SchemaProperty('name', RealmPropertyType.string),
       SchemaProperty('budget', RealmPropertyType.int),
       SchemaProperty('transactions', RealmPropertyType.object,

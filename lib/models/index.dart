@@ -1,30 +1,48 @@
+// import 'dart:io';
+
 import 'package:realm/realm.dart';
 
-import 'package:pernance/models/user.dart';
 import 'package:pernance/models/subtransaction.dart';
 import 'package:pernance/models/transaction.dart';
 import 'package:pernance/models/category.dart';
 
-var config = Configuration.local([
-  AppUser.schema,
-  FinancialTransaction.schema,
-  FinancialSubtransaction.schema,
-  Category.schema,
-]);
-var realm = Realm(config);
+import 'package:pernance/env/env.dart';
+import 'package:pernance/utils/is_online.dart';
 
-// Future<User> loginCustomJwt(App app, String jwt) async {
-//   // Create a Custom JWT credential
-//   final credentials = Credentials.jwt(jwt);
-//   // Authenticate the user
-//   final user = await app.logIn(credentials);
-//   // `app.currentUser` updates to match the logged in user
-//   assert(user.id == app.currentUser?.id);
-//   return user;
-// }
+// var config = Configuration.local([
+//   FinancialTransaction.schema,
+//   FinancialSubtransaction.schema,
+//   Category.schema,
+// ]);
+// var realm = Realm(config);
 
-// void main() async {
-//   final app = App(AppConfiguration('your-app-id'));
-//   final user = await loginCustomJwt(app, 'eyJ0eXAi...Q3NJmnU8oP3YkZ8');
-//   print('Logged in user: ${user.id}');
-// }
+class RealmProvider {
+  static final RealmProvider _instance = RealmProvider._internal();
+  late Realm _realm;
+
+  factory RealmProvider() {
+    return _instance;
+  }
+
+  RealmProvider._internal();
+
+  Future<void> initializeRealm(String firebaseToken) async {
+    final app = App(AppConfiguration(Env.realmAppID));
+    
+    final jwtCredentials = Credentials.jwt(firebaseToken);
+    final currentUser = await app.logIn(jwtCredentials);
+
+    final config = Configuration.flexibleSync(currentUser, [
+      FinancialTransaction.schema,
+      FinancialSubtransaction.schema,
+      Category.schema,
+    ]);
+    if (await isOnline()) {
+      _realm = await Realm.open(config);
+    } else {
+      _realm = Realm(config);
+    }
+  }
+
+  Realm get realm => _realm;
+}

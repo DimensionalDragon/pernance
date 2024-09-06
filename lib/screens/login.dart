@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pernance/models/index.dart';
 
 import 'package:pernance/routes/routes.dart';
-import 'package:pernance/utils/storage.dart';
 
 @RoutePage()
 class LoginScreen extends StatelessWidget {
@@ -111,9 +111,11 @@ class LoginFormState extends State<LoginForm> {
                             password: _passwordController.text,
                           );
 
-                          // Store UID and refresh token
-                          await storage.write(key: 'firebase_uid', value: credential.user!.uid);
-                          await storage.write(key: 'firebase_refresh', value: credential.user!.refreshToken);
+                          // Open Realm
+                          final firebaseIDToken = await credential.user?.getIdToken();
+                          if (firebaseIDToken != null) {
+                            RealmProvider().initializeRealm(firebaseIDToken);
+                          }
                           
                           // Redirect to dashboard
                           router.replace(const DashboardRoute());

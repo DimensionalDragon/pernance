@@ -20,6 +20,7 @@ class TransactionsListPerDay extends StatelessWidget {
     return Column(
       children: <Widget>[
         const Text('Today', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey)),
+        const SizedBox(height: 5),
         ListView.builder(
           shrinkWrap: true,
           itemCount: transactions.length,

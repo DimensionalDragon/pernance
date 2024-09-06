@@ -14,12 +14,10 @@ class FinancialTransaction extends $FinancialTransaction
     String name,
     int price,
     DateTime date, {
-    AppUser? user,
     Category? category,
     Iterable<FinancialSubtransaction> subtransactions = const [],
   }) {
     RealmObjectBase.set(this, '_id', id);
-    RealmObjectBase.set(this, 'user', user);
     RealmObjectBase.set(this, 'name', name);
     RealmObjectBase.set(this, 'category', category);
     RealmObjectBase.set(this, 'price', price);
@@ -34,12 +32,6 @@ class FinancialTransaction extends $FinancialTransaction
   ObjectId get id => RealmObjectBase.get<ObjectId>(this, '_id') as ObjectId;
   @override
   set id(ObjectId value) => RealmObjectBase.set(this, '_id', value);
-
-  @override
-  AppUser? get user => RealmObjectBase.get<AppUser>(this, 'user') as AppUser?;
-  @override
-  set user(covariant AppUser? value) =>
-      RealmObjectBase.set(this, 'user', value);
 
   @override
   String get name => RealmObjectBase.get<String>(this, 'name') as String;
@@ -87,7 +79,6 @@ class FinancialTransaction extends $FinancialTransaction
   EJsonValue toEJson() {
     return <String, dynamic>{
       '_id': id.toEJson(),
-      'user': user.toEJson(),
       'name': name.toEJson(),
       'category': category.toEJson(),
       'price': price.toEJson(),
@@ -111,7 +102,6 @@ class FinancialTransaction extends $FinancialTransaction
           fromEJson(name),
           fromEJson(price),
           fromEJson(date),
-          user: fromEJson(ejson['user']),
           category: fromEJson(ejson['category']),
           subtransactions: fromEJson(ejson['subtransactions']),
         ),
@@ -126,8 +116,6 @@ class FinancialTransaction extends $FinancialTransaction
         ObjectType.realmObject, FinancialTransaction, 'FinancialTransaction', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
-      SchemaProperty('user', RealmPropertyType.object,
-          optional: true, linkTarget: 'AppUser'),
       SchemaProperty('name', RealmPropertyType.string),
       SchemaProperty('category', RealmPropertyType.object,
           optional: true, linkTarget: 'Category'),
