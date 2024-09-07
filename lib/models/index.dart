@@ -6,8 +6,8 @@ import 'package:pernance/models/subtransaction.dart';
 import 'package:pernance/models/transaction.dart';
 import 'package:pernance/models/category.dart';
 
-import 'package:pernance/env/env.dart';
-import 'package:pernance/utils/is_online.dart';
+// import 'package:pernance/env/env.dart';
+// import 'package:pernance/utils/is_online.dart';
 
 // var config = Configuration.local([
 //   FinancialTransaction.schema,
@@ -26,22 +26,28 @@ class RealmProvider {
 
   RealmProvider._internal();
 
-  Future<void> initializeRealm(String firebaseToken) async {
-    final app = App(AppConfiguration(Env.realmAppID));
+  Future<void> initializeRealm(String? firebaseToken) async {
+    // final app = App(AppConfiguration(Env.realmAppID));
     
-    final jwtCredentials = Credentials.jwt(firebaseToken);
-    final currentUser = await app.logIn(jwtCredentials);
+    // final jwtCredentials = Credentials.jwt(firebaseToken);
+    // final currentUser = await app.logIn(jwtCredentials);
 
-    final config = Configuration.flexibleSync(currentUser, [
+    _realm = await Realm.open(Configuration.local([
       FinancialTransaction.schema,
       FinancialSubtransaction.schema,
       Category.schema,
-    ]);
-    if (await isOnline()) {
-      _realm = await Realm.open(config);
-    } else {
-      _realm = Realm(config);
-    }
+    ]));
+
+    // final config = Configuration.flexibleSync(currentUser, [
+    //   FinancialTransaction.schema,
+    //   FinancialSubtransaction.schema,
+    //   Category.schema,
+    // ]);
+    // if (await isOnline()) {
+    //   _realm = await Realm.open(config);
+    // } else {
+    //   _realm = Realm(config);
+    // }
   }
 
   Realm get realm => _realm;
