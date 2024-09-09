@@ -7,6 +7,7 @@ import 'package:pernance/screens/dashboard/index.dart';
 import 'package:pernance/screens/login.dart';
 import 'package:pernance/screens/register.dart';
 import 'package:pernance/screens/dashboard/transactions.dart';
+import 'package:pernance/screens/dashboard/add_transaction.dart';
 import 'package:pernance/screens/dashboard/categories.dart';
 
 part 'routes.gr.dart';
@@ -31,6 +32,10 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: 'transactions', page: TransactionsRoute.page),
         AutoRoute(path: 'categories', page: CategoriesRoute.page),
       ]
+    ),
+    AutoRoute(
+      path: '/dashboard/transactions/add',
+      page: AddTransactionRoute.page,
     ),
     AutoRoute(
       path: '/auth/login',
