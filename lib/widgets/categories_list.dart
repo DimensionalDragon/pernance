@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:realm/realm.dart';
+import 'package:pernance/models/index.dart';
+// import 'package:realm/realm.dart';
 
 import 'package:pernance/widgets/currency_text.dart';
 import 'package:pernance/models/category.dart';
@@ -7,15 +8,15 @@ import 'package:pernance/models/category.dart';
 class CategoriesList extends StatelessWidget {
   CategoriesList({super.key});
 
-  final List<Category> categories = [
-    Category(ObjectId(), 'Food & Drinks', 50000),
-    Category(ObjectId(), 'Electronics', 50000),
-    Category(ObjectId(), 'Entertainment', 50000),
-    Category(ObjectId(), 'Food & Drinks', 50000),
-  ];
+  // final List<Category> categories = [
+  //   Category(ObjectId(), 'Food & Drinks', 50000),
+  //   Category(ObjectId(), 'Electronics', 50000),
+  //   Category(ObjectId(), 'Entertainment', 50000),
+  // ];
 
   @override
   Widget build(BuildContext context) {
+    final categories = RealmProvider().realm.all<Category>();
     return Column(
       children: <Widget>[
         const Padding(

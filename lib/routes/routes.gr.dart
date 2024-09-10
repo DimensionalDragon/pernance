@@ -10,6 +10,25 @@
 part of 'routes.dart';
 
 /// generated route for
+/// [AddCategoryScreen]
+class AddCategoryRoute extends PageRouteInfo<void> {
+  const AddCategoryRoute({List<PageRouteInfo>? children})
+      : super(
+          AddCategoryRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AddCategoryRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AddCategoryScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [AddTransactionScreen]
 class AddTransactionRoute extends PageRouteInfo<void> {
   const AddTransactionRoute({List<PageRouteInfo>? children})

@@ -120,13 +120,13 @@ class LoginFormState extends State<LoginForm> {
                           // Redirect to dashboard
                           router.replace(const DashboardRoute());
                         } on FirebaseAuthException catch (e) {
-                          if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-credential') {
-                            setState(() {
+                          setState(() {
+                            if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-credential') {
                               _errorMessage = 'Invalid email or password';
-                            });
-                          } else {
-                            _errorMessage = 'Something bad happened, please try again later';
-                          }
+                            } else {
+                                _errorMessage = 'Something bad happened, please try again later';
+                            }
+                          });
                         }
                       }
                     },

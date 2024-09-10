@@ -26,6 +26,12 @@ class RealmProvider {
 
   RealmProvider._internal();
 
+  // void _writeInitialData() {
+  //   _realm.write(() {
+      
+  //   });
+  // }
+
   Future<void> initializeRealm(String firebaseToken) async {
     final app = App(AppConfiguration(Env.realmAppID));
     
@@ -37,11 +43,21 @@ class RealmProvider {
       FinancialSubtransaction.schema,
       Category.schema,
     ]);
+
+    // If offline, open local realm instead, sync it later
     if (await isOnline()) {
       _realm = await Realm.open(config);
+      // _writeInitialData();
     } else {
       _realm = Realm(config);
+      // _writeInitialData();
     }
+
+    // Sync update configuration
+    // realm.subscriptions.update((mutableSubscriptions) {
+    //   mutableSubscriptions.add(realm.query<Category>(r'name == $0 AND age > $1', ['Clifford', 5]));
+    // });
+    // await realm.subscriptions.waitForSynchronization();
   }
 
   Realm get realm => _realm;
