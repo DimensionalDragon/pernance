@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 // import 'package:pernance/models/index.dart';
 
 import 'package:pernance/routes/routes.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 // import 'package:realm/realm.dart';
 
 @RoutePage()
@@ -144,23 +145,20 @@ class RegisterFormState extends State<RegisterForm> {
                       if (_formKey.currentState!.validate()) {
                         try {
                           // Register
-                          final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                          await Supabase.instance.client.auth.signUp(
                             email: _emailController.text,
                             password: _passwordController.text,
+                            data: {
+                              'displayName': _displayNameController.text,
+                            }
                           );
-                          await credential.user!.updateDisplayName(_displayNameController.text);
-                          // await realm.writeAsync(() {
-                          //   realm.add(
-                          //     AppUser(
-                          //       ObjectId(),
-                          //       credential.user!.uid,
-                          //       credential.user!.displayName!,
-                          //       credential.user!.email!,
-                          //     )
-                          //   );
-                          // });
+                          // final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                          //   email: _emailController.text,
+                          //   password: _passwordController.text,
+                          // );
+                          // await credential.user!.updateDisplayName(_displayNameController.text);
                           router.replace(const LoginRoute());
-                        } on FirebaseAuthException catch (_) {
+                        } on AuthException catch (_) {
                           _errorMessage = 'Something bad happened, please try again later';
                         }
                       }

@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pernance/routes/routes.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    FirebaseAuth.instance.signOut();
+                    Supabase.instance.client.auth.signOut();
                   },
                   child: const Text('Force Logout')
                 ),

@@ -1,7 +1,7 @@
 import "package:powersync/powersync.dart";
 
 const subtransactionSchema = Table(
-  'subtransaction',
+  'subtransactions',
   [ 
     Column.text('name'),
     Column.integer('price'),

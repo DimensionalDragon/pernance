@@ -1,7 +1,7 @@
 import "package:powersync/powersync.dart";
 
 const transactionSchema = Table(
-  'transaction',
+  'transactions',
   [ 
     Column.text('name'),
     Column.text('category_id'),

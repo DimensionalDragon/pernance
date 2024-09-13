@@ -1,9 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:pernance/models/category.dart';
-import 'package:pernance/models/index.dart';
-
-import 'package:realm/realm.dart';
+import 'package:pernance/models_powersync/index.dart';
+import 'package:pernance/utils/get_user_id.dart';
 
 @RoutePage()
 class AddCategoryScreen extends StatelessWidget {
@@ -88,10 +86,11 @@ class AddCategoryFormState extends State<AddCategoryForm> {
                       if (_formKey.currentState!.validate()) {
                         try {                     
                           // Add Category
-                          RealmProvider().realm.write(() {
-                            final newCategory = Category(ObjectId(), _nameController.text, int.parse(_budgetController.text));
-                            RealmProvider().realm.add(newCategory);
-                          });
+                          await db.execute(
+                            'INSERT INTO categories(id, name, budget, user_id) VALUES(gen_random_uuid(), ?, ?, ?)',
+                            [_nameController.text, _budgetController.text, await getUserId()]
+                          );
+                          
                           // Redirect back to categories page
                           router.back();
                         } catch (e) {
@@ -100,6 +99,8 @@ class AddCategoryFormState extends State<AddCategoryForm> {
                             _errorMessage = 'Something bad happened, please try again later';
                           });
                         }
+                      } else {
+                        print('not valid');
                       }
                     },
                     style: ButtonStyle(

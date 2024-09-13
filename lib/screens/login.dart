@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pernance/models/index.dart';
+// import 'package:pernance/models/index.dart';
 
 import 'package:pernance/routes/routes.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 @RoutePage()
 class LoginScreen extends StatelessWidget {
@@ -106,22 +107,26 @@ class LoginFormState extends State<LoginForm> {
                       if (_formKey.currentState!.validate()) {
                         try {                     
                           // Login
-                          final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          await Supabase.instance.client.auth.signInWithPassword(
                             email: _emailController.text,
                             password: _passwordController.text,
                           );
+                          // final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          //   email: _emailController.text,
+                          //   password: _passwordController.text,
+                          // );
 
                           // Open Realm
-                          final firebaseIDToken = await credential.user?.getIdToken();
-                          if (firebaseIDToken != null) {
-                            RealmProvider().initializeRealm(firebaseIDToken);
-                          }
+                          // final firebaseIDToken = await credential.user?.getIdToken();
+                          // if (firebaseIDToken != null) {
+                          //   RealmProvider().initializeRealm(firebaseIDToken);
+                          // }
                           
                           // Redirect to dashboard
                           router.replace(const DashboardRoute());
-                        } on FirebaseAuthException catch (e) {
+                        } on AuthException catch (e) {
                           setState(() {
-                            if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-credential') {
+                            if (e.code == 'user_not_found' || e.code == 'invalid_credentials') {
                               _errorMessage = 'Invalid email or password';
                             } else {
                                 _errorMessage = 'Something bad happened, please try again later';
