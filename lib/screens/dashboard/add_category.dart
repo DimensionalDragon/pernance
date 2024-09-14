@@ -1,23 +1,26 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:pernance/models_powersync/index.dart';
+import 'package:pernance/routes/routes.dart';
 import 'package:pernance/utils/get_user_id.dart';
 
 @RoutePage()
 class AddCategoryScreen extends StatelessWidget {
-  const AddCategoryScreen({super.key});
+  const AddCategoryScreen({super.key, required this.onSubmit});
+
+  final void Function() onSubmit;
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: AddCategoryForm(),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: AddCategoryForm(onSubmit: onSubmit),
             ),
           ],
         ),
@@ -27,7 +30,9 @@ class AddCategoryScreen extends StatelessWidget {
 }
 
 class AddCategoryForm extends StatefulWidget {
-  const AddCategoryForm({super.key});
+  const AddCategoryForm({super.key, required this.onSubmit});
+
+  final void Function() onSubmit;
 
   @override
   AddCategoryFormState createState() {
@@ -90,9 +95,12 @@ class AddCategoryFormState extends State<AddCategoryForm> {
                             'INSERT INTO categories(id, name, budget, user_id) VALUES(gen_random_uuid(), ?, ?, ?)',
                             [_nameController.text, _budgetController.text, await getUserId()]
                           );
+
+                          // Update the data
+                          widget.onSubmit();
                           
                           // Redirect back to categories page
-                          router.back();
+                          router.navigate(const CategoriesRoute());
                         } catch (e) {
                           print(e);
                           setState(() {

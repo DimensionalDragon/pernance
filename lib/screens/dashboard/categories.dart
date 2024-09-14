@@ -28,7 +28,7 @@ class CategoriesScreen extends StatelessWidget {
                         )
                       ),
                     onPressed: () {
-                      router.push(const AddCategoryRoute());
+                      router.push(AddCategoryRoute(onSubmit: () {}));
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,

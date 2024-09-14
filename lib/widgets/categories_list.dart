@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:pernance/models_powersync/category.dart';
-// import 'package:pernance/models/index.dart';
-import 'package:pernance/models_powersync/index.dart';
-// import 'package:realm/realm.dart';
 
 import 'package:pernance/widgets/currency_text.dart';
-// import 'package:pernance/models/category.dart';
+import 'package:pernance/models_powersync/index.dart';
+import 'package:pernance/models_powersync/category.dart';
 
 class CategoriesList extends StatelessWidget {
+
   const CategoriesList({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: db.getAll(
-        'SELECT *, SUM(transactions.price) AS spent FROM categories '
-        'INNER JOIN transactions '
+        'SELECT categories.*, SUM(IFNULL(transactions.price, 0)) AS spent '
+        'FROM categories '
+        'LEFT JOIN transactions '
         'ON categories.id = transactions.category_id '
         'GROUP BY categories.id '
       ),
@@ -25,11 +24,6 @@ class CategoriesList extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         }
-
-        db.getAll('SELECT * FROM categories').then((categories) {
-          print('query complete');
-          print(categories.rows);
-        });
 
         final categories = snapshot.data!.map((row) => Category.fromRow(row)).toList();
         

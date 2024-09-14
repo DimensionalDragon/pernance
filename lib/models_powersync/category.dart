@@ -1,4 +1,5 @@
 import "package:powersync/powersync.dart";
+import 'package:powersync/sqlite3.dart';
 
 const categorySchema = Table(
   'categories',
@@ -25,7 +26,7 @@ class Category {
     required this.userId,
   });
 
-  factory Category.fromRow(row) {
+  factory Category.fromRow(Row row) {
     return Category(
       name: row['name'] as String,
       budget: row['budget'] as int,
