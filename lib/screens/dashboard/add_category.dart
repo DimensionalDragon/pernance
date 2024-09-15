@@ -102,13 +102,10 @@ class AddCategoryFormState extends State<AddCategoryForm> {
                           // Redirect back to categories page
                           router.navigate(const CategoriesRoute());
                         } catch (e) {
-                          print(e);
                           setState(() {
                             _errorMessage = 'Something bad happened, please try again later';
                           });
                         }
-                      } else {
-                        print('not valid');
                       }
                     },
                     style: ButtonStyle(

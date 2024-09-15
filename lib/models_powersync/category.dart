@@ -12,6 +12,7 @@ const categorySchema = Table(
 );
 
 class Category {
+  final String id;
   final String name;
   final int budget;
   final int spent;
@@ -19,6 +20,7 @@ class Category {
   final String userId;
 
   Category({
+    required this.id,
     required this.name,
     required this.budget,
     required this.spent,
@@ -28,11 +30,12 @@ class Category {
 
   factory Category.fromRow(Row row) {
     return Category(
-      name: row['name'] as String,
-      budget: row['budget'] as int,
-      spent: row['spent'] as int,
-      createdAt: row['created_at'] as String,
-      userId: row['user_id'] as String,
+      id: row['id'],
+      name: row['name'] ?? 'null',
+      budget: row['budget'] ?? 0,
+      spent: row['spent'] ?? 0,
+      createdAt: row['created_at'] ?? 'null',
+      userId: row['user_id'] ?? 'null',
     );
   }
 }

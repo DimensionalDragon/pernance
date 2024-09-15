@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:powersync/sqlite3.dart' as sqlite;
 
 import 'package:pernance/widgets/currency_text.dart';
-import 'package:pernance/models_powersync/index.dart';
 import 'package:pernance/models_powersync/category.dart';
 
 class CategoriesList extends StatelessWidget {
 
-  const CategoriesList({super.key});
+  const CategoriesList({super.key, required this.categoriesQueryResult});
+
+  final Future<sqlite.ResultSet> categoriesQueryResult;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: db.getAll(
-        'SELECT categories.*, SUM(IFNULL(transactions.price, 0)) AS spent '
-        'FROM categories '
-        'LEFT JOIN transactions '
-        'ON categories.id = transactions.category_id '
-        'GROUP BY categories.id '
-      ),
+      future: categoriesQueryResult,
       builder: ((context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
