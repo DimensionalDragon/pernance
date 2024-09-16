@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 import 'package:pernance/models_powersync/category.dart';
 import 'package:pernance/models_powersync/index.dart';
 
@@ -8,34 +10,22 @@ import 'package:pernance/utils/get_user_id.dart';
 
 @RoutePage()
 class AddTransactionScreen extends StatelessWidget {
-  const AddTransactionScreen({super.key});
+  const AddTransactionScreen({super.key, required this.onSubmit});
+
+  final void Function() onSubmit;
 
   @override
   Widget build(BuildContext context) {
-    final router = AutoRouter.of(context);
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: AddTransactionForm(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: AddTransactionForm(onSubmit: onSubmit),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text("Don't have an account?"),
-                TextButton(
-                  onPressed: () {
-                    router.push(const RegisterRoute());
-                  },
-                  style: ButtonStyle(padding: WidgetStateProperty.all(EdgeInsets.zero)),
-                  child: const Text("Register", style: TextStyle(color: Colors.blue),),
-                ),
-              ],
-            )
           ],
         ),
       ),
@@ -44,7 +34,9 @@ class AddTransactionScreen extends StatelessWidget {
 }
 
 class AddTransactionForm extends StatefulWidget {
-  const AddTransactionForm({super.key});
+  const AddTransactionForm({super.key, required this.onSubmit});
+
+  final void Function() onSubmit;
 
   @override
   AddTransactionFormState createState() {
@@ -56,9 +48,10 @@ class AddTransactionForm extends StatefulWidget {
 class AddTransactionFormState extends State<AddTransactionForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _amountController = TextEditingController();
-  // final _dateController = TextEditingController();
-  String? _selectedCategory;
+  final _priceController = TextEditingController();
+  final _dateController = TextEditingController();
+  DateTime? _selectedDate;
+  Category? _selectedCategory;
   String _errorMessage = '';
 
   void _showCategoryModal() {
@@ -84,7 +77,7 @@ class AddTransactionFormState extends State<AddTransactionForm> {
                           title: Text(category.name),
                           onTap: () {
                             setState(() {
-                              _selectedCategory = category.id;
+                              _selectedCategory = category;
                               Navigator.pop(context);
                             });
                           },
@@ -96,6 +89,20 @@ class AddTransactionFormState extends State<AddTransactionForm> {
         );
       },
     );
+  }
+
+  _showDatePicker() async {
+    DateTime? chosenDate = await showOmniDateTimePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      type: OmniDateTimePickerType.date
+    );
+    setState(() {
+      if (chosenDate != null) {
+        _selectedDate = chosenDate;
+        _dateController.text = DateFormat('dd/MM/yyyy').format(chosenDate);
+      }
+    });
   }
 
   @override
@@ -126,19 +133,30 @@ class AddTransactionFormState extends State<AddTransactionForm> {
               }
               return null;
             },
-            controller: _amountController,
+            controller: _priceController,
             decoration: const InputDecoration(
-              labelText: 'Amount',
+              labelText: 'Price',
             ),
           ),
           const SizedBox(height: 10),
-          // TextButton(
-          //   onPressed: _showDatePicker,
-          // ),
+          TextFormField(
+            readOnly: true,
+            onTap: _showDatePicker,
+            controller: _dateController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please choose the date of purchase';
+              }
+              return null;
+            },
+            decoration: const InputDecoration(
+              labelText: 'Date of Purchase',
+            ),
+          ),
           const SizedBox(height: 10),
           ElevatedButton(
             onPressed: _showCategoryModal,
-            child: Text(_selectedCategory ?? 'Choose Category'),
+            child: Text(_selectedCategory?.name ?? 'Choose Category'),
           ),
           const SizedBox(height: 20),
           Column(
@@ -148,19 +166,19 @@ class AddTransactionFormState extends State<AddTransactionForm> {
                   width: double.maxFinite,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (_formKey.currentState!.validate() && _selectedCategory != null) {
-                        try {                     
+                      if (_formKey.currentState!.validate() && _selectedDate != null && _selectedCategory != null) {
+                        try {
                           // Add Transaction
-                          // await db.execute(
-                          //   'INSERT INTO categories(id, category_id, name, price, date, user_id) VALUES(gen_random_uuid(), ?, ?, ?, ?, ?)',
-                          //   [_nameController.text, _amountController.text, await getUserId()]
-                          // );
+                          await db.execute(
+                            'INSERT INTO transactions(id, category_id, name, price, date, user_id) VALUES(gen_random_uuid(), ?, ?, ?, ?, ?)',
+                            [_selectedCategory?.id, _nameController.text, _priceController.text, _selectedDate.toString(), await getUserId()]
+                          );
 
                           // Update the data
-                          // widget.onSubmit();
+                          widget.onSubmit();
                           
-                          // Redirect to dashboard
-                          router.replace(const DashboardRoute());
+                          // Redirect back to transactions page
+                          router.navigate(const TransactionsRoute());
                         } catch (e) {
                             _errorMessage = 'Something bad happened, please try again later';
                         }

@@ -57,10 +57,17 @@ class AddCategoryRouteArgs {
 
 /// generated route for
 /// [AddTransactionScreen]
-class AddTransactionRoute extends PageRouteInfo<void> {
-  const AddTransactionRoute({List<PageRouteInfo>? children})
-      : super(
+class AddTransactionRoute extends PageRouteInfo<AddTransactionRouteArgs> {
+  AddTransactionRoute({
+    Key? key,
+    required void Function() onSubmit,
+    List<PageRouteInfo>? children,
+  }) : super(
           AddTransactionRoute.name,
+          args: AddTransactionRouteArgs(
+            key: key,
+            onSubmit: onSubmit,
+          ),
           initialChildren: children,
         );
 
@@ -69,9 +76,29 @@ class AddTransactionRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const AddTransactionScreen();
+      final args = data.argsAs<AddTransactionRouteArgs>();
+      return AddTransactionScreen(
+        key: args.key,
+        onSubmit: args.onSubmit,
+      );
     },
   );
+}
+
+class AddTransactionRouteArgs {
+  const AddTransactionRouteArgs({
+    this.key,
+    required this.onSubmit,
+  });
+
+  final Key? key;
+
+  final void Function() onSubmit;
+
+  @override
+  String toString() {
+    return 'AddTransactionRouteArgs{key: $key, onSubmit: $onSubmit}';
+  }
 }
 
 /// generated route for

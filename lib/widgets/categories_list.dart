@@ -14,7 +14,7 @@ class CategoriesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: categoriesQueryResult,
-      builder: ((context, snapshot) {
+      builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
@@ -84,7 +84,7 @@ class CategoriesList extends StatelessWidget {
             ),
           ],
         );
-      }),
+      },
     );
   }
 }
