@@ -21,13 +21,14 @@ class AppRouter extends RootStackRouter {
   
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(
-      page: HomeRoute.page,
-      initial: true,
-    ),
+    // AutoRoute(
+    //   page: HomeRoute.page,
+    //   initial: true,
+    // ),
     AutoRoute(
       path: '/dashboard',
       page: DashboardRoute.page,
+      initial: true,
       children: [
         RedirectRoute(path: '', redirectTo: 'transactions'),
         AutoRoute(path: 'transactions', page: TransactionsRoute.page),

@@ -19,12 +19,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   void _updateData() {
     setState(() {
+      final currentMonth = DateTime.now().month.toString().padLeft(2, '0');
+      final currentYear = DateTime.now().year;
       _data = db.getAll(
-        'SELECT categories.*, SUM(IFNULL(transactions.price, 0)) AS spent '
+        'SELECT categories.*, SUM(IFNULL(monthly_transactions.price, 0)) AS spent '
         'FROM categories '
-        'LEFT JOIN transactions '
-        'ON categories.id = transactions.category_id '
-        'GROUP BY categories.id '
+        'LEFT JOIN (SELECT * FROM transactions WHERE date > ?) AS monthly_transactions '
+        'ON categories.id = monthly_transactions.category_id '
+        'GROUP BY categories.id ',
+        ['$currentYear-$currentMonth-01 00:00:00'], // Only fetch the categories that are in this month
       );
     });
   }
