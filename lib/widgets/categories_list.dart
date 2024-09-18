@@ -47,6 +47,7 @@ class CategoriesList extends StatelessWidget {
               shrinkWrap: true,
               itemCount: categories.length,
               itemBuilder: (BuildContext context, int index) {
+                final percentageOfBudgetSpent = categories[index].spent / categories[index].budget;
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 0),
                   child: Row(
@@ -64,9 +65,13 @@ class CategoriesList extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 2,
-                        child: Text('ProgressBar'),
+                        child: LinearProgressIndicator(
+                          value: percentageOfBudgetSpent,
+                          backgroundColor: Colors.grey,
+                          valueColor: AlwaysStoppedAnimation(percentageOfBudgetSpent <= 0.25 ? Colors.lightGreen : percentageOfBudgetSpent <= 0.75 ? Colors.yellow : Colors.red),
+                        ),
                       ),
                       Expanded(
                         flex: 3,
