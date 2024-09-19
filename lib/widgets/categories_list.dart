@@ -29,7 +29,7 @@ class CategoriesList extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 3, horizontal: 0),
               child: Row(
                 children: <Widget>[
-                  Expanded(flex: 4, child: SizedBox()),
+                  Expanded(flex: 3, child: SizedBox()),
                   Expanded(
                     flex: 3,
                     child: Text('SPENT', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.grey), textAlign: TextAlign.center),
@@ -53,15 +53,26 @@ class CategoriesList extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Expanded(
-                        flex: 4,
-                        child: Text(categories[index].name, overflow: TextOverflow.ellipsis, maxLines: 1),
+                        flex: 3,
+                        child: InkWell(
+                          child: Text(
+                            categories[index].name,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                          onTap: () {
+                            print('category tapped:');
+                            print(categories[index].name);
+                          }
+                        ),
                       ),
                       Expanded(
                         flex: 3,
                         child: CurrencyText(
                           amount: categories[index].spent,
                           locale: 'id-ID',
-                          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -71,6 +82,8 @@ class CategoriesList extends StatelessWidget {
                           value: percentageOfBudgetSpent,
                           backgroundColor: Colors.grey,
                           valueColor: AlwaysStoppedAnimation(percentageOfBudgetSpent <= 0.25 ? Colors.lightGreen : percentageOfBudgetSpent <= 0.75 ? Colors.yellow : Colors.red),
+                          minHeight: 8,
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       Expanded(
@@ -78,7 +91,7 @@ class CategoriesList extends StatelessWidget {
                         child: CurrencyText(
                           amount: categories[index].budget,
                           locale: 'id-ID',
-                          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.end,
                         ),
                       ),
