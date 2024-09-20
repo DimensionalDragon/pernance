@@ -78,23 +78,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
               )
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Column(
-                children: [
-                  OutlinedButton(
-                    style: ButtonStyle(
-                      shape: WidgetStateProperty.all(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
-                        )
-                      ),
-                    onPressed: () {
-                      // router.push(AddCategoryRoute(onSubmit: _updateData));
-                    },
-                    child: const Center(child: Text('Adjust Budgets')),
-                  ),
-                ]),
-            ),
           ],
         ),
       )
