@@ -14,7 +14,8 @@ class CategoriesChart extends StatelessWidget {
         const Expanded(
           child: Column(
             children: <Widget>[
-              Text('Info 1'),
+              Text('Rp 10,000'),
+              Text('Spent this month'),
             ],
           ),
         ),
@@ -32,7 +33,8 @@ class CategoriesChart extends StatelessWidget {
         const Expanded(
           child: Column(
             children: <Widget>[
-              Text('Info 2'),
+              Text('Rp 100,000'),
+              Text('Total budget for this month'),
             ],
           ),
         ),
