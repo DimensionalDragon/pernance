@@ -49,7 +49,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
                 children: [
-                  // const CategoriesChart(),
+                  // const CategoriesChart(categoriesQueryResult: _data),
                   const SizedBox(height: 7),
                   OutlinedButton(
                     style: ButtonStyle(
