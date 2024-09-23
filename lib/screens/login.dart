@@ -111,16 +111,6 @@ class LoginFormState extends State<LoginForm> {
                             email: _emailController.text,
                             password: _passwordController.text,
                           );
-                          // final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          //   email: _emailController.text,
-                          //   password: _passwordController.text,
-                          // );
-
-                          // Open Realm
-                          // final firebaseIDToken = await credential.user?.getIdToken();
-                          // if (firebaseIDToken != null) {
-                          //   RealmProvider().initializeRealm(firebaseIDToken);
-                          // }
                           
                           // Redirect to dashboard
                           router.replace(const DashboardRoute());

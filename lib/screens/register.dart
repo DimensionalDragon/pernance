@@ -1,12 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-// import 'package:pernance/models/index.dart';
 
 import 'package:pernance/routes/routes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-// import 'package:realm/realm.dart';
 
 @RoutePage()
 class RegisterScreen extends StatelessWidget {

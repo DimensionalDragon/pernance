@@ -9,17 +9,7 @@ import 'package:pernance/routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
-
-  // final firebaseIDToken = await FirebaseAuth.instance.currentUser?.getIdToken();
-  // if (firebaseIDToken != null) {
-  //   RealmProvider().initializeRealm(firebaseIDToken);
-  // }
-
   await openDatabase();
-  
   runApp(MyApp());
 }
 
