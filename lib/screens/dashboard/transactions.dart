@@ -72,12 +72,15 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: Column(
-                  children: [
-                    for (int i = 0; i < 10; i++) 
-                      TransactionsListPerDay(
-                        transactionsQueryResult: _data,
-                        transactionDate: DateTime.now().subtract(Duration(days: i))
-                      )
+                  children: <Widget>[
+                    for (int i = 0; i < 10; i++)
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 1.5),
+                        child: TransactionsListPerDay(
+                          transactionsQueryResult: _data,
+                          transactionDate: DateTime.now().subtract(Duration(days: i))
+                        )
+                      ) 
                   ],
                 ),
               )
