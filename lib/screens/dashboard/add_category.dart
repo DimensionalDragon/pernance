@@ -1,26 +1,26 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:pernance/models_powersync/index.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pernance/models_powersync/category.dart';
+
+import 'package:pernance/providers/categories.dart';
 import 'package:pernance/routes/routes.dart';
-import 'package:pernance/utils/get_user_id.dart';
 
 @RoutePage()
 class AddCategoryScreen extends StatelessWidget {
-  const AddCategoryScreen({super.key, required this.onSubmit});
-
-  final void Function() onSubmit;
+  const AddCategoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: AddCategoryForm(onSubmit: onSubmit),
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: AddCategoryForm(),
             ),
           ],
         ),
@@ -29,19 +29,15 @@ class AddCategoryScreen extends StatelessWidget {
   }
 }
 
-class AddCategoryForm extends StatefulWidget {
-  const AddCategoryForm({super.key, required this.onSubmit});
-
-  final void Function() onSubmit;
+class AddCategoryForm extends ConsumerStatefulWidget {
+  const AddCategoryForm({super.key});
 
   @override
-  AddCategoryFormState createState() {
-    return AddCategoryFormState();
-  }
+  ConsumerState<AddCategoryForm> createState() => AddCategoryFormState();
 }
 
 
-class AddCategoryFormState extends State<AddCategoryForm> {
+class AddCategoryFormState extends ConsumerState<AddCategoryForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _budgetController = TextEditingController();
@@ -50,10 +46,20 @@ class AddCategoryFormState extends State<AddCategoryForm> {
   @override
   Widget build(BuildContext context) {
     final router = AutoRouter.of(context);
+    final categoriesRef = ref.watch(categoriesNotifierProvider);
     return Form(
       key: _formKey,
       child: Column(
         children: <Widget>[
+          OutlinedButton(
+            onPressed: () {
+              final categories = categoriesRef.value!;
+              for (Category category in categories) {
+                ref.read(categoriesNotifierProvider.notifier).updateCategory(category.id, name: category.name, budget: 160000);
+              }
+            },
+            child: const Text('Force update the categories')
+          ),
           TextFormField(
             keyboardType: TextInputType.name,
             validator: (value) {
@@ -91,13 +97,7 @@ class AddCategoryFormState extends State<AddCategoryForm> {
                       if (_formKey.currentState!.validate()) {
                         try {                     
                           // Add Category
-                          await db.execute(
-                            'INSERT INTO categories(id, name, budget, user_id) VALUES(gen_random_uuid(), ?, ?, ?)',
-                            [_nameController.text, _budgetController.text, await getUserId()]
-                          );
-
-                          // Update the data
-                          widget.onSubmit();
+                          await ref.read(categoriesNotifierProvider.notifier).addCategory(name: _nameController.text, budget: _budgetController.text);
                           
                           // Redirect back to categories page
                           router.navigate(const CategoriesRoute());

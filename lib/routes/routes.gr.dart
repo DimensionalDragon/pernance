@@ -11,17 +11,10 @@ part of 'routes.dart';
 
 /// generated route for
 /// [AddCategoryScreen]
-class AddCategoryRoute extends PageRouteInfo<AddCategoryRouteArgs> {
-  AddCategoryRoute({
-    Key? key,
-    required void Function() onSubmit,
-    List<PageRouteInfo>? children,
-  }) : super(
+class AddCategoryRoute extends PageRouteInfo<void> {
+  const AddCategoryRoute({List<PageRouteInfo>? children})
+      : super(
           AddCategoryRoute.name,
-          args: AddCategoryRouteArgs(
-            key: key,
-            onSubmit: onSubmit,
-          ),
           initialChildren: children,
         );
 
@@ -30,29 +23,9 @@ class AddCategoryRoute extends PageRouteInfo<AddCategoryRouteArgs> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<AddCategoryRouteArgs>();
-      return AddCategoryScreen(
-        key: args.key,
-        onSubmit: args.onSubmit,
-      );
+      return const AddCategoryScreen();
     },
   );
-}
-
-class AddCategoryRouteArgs {
-  const AddCategoryRouteArgs({
-    this.key,
-    required this.onSubmit,
-  });
-
-  final Key? key;
-
-  final void Function() onSubmit;
-
-  @override
-  String toString() {
-    return 'AddCategoryRouteArgs{key: $key, onSubmit: $onSubmit}';
-  }
 }
 
 /// generated route for
