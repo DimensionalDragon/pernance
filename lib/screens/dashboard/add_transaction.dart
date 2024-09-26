@@ -1,30 +1,29 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
+
 import 'package:pernance/models_powersync/category.dart';
 import 'package:pernance/models_powersync/index.dart';
-
+import 'package:pernance/providers/transactions.dart';
 import 'package:pernance/routes/routes.dart';
-import 'package:pernance/utils/get_user_id.dart';
 
 @RoutePage()
 class AddTransactionScreen extends StatelessWidget {
-  const AddTransactionScreen({super.key, required this.onSubmit});
-
-  final void Function() onSubmit;
+  const AddTransactionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: AddTransactionForm(onSubmit: onSubmit),
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: AddTransactionForm(),
             ),
           ],
         ),
@@ -33,19 +32,15 @@ class AddTransactionScreen extends StatelessWidget {
   }
 }
 
-class AddTransactionForm extends StatefulWidget {
-  const AddTransactionForm({super.key, required this.onSubmit});
-
-  final void Function() onSubmit;
+class AddTransactionForm extends ConsumerStatefulWidget {
+  const AddTransactionForm({super.key});
 
   @override
-  AddTransactionFormState createState() {
-    return AddTransactionFormState();
-  }
+  ConsumerState<AddTransactionForm> createState() => AddTransactionFormState();
 }
 
 
-class AddTransactionFormState extends State<AddTransactionForm> {
+class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _priceController = TextEditingController();
@@ -169,13 +164,12 @@ class AddTransactionFormState extends State<AddTransactionForm> {
                       if (_formKey.currentState!.validate() && _selectedDate != null && _selectedCategory != null) {
                         try {
                           // Add Transaction
-                          await db.execute(
-                            'INSERT INTO transactions(id, category_id, name, price, date, user_id) VALUES(gen_random_uuid(), ?, ?, ?, ?, ?)',
-                            [_selectedCategory?.id, _nameController.text, _priceController.text, _selectedDate.toString(), await getUserId()]
+                          await ref.read(transactionsNotifierProvider.notifier).addTransaction(
+                            name: _nameController.text,
+                            price: _priceController.text,
+                            categoryId: _selectedCategory!.id,
+                            date: _selectedDate
                           );
-
-                          // Update the data
-                          widget.onSubmit();
                           
                           // Redirect back to transactions page
                           router.navigate(const TransactionsRoute());

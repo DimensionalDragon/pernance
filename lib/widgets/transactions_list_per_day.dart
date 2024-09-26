@@ -1,35 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pernance/providers/transactions.dart';
+
 import 'package:pernance/models_powersync/transaction.dart';
 import 'package:pernance/utils/is_same_date.dart';
-import 'package:powersync/sqlite3.dart' as sqlite;
-
 import 'package:pernance/widgets/currency_text.dart';
 
-class TransactionsListPerDay extends StatelessWidget {
-  const TransactionsListPerDay({super.key, required this.transactionsQueryResult, required this.transactionDate});
+class TransactionsListPerDay extends ConsumerWidget {
+  const TransactionsListPerDay({super.key, required this.transactionDate});
 
-  final Future<sqlite.ResultSet> transactionsQueryResult;
   final DateTime transactionDate;
 
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: transactionsQueryResult,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SizedBox(height: 0, width: 0);
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        }
-
-        final transactions = snapshot.data!.map((row) => Transaction.fromRow(row)).where((transaction) => isSameDate(transactionDate, transaction.date)).toList();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final transactionsRef = ref.watch(transactionsNotifierProvider);
+    return transactionsRef.when(
+      data: (transactionsData) {
+        final List<Transaction> transactions = transactionsData.where((transaction) => isSameDate(transactionDate, transaction.date)).toList();
         final manyDaysAgo = DateTime.now().difference(transactionDate).inDays;
         final dateLabelText = manyDaysAgo == 0 ? 'Today' : manyDaysAgo == 1 ? 'Yesterday' : manyDaysAgo <= 7 ? '$manyDaysAgo Days Ago' : '${transactionDate.day}/${transactionDate.month}/${transactionDate.year}';
 
         if (transactions.isEmpty) {
           return const SizedBox(height: 0, width: 0);
         }
-
         return Column(
           children: <Widget>[
             Text(dateLabelText, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey)),
@@ -84,7 +77,9 @@ class TransactionsListPerDay extends StatelessWidget {
             ),
           ],
         );
-      }
+      },
+      error: (error, stackTrace) => const SizedBox(),
+      loading: () => const SizedBox(),
     );
   }
 }

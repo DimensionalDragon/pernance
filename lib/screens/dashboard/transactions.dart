@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:powersync/sqlite3.dart' as sqlite;
 
-import 'package:pernance/models_powersync/index.dart';
 import 'package:pernance/routes/routes.dart';
 import 'package:pernance/widgets/transactions_list_per_day.dart';
 
@@ -15,25 +13,25 @@ class TransactionsScreen extends StatefulWidget {
 }
 
 class _TransactionsScreenState extends State<TransactionsScreen> {
-  late Future<sqlite.ResultSet> _data;
+  // late Future<sqlite.ResultSet> _data;
 
-  void _updateData() {
-    setState(() {
-      _data = db.getAll(
-        'SELECT transactions.*, categories.name AS category_name '
-        'FROM transactions '
-        'LEFT JOIN categories '
-        'ON categories.id = transactions.category_id '
-        'ORDER BY transactions.date DESC '
-      );
-    });
-  }
+  // void _updateData() {
+  //   setState(() {
+  //     _data = db.getAll(
+  //       'SELECT transactions.*, categories.name AS category_name '
+  //       'FROM transactions '
+  //       'LEFT JOIN categories '
+  //       'ON categories.id = transactions.category_id '
+  //       'ORDER BY transactions.date DESC '
+  //     );
+  //   });
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    _updateData();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _updateData();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +51,10 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     style: ButtonStyle(
                       shape: WidgetStateProperty.all(
                         RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
-                        )
-                      ),
+                      )
+                    ),
                     onPressed: () {
-                      router.push(AddTransactionRoute(onSubmit: _updateData));
+                      router.push(const AddTransactionRoute());
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -73,11 +71,10 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: Column(
                   children: <Widget>[
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < 31; i++)
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 1.5),
                         child: TransactionsListPerDay(
-                          transactionsQueryResult: _data,
                           transactionDate: DateTime.now().subtract(Duration(days: i))
                         )
                       ) 

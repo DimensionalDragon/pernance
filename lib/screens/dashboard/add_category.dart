@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pernance/models_powersync/category.dart';
 
 import 'package:pernance/providers/categories.dart';
 import 'package:pernance/routes/routes.dart';
@@ -46,20 +45,10 @@ class AddCategoryFormState extends ConsumerState<AddCategoryForm> {
   @override
   Widget build(BuildContext context) {
     final router = AutoRouter.of(context);
-    final categoriesRef = ref.watch(categoriesNotifierProvider);
     return Form(
       key: _formKey,
       child: Column(
         children: <Widget>[
-          OutlinedButton(
-            onPressed: () {
-              final categories = categoriesRef.value!;
-              for (Category category in categories) {
-                ref.read(categoriesNotifierProvider.notifier).updateCategory(category.id, name: category.name, budget: 160000);
-              }
-            },
-            child: const Text('Force update the categories')
-          ),
           TextFormField(
             keyboardType: TextInputType.name,
             validator: (value) {

@@ -22,10 +22,10 @@ class TransactionsNotifier extends _$TransactionsNotifier {
     return transactions;
   }
 
-  Future<void> addCategory({required name, required price, required categoryId}) async {
+  Future<void> addTransaction({required name, required price, required categoryId, required date}) async {
     await db.execute(
-      'INSERT INTO transactions(id, name, price, category_id, user_id) VALUES(gen_random_uuid(), ?, ?, ?, ?)',
-      [name, price, categoryId, await getUserId()]
+       'INSERT INTO transactions(id, category_id, name, price, date, user_id) VALUES(gen_random_uuid(), ?, ?, ?, ?, ?)',
+      [categoryId, name, price, date.toString(), await getUserId()]
     );
 
     ref.invalidateSelf();
@@ -33,7 +33,7 @@ class TransactionsNotifier extends _$TransactionsNotifier {
     await future;
   }
 
-  // Future<void> updateCategory(id, {required name, required budget}) async {
+  // Future<void> updateTransaction(id, {required name, required budget}) async {
   //   await db.execute(
   //     'UPDATE categories SET name = ?, budget = ? WHERE id = ? AND user_id = ?',
   //     [name, budget, id, await getUserId()],
