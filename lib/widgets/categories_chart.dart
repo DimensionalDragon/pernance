@@ -4,7 +4,7 @@ import 'package:pernance/providers/categories.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:uuid/uuid.dart';
 
-import 'package:pernance/models_powersync/category.dart';
+import 'package:pernance/models/category.dart';
 import 'package:pernance/widgets/currency_text.dart';
 
 class CategoriesChart extends ConsumerWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:pernance/models_powersync/index.dart';
+import 'package:pernance/models/index.dart';
 import 'package:pernance/routes/routes.dart';
 
 void main() async {

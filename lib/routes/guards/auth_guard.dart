@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:pernance/models_powersync/index.dart';
+import 'package:pernance/models/index.dart';
 import 'package:pernance/routes/routes.dart';
 
 class AuthGuard extends AutoRouteGuard {

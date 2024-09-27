@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:omni_datetime_picker/omni_datetime_picker.dart';
 
-import 'package:pernance/models_powersync/category.dart';
-import 'package:pernance/models_powersync/index.dart';
+import 'package:pernance/models/category.dart';
+import 'package:pernance/models/index.dart';
 import 'package:pernance/providers/transactions.dart';
 import 'package:pernance/routes/routes.dart';
 

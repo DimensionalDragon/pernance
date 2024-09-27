@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'package:pernance/models_powersync/index.dart';
-import 'package:pernance/models_powersync/transaction.dart';
+import 'package:pernance/models/index.dart';
+import 'package:pernance/models/transaction.dart';
 import 'package:pernance/providers/categories.dart';
 import 'package:pernance/utils/get_user_id.dart';
 

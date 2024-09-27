@@ -5,9 +5,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
-import 'package:pernance/models_powersync/category.dart';
-import 'package:pernance/models_powersync/transaction.dart';
-import 'package:pernance/models_powersync/subtransaction.dart';
+import 'package:pernance/models/category.dart';
+import 'package:pernance/models/transaction.dart';
+import 'package:pernance/models/subtransaction.dart';
 
 late final PowerSyncDatabase db;
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pernance/providers/transactions.dart';
 
-import 'package:pernance/models_powersync/transaction.dart';
+import 'package:pernance/models/transaction.dart';
 import 'package:pernance/utils/is_same_date.dart';
 import 'package:pernance/widgets/currency_text.dart';
 

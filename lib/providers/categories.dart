@@ -1,5 +1,5 @@
-import 'package:pernance/models_powersync/category.dart';
-import 'package:pernance/models_powersync/index.dart';
+import 'package:pernance/models/category.dart';
+import 'package:pernance/models/index.dart';
 import 'package:pernance/utils/get_user_id.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -25,8 +25,9 @@ class CategoriesNotifier extends _$CategoriesNotifier {
 
   Future<void> addCategory({required name, required budget}) async {
     await db.execute(
-        'INSERT INTO categories(id, name, budget, user_id) VALUES(gen_random_uuid(), ?, ?, ?)',
-        [name, budget, await getUserId()]);
+      'INSERT INTO categories(id, name, budget, user_id) VALUES(gen_random_uuid(), ?, ?, ?)',
+      [name, budget, await getUserId()]
+    );
 
     ref.invalidateSelf();
     await future;
