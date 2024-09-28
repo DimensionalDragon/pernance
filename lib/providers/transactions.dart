@@ -39,4 +39,12 @@ class TransactionsNotifier extends _$TransactionsNotifier {
   //     [name, budget, id, await getUserId()],
   //   );
   // }
+
+  Future<void> deleteTransaction(id) async {
+    await db.execute('DELETE FROM transactions WHERE id = ?', [id]);
+
+    ref.invalidateSelf();
+    ref.invalidate(categoriesNotifierProvider);
+    await future;
+  }
 }
