@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pernance/providers/transactions.dart';
+import 'package:pernance/widgets/currency_text.dart';
 
 class TransactionDetail extends ConsumerWidget {
   const TransactionDetail({super.key, required this.transactionID});
@@ -47,7 +48,12 @@ class TransactionDetail extends ConsumerWidget {
             ),
           ],
         ),
-        const Text('Overview, Editable price display'),
+        const Row(
+          children: <Widget>[
+            CurrencyText(amount: 16000), // TODO: make this editable
+            Text('Overview')
+          ],
+        ),
         const Text('Graphs'),
         const Text('More Infos')
       ]
