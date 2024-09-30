@@ -12,7 +12,6 @@ class TransactionDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = AutoRouter.of(context);
-
     return Column(
       children: <Widget>[
         Row(
