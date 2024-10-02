@@ -11,6 +11,7 @@ class DashboardScreen extends StatelessWidget {
     return AutoTabsScaffold(
       routes: const [
         TransactionsRoute(),
+        DashboardHomeRoute(),
         CategoriesRoute(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
@@ -20,6 +21,7 @@ class DashboardScreen extends StatelessWidget {
           selectedItemColor: Colors.blue,
           items: const [
             BottomNavigationBarItem(label: 'Transactions', icon: Icon(Icons.money)),
+            BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home_filled)),
             BottomNavigationBarItem(label: 'Categories', icon: Icon(Icons.category)),
           ],
         );

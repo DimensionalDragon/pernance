@@ -67,6 +67,25 @@ class CategoriesRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [DashboardHomeScreen]
+class DashboardHomeRoute extends PageRouteInfo<void> {
+  const DashboardHomeRoute({List<PageRouteInfo>? children})
+      : super(
+          DashboardHomeRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DashboardHomeRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const DashboardHomeScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [DashboardScreen]
 class DashboardRoute extends PageRouteInfo<void> {
   const DashboardRoute({List<PageRouteInfo>? children})

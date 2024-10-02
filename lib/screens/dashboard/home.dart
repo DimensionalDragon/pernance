@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:pernance/widgets/categories_chart.dart';
 
 @RoutePage()
-class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key});
+class DashboardHomeScreen extends ConsumerWidget {
+  const DashboardHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
