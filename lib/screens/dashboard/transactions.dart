@@ -44,7 +44,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
-                children: [
+                children: <Widget>[
                   // const SearchBar(),
                   const SizedBox(height: 7),
                   OutlinedButton(
@@ -64,21 +64,24 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                       ],
                     )
                   ),
-                ]),
+                ]
+              ),
             ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                child: Column(
-                  children: <Widget>[
-                    for (int i = 0; i < 31; i++)
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 1.5),
-                        child: TransactionsListPerDay(
-                          transactionDate: DateTime.now().subtract(Duration(days: i))
-                        )
-                      ) 
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      for (int i = 0; i < 31; i++)
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 1.5),
+                          child: TransactionsListPerDay(
+                            transactionDate: DateTime.now().subtract(Duration(days: i))
+                          )
+                        ) 
+                    ],
+                  ),
                 ),
               )
             )

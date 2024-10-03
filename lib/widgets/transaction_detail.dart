@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pernance/providers/transactions.dart';
@@ -11,13 +10,13 @@ class TransactionDetail extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = AutoRouter.of(context);
+    final router = Navigator.of(context);
     return Column(
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            IconButton(onPressed: () => router.back(), icon: const Icon(Icons.arrow_back, color: Colors.blue)),
+            IconButton(onPressed: () => router.pop(), icon: const Icon(Icons.arrow_back, color: Colors.blue)),
             IconButton(
               onPressed: () {
                 showDialog(
@@ -28,13 +27,13 @@ class TransactionDetail extends ConsumerWidget {
                       content: const Text('Are you sure you want to delete this transaction?'),
                       actions: <Widget>[
                         TextButton(
-                          onPressed: () => router.back(),
+                          onPressed: () => router.pop(),
                           child: const Text('No'),
                         ),
                         TextButton(
                           onPressed: () async {
                             await ref.read(transactionsNotifierProvider.notifier).deleteTransaction(transactionID);
-                            router.back();
+                            router.pop();
                           },
                           child: const Text('Yes'),
                         ),
@@ -47,7 +46,7 @@ class TransactionDetail extends ConsumerWidget {
             ),
           ],
         ),
-        const Row(
+        const Column(
           children: <Widget>[
             CurrencyText(amount: 16000), // TODO: make this editable
             Text('Overview')
