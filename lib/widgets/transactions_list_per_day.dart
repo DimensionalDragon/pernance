@@ -30,6 +30,7 @@ class TransactionsListPerDay extends ConsumerWidget {
             const SizedBox(height: 5),
             ListView.builder(
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: transactions.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
