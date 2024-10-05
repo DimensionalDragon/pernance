@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pernance/providers/transactions.dart';
+import 'package:collection/collection.dart';
 
+import 'package:pernance/providers/transactions.dart';
 import 'package:pernance/models/transaction.dart';
-import 'package:pernance/utils/is_same_date.dart';
 import 'package:pernance/widgets/currency_text.dart';
 import 'package:pernance/widgets/transaction_detail.dart';
 
@@ -17,7 +17,8 @@ class TransactionsListPerDay extends ConsumerWidget {
     final transactionsRef = ref.watch(transactionsNotifierProvider);
     return transactionsRef.when(
       data: (transactionsData) {
-        final List<Transaction> transactions = transactionsData.where((transaction) => isSameDate(transactionDate, transaction.date)).toList();
+        final grouped = groupBy(transactionsData, (transaction) => transaction.date.toString().split(' ').first);
+        final List<Transaction> transactions = grouped[transactionDate.toString().split(' ').first] ?? [];
         final manyDaysAgo = DateTime.now().difference(transactionDate).inDays;
         final dateLabelText = manyDaysAgo == 0 ? 'Today' : manyDaysAgo == 1 ? 'Yesterday' : manyDaysAgo <= 7 ? '$manyDaysAgo Days Ago' : '${transactionDate.day}/${transactionDate.month}/${transactionDate.year}';
 

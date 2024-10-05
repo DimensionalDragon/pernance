@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:pernance/providers/transactions.dart';
+import 'package:pernance/routes/routes.dart';
 import 'package:pernance/widgets/currency_text.dart';
 
 class TransactionDetail extends ConsumerWidget {
@@ -35,7 +37,7 @@ class TransactionDetail extends ConsumerWidget {
                         TextButton(
                           onPressed: () async {
                             await ref.read(transactionsNotifierProvider.notifier).deleteTransaction(transactionID);
-                            autoRouter.back();
+                            await autoRouter.navigate(const TransactionsRoute());
                           },
                           child: const Text('Yes'),
                         ),
