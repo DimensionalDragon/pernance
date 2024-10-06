@@ -13,26 +13,6 @@ class TransactionsScreen extends StatefulWidget {
 }
 
 class _TransactionsScreenState extends State<TransactionsScreen> {
-  // late Future<sqlite.ResultSet> _data;
-
-  // void _updateData() {
-  //   setState(() {
-  //     _data = db.getAll(
-  //       'SELECT transactions.*, categories.name AS category_name '
-  //       'FROM transactions '
-  //       'LEFT JOIN categories '
-  //       'ON categories.id = transactions.category_id '
-  //       'ORDER BY transactions.date DESC '
-  //     );
-  //   });
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _updateData();
-  // }
-
   @override
   Widget build(BuildContext context) {
     final router = AutoRouter.of(context);

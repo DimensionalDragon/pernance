@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:pernance/models/index.dart';
@@ -19,6 +20,7 @@ class TransactionsNotifier extends _$TransactionsNotifier {
       'ORDER BY transactions.date DESC ',
     );
     final transactions = result.map((row) => Transaction.fromRow(row)).toList();
+    final groupedTransactions = groupBy(transactions, (transaction) => transaction.date.toString().split(' ').first);
     return transactions;
   }
 
