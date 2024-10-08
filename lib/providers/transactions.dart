@@ -67,8 +67,15 @@ class TransactionsNotifier extends _$TransactionsNotifier {
 //     return groupedTransactions;
 // }
 
+class DayTotalTransaction {
+  final DateTime date;
+  final int total;
+
+  DayTotalTransaction({required this.date, required this.total});
+}
+
 @riverpod
-Future<Map<DateTime, int>> cumulativeTotalTransaction() async {
+Future<List<DayTotalTransaction>> cumulativeTotalTransaction() async {
   final currentMonth = DateTime.now().month.toString().padLeft(2, '0');
   final currentYear = DateTime.now().year;
   final result = await db.getAll(
@@ -79,16 +86,11 @@ Future<Map<DateTime, int>> cumulativeTotalTransaction() async {
     ['$currentYear-$currentMonth-01 00:00:00'],
   );
 
-  Map<DateTime, int> computedCumulativeTotal = {};
-  int tempCumulativeTotal = 0;
-  for(final row in result) {
-    tempCumulativeTotal += row['total'] as int;
-    computedCumulativeTotal[DateTime.parse(row['date'])] = tempCumulativeTotal;
+  List<DayTotalTransaction> computedCumulativeTotal = [];
+  int cumulativeTotalTemp = 0;
+  for (int i = 0; i < result.length; i++) {
+    cumulativeTotalTemp += int.parse(result[i]['total']);
+    computedCumulativeTotal.add(DayTotalTransaction(date: DateTime.parse(result[i]['date']), total: cumulativeTotalTemp));
   }
-  
-  // for(int i = 1; i < computedAccumulativeTotal.length; i++) {
-  //   computedAccumulativeTotal[i] += computedAccumulativeTotal[i - 1];
-  // }
-
   return computedCumulativeTotal;
 }
