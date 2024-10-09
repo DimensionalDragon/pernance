@@ -7,7 +7,7 @@ part of 'transactions.dart';
 // **************************************************************************
 
 String _$cumulativeTotalTransactionHash() =>
-    r'7082286786404246b0bff8a85616cef77f4ecd43';
+    r'4cbabd0d4a6b741930f3090cd494d5c5ebf6e2ba';
 
 /// See also [cumulativeTotalTransaction].
 @ProviderFor(cumulativeTotalTransaction)

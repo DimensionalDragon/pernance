@@ -75,7 +75,7 @@ class DayTotalTransaction {
 }
 
 @riverpod
-Future<List<DayTotalTransaction>> cumulativeTotalTransaction() async {
+Future<List<DayTotalTransaction>> cumulativeTotalTransaction(CumulativeTotalTransactionRef ref) async {
   final currentMonth = DateTime.now().month.toString().padLeft(2, '0');
   final currentYear = DateTime.now().year;
   final result = await db.getAll(
