@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:pernance/routes/routes.dart';
 import 'package:pernance/widgets/transactions_list_section.dart';
 
 @RoutePage()
-class TransactionsScreen extends StatefulWidget {
+class TransactionsScreen extends ConsumerStatefulWidget {
   const TransactionsScreen({super.key});
 
   @override
-  State<TransactionsScreen> createState() => _TransactionsScreenState();
+  ConsumerState<TransactionsScreen> createState() => _TransactionsScreenState();
 }
 
-class _TransactionsScreenState extends State<TransactionsScreen> {
+class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
+  int numberOfWeeksToQuery = 1;
+
   @override
   Widget build(BuildContext context) {
     final router = AutoRouter.of(context);
-
+    // final transactionsRef = ref.watch(transactionsNotifierProvider);
     return Scaffold(
       body: SafeArea(
         child: Column(
