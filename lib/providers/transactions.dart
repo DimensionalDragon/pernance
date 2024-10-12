@@ -1,4 +1,5 @@
 // import 'package:collection/collection.dart';
+import 'package:collection/collection.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:pernance/models/index.dart';
@@ -23,14 +24,11 @@ class TransactionsNotifier extends _$TransactionsNotifier {
     return transactions;
   }
 
-  Future<void> addTransaction(
-      {required name,
-      required price,
-      required categoryId,
-      required date}) async {
+  Future<void> addTransaction({required name, required price, required categoryId, required date}) async {
     await db.execute(
-        'INSERT INTO transactions(id, category_id, name, price, date, user_id) VALUES(gen_random_uuid(), ?, ?, ?, ?, ?)',
-        [categoryId, name, price, date.toString(), await getUserId()]);
+      'INSERT INTO transactions(id, category_id, name, price, date, user_id) VALUES(gen_random_uuid(), ?, ?, ?, ?, ?)',
+      [categoryId, name, price, date.toString(), await getUserId()]
+    );
 
     ref.invalidateSelf();
     ref.invalidate(categoriesNotifierProvider);
@@ -53,19 +51,21 @@ class TransactionsNotifier extends _$TransactionsNotifier {
   }
 }
 
-// @riverpod
-// Future<Map<String, List<Transaction>>> groupedTransactions() async {
-//   final result = await db.getAll(
-//       'SELECT transactions.*, categories.name AS category_name '
-//       'FROM transactions '
-//       'LEFT JOIN categories '
-//       'ON categories.id = transactions.category_id '
-//       'ORDER BY transactions.date DESC ',
-//     );
-//     final transactions = result.map((row) => Transaction.fromRow(row)).toList();
-//     final groupedTransactions = groupBy(transactions, (transaction) => transaction.date.toString().split(' ').first);
-//     return groupedTransactions;
-// }
+@riverpod
+Future<Map<String, List<Transaction>>> groupedTransactions(ref, DateTime startDate, DateTime endDate) async {
+  final result = await db.getAll(
+      'SELECT transactions.*, categories.name AS category_name '
+      'FROM transactions '
+      'LEFT JOIN categories '
+      'ON categories.id = transactions.category_id '
+      'WHERE transactions.date > ? AND transactions.date < ? '
+      'ORDER BY transactions.date DESC ',
+      [startDate.toString(), endDate.add(const Duration(days: 1)).toString()],
+    );
+    final transactions = result.map((row) => Transaction.fromRow(row)).toList();
+    final groupedTransactions = groupBy(transactions, (transaction) => transaction.date.toString().split(' ').first);
+    return groupedTransactions;
+}
 
 class DayTotalTransaction {
   final DateTime date;
