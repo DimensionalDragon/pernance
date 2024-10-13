@@ -52,7 +52,7 @@ class TransactionDetail extends ConsumerWidget {
         ),
         const Column(
           children: <Widget>[
-            CurrencyText(amount: 16000), // TODO: make this editable
+            CurrencyText(amount: 16000, locale: 'id-ID'), // TODO: make this editable
             Text('Overview')
           ],
         ),

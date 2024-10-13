@@ -7,11 +7,12 @@ import 'package:pernance/widgets/currency_text.dart';
 import 'package:pernance/widgets/transaction_detail.dart';
 
 class TransactionsListSection extends ConsumerWidget {
-  const TransactionsListSection({super.key, required this.startDate, required this.endDate, required this.label});
+  const TransactionsListSection({super.key, required this.startDate, required this.endDate, required this.label, this.transactions});
 
   final DateTime startDate;
   final DateTime endDate;
   final String label;
+  final List<Transaction>? transactions;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
