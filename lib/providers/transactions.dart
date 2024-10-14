@@ -53,18 +53,21 @@ class TransactionsNotifier extends _$TransactionsNotifier {
 
 @riverpod
 Future<Map<String, List<Transaction>>> groupedTransactions(ref, DateTime startDate, DateTime endDate) async {
+  print('Fetching...');
   final result = await db.getAll(
-      'SELECT transactions.*, categories.name AS category_name '
-      'FROM transactions '
-      'LEFT JOIN categories '
-      'ON categories.id = transactions.category_id '
-      'WHERE transactions.date > ? AND transactions.date < ? '
-      'ORDER BY transactions.date DESC ',
-      [startDate.toString(), endDate.add(const Duration(days: 1)).toString()],
-    );
-    final transactions = result.map((row) => Transaction.fromRow(row)).toList();
-    final groupedTransactions = groupBy(transactions, (transaction) => transaction.date.toString().split(' ').first);
-    return groupedTransactions;
+    'SELECT transactions.*, categories.name AS category_name '
+    'FROM transactions '
+    'LEFT JOIN categories '
+    'ON categories.id = transactions.category_id '
+    'WHERE transactions.date > ? AND transactions.date < ? '
+    'ORDER BY transactions.date DESC ',
+    [startDate.toString(), endDate.add(const Duration(days: 1)).toString()],
+  );
+  print('Fetch complete');
+  final transactions = result.map((row) => Transaction.fromRow(row)).toList();
+  final groupedTransactions = groupBy(transactions, (transaction) => transaction.date.toString().split(' ').first);
+  print('Returning...');
+  return groupedTransactions;
 }
 
 class DayTotalTransaction {

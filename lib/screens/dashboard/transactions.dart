@@ -8,24 +8,34 @@ import 'package:pernance/utils/date_utils.dart';
 import 'package:pernance/widgets/transactions_list_section.dart';
 
 @RoutePage()
-class TransactionsScreen extends ConsumerStatefulWidget {
+class TransactionsScreen extends StatelessWidget {
   const TransactionsScreen({super.key});
 
   @override
-  ConsumerState<TransactionsScreen> createState() => _TransactionsScreenState();
+  Widget build(BuildContext context) {
+    return const TransactionsScreenConsumer();
+  }
 }
 
-class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
+class TransactionsScreenConsumer extends ConsumerStatefulWidget {
+  const TransactionsScreenConsumer({super.key});
+
+  @override
+  ConsumerState<TransactionsScreenConsumer> createState() => _TransactionsScreenConsumerState();
+}
+
+class _TransactionsScreenConsumerState extends ConsumerState<TransactionsScreenConsumer> {
   int numberOfWeeksToQuery = 4;
 
   @override
   Widget build(BuildContext context) {
     final router = AutoRouter.of(context);
-
+    print('Rebuilding...');
+    
     final startDate = DateTime.now().subtract(Duration(days: 7 * numberOfWeeksToQuery));
     final endDate = DateTime.now();
     
-    final transactionsRef = ref.watch(groupedTransactionsProvider(startDate, endDate));
+    // final transactionsRef = ref.watch(groupedTransactionsProvider(startDate, endDate));
     
     return Scaffold(
       body: SafeArea(
@@ -62,41 +72,45 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: SingleChildScrollView(
                   child: Column(
-                    children: transactionsRef.when(
-                      data: (transactionsData) {
-                        final List<TransactionsListSection> transactionsSections = [];
-                        for (int i = 0; i < 7; i++) {
-                          final iDaysAgo = midnightOf(DateTime.now().subtract(Duration(days: i)));
-                          final dayAfterIDaysAgo = iDaysAgo.add(const Duration(days: 1));
-                          if(transactionsData.containsKey(iDaysAgo.toString().split(' ').first)) {
-                            transactionsSections.add(
-                              TransactionsListSection(
-                                startDate: iDaysAgo,
-                                endDate: dayAfterIDaysAgo,
-                                label: (i == 0) ? 'Today' : (i == 1) ? 'Yesterday' : '$i Days Ago',
-                              )
-                            );
-                          }
-                        }
-                        if(numberOfWeeksToQuery <= 1) return transactionsSections;
+                    children: [Text('placeholder')],
+                    // children: transactionsRef.when
 
-                        // Start the query for previous weeks, now grouped by week instead of day
-                        for(int i = 1; i <= numberOfWeeksToQuery - 1; i++) {
-                          final iWeeksAgoEnd = midnightOf(DateTime.now().subtract(Duration(days: 7 * i)));
-                          final iWeeksAgoStart = iWeeksAgoEnd.subtract(const Duration(days: 6));
-                          transactionsSections.add(
-                            TransactionsListSection(
-                              startDate: iWeeksAgoStart,
-                              endDate: iWeeksAgoEnd,
-                              label: (i == 1) ? 'A Week Ago' : '$i Weeks Ago',
-                            )
-                          );
-                        }
-                        return transactionsSections;
-                      },
-                      error: (e, stackTrace) => [const Text('An error occured')],
-                      loading: () => [const CircularProgressIndicator()]
-                    ),
+                    // children: transactionsRef.when(
+                    //   data: (transactionsData) {
+                    //     final List<TransactionsListSection> transactionsSections = [];
+                    //     for (int i = 0; i < 7; i++) {
+                    //       final iDaysAgo = midnightOf(DateTime.now().subtract(Duration(days: i)));
+                    //       final dayAfterIDaysAgo = iDaysAgo.add(const Duration(days: 1));
+                    //       if(transactionsData.containsKey(iDaysAgo.toString().split(' ').first)) {
+                    //         transactionsSections.add(
+                    //           TransactionsListSection(
+                    //             startDate: iDaysAgo,
+                    //             endDate: dayAfterIDaysAgo,
+                    //             label: (i == 0) ? 'Today' : (i == 1) ? 'Yesterday' : '$i Days Ago',
+                    //           )
+                    //         );
+                    //       }
+                    //     }
+                    //     if(numberOfWeeksToQuery <= 1) return transactionsSections;
+
+                    //     // Start the query for previous weeks, now grouped by week instead of day
+                    //     for(int i = 1; i <= numberOfWeeksToQuery - 1; i++) {
+                    //       final iWeeksAgoEnd = midnightOf(DateTime.now().subtract(Duration(days: 7 * i)));
+                    //       final iWeeksAgoStart = iWeeksAgoEnd.subtract(const Duration(days: 6));
+                    //       transactionsSections.add(
+                    //         TransactionsListSection(
+                    //           startDate: iWeeksAgoStart,
+                    //           endDate: iWeeksAgoEnd,
+                    //           label: (i == 1) ? 'A Week Ago' : '$i Weeks Ago',
+                    //         )
+                    //       );
+                    //     }
+                    //     return transactionsSections;
+                    //   },
+                    //   error: (e, stackTrace) => [const Text('An error occured')],
+                    //   loading: () => [const CircularProgressIndicator()]
+                    // ),
+
                     // children: List.generate(10, (i) {
                     //   if (i < 7) {
                     //     final startDate = DateTime.parse(DateTime.now().subtract(Duration(days: i)).toString().split(' ').first);
