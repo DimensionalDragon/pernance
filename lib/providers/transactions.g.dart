@@ -7,7 +7,7 @@ part of 'transactions.dart';
 // **************************************************************************
 
 String _$groupedTransactionsHash() =>
-    r'd5f6a842fdb211a82ded6f59c259a4b0a2e5f27a';
+    r'95589bcb707fc89e3af4b51a839de004bd95eada';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -42,12 +42,10 @@ class GroupedTransactionsFamily
 
   /// See also [groupedTransactions].
   GroupedTransactionsProvider call(
-    DateTime startDate,
-    DateTime endDate,
+    int daysAgo,
   ) {
     return GroupedTransactionsProvider(
-      startDate,
-      endDate,
+      daysAgo,
     );
   }
 
@@ -56,8 +54,7 @@ class GroupedTransactionsFamily
     covariant GroupedTransactionsProvider provider,
   ) {
     return call(
-      provider.startDate,
-      provider.endDate,
+      provider.daysAgo,
     );
   }
 
@@ -81,13 +78,11 @@ class GroupedTransactionsProvider
     extends AutoDisposeFutureProvider<Map<String, List<Transaction>>> {
   /// See also [groupedTransactions].
   GroupedTransactionsProvider(
-    DateTime startDate,
-    DateTime endDate,
+    int daysAgo,
   ) : this._internal(
           (ref) => groupedTransactions(
             ref as GroupedTransactionsRef,
-            startDate,
-            endDate,
+            daysAgo,
           ),
           from: groupedTransactionsProvider,
           name: r'groupedTransactionsProvider',
@@ -98,8 +93,7 @@ class GroupedTransactionsProvider
           dependencies: GroupedTransactionsFamily._dependencies,
           allTransitiveDependencies:
               GroupedTransactionsFamily._allTransitiveDependencies,
-          startDate: startDate,
-          endDate: endDate,
+          daysAgo: daysAgo,
         );
 
   GroupedTransactionsProvider._internal(
@@ -109,12 +103,10 @@ class GroupedTransactionsProvider
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.startDate,
-    required this.endDate,
+    required this.daysAgo,
   }) : super.internal();
 
-  final DateTime startDate;
-  final DateTime endDate;
+  final int daysAgo;
 
   @override
   Override overrideWith(
@@ -131,8 +123,7 @@ class GroupedTransactionsProvider
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        startDate: startDate,
-        endDate: endDate,
+        daysAgo: daysAgo,
       ),
     );
   }
@@ -145,16 +136,13 @@ class GroupedTransactionsProvider
 
   @override
   bool operator ==(Object other) {
-    return other is GroupedTransactionsProvider &&
-        other.startDate == startDate &&
-        other.endDate == endDate;
+    return other is GroupedTransactionsProvider && other.daysAgo == daysAgo;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, startDate.hashCode);
-    hash = _SystemHash.combine(hash, endDate.hashCode);
+    hash = _SystemHash.combine(hash, daysAgo.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -162,11 +150,8 @@ class GroupedTransactionsProvider
 
 mixin GroupedTransactionsRef
     on AutoDisposeFutureProviderRef<Map<String, List<Transaction>>> {
-  /// The parameter `startDate` of this provider.
-  DateTime get startDate;
-
-  /// The parameter `endDate` of this provider.
-  DateTime get endDate;
+  /// The parameter `daysAgo` of this provider.
+  int get daysAgo;
 }
 
 class _GroupedTransactionsProviderElement
@@ -175,13 +160,11 @@ class _GroupedTransactionsProviderElement
   _GroupedTransactionsProviderElement(super.provider);
 
   @override
-  DateTime get startDate => (origin as GroupedTransactionsProvider).startDate;
-  @override
-  DateTime get endDate => (origin as GroupedTransactionsProvider).endDate;
+  int get daysAgo => (origin as GroupedTransactionsProvider).daysAgo;
 }
 
 String _$cumulativeTotalTransactionHash() =>
-    r'f98163bd081f87919f4b8d6ad635f03b136edc8f';
+    r'968d3061e60a1174bf94b2647af9a1b7aea96c61';
 
 /// See also [cumulativeTotalTransaction].
 @ProviderFor(cumulativeTotalTransaction)

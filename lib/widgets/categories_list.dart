@@ -52,8 +52,7 @@ class CategoriesList extends ConsumerWidget {
                             style: const TextStyle(fontSize: 13),
                           ),
                           onTap: () {
-                            print('category tapped:');
-                            print(categoriesData[index].name);
+                            showModalBottomSheet(context: context, builder: (context) => Text(categoriesData[index].name));
                           }
                         ),
                       ),

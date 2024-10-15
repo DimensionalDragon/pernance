@@ -1,5 +1,5 @@
-// import 'package:collection/collection.dart';
 import 'package:collection/collection.dart';
+import 'package:pernance/utils/date_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:pernance/models/index.dart';
@@ -52,21 +52,19 @@ class TransactionsNotifier extends _$TransactionsNotifier {
 }
 
 @riverpod
-Future<Map<String, List<Transaction>>> groupedTransactions(ref, DateTime startDate, DateTime endDate) async {
-  print('Fetching...');
+Future<Map<String, List<Transaction>>> groupedTransactions(GroupedTransactionsRef ref, int daysAgo) async {
+  final now = midnightOf(DateTime.now());
   final result = await db.getAll(
     'SELECT transactions.*, categories.name AS category_name '
     'FROM transactions '
     'LEFT JOIN categories '
     'ON categories.id = transactions.category_id '
-    'WHERE transactions.date > ? AND transactions.date < ? '
+    'WHERE transactions.date > ? '
     'ORDER BY transactions.date DESC ',
-    [startDate.toString(), endDate.add(const Duration(days: 1)).toString()],
+    [now.subtract(Duration(days: daysAgo)).toString()],
   );
-  print('Fetch complete');
   final transactions = result.map((row) => Transaction.fromRow(row)).toList();
-  final groupedTransactions = groupBy(transactions, (transaction) => transaction.date.toString().split(' ').first);
-  print('Returning...');
+  final groupedTransactions = groupBy<Transaction, String>(transactions, (transaction) => transaction.date.toString().split(' ')[0]);
   return groupedTransactions;
 }
 
@@ -79,10 +77,12 @@ class DayTotalTransaction {
 
 @riverpod
 Future<List<DayTotalTransaction>> cumulativeTotalTransaction(CumulativeTotalTransactionRef ref) async {
-  final currentMonth = DateTime.now().month.toString().padLeft(2, '0');
-  final currentYear = DateTime.now().year;
+  final now = DateTime.now();
+  final currentMonth = now.month.toString().padLeft(2, '0');
+  final currentYear = now.year;
+
   final result = await db.getAll(
-    'SELECT SUM(price), date AS total FROM transactions '
+    'SELECT SUM(price) AS total, date FROM transactions '
     'WHERE date > ?'
     'GROUP BY date '
     'ORDER BY date ASC ',
@@ -92,8 +92,13 @@ Future<List<DayTotalTransaction>> cumulativeTotalTransaction(CumulativeTotalTran
   List<DayTotalTransaction> computedCumulativeTotal = [];
   int cumulativeTotalTemp = 0;
   for (int i = 0; i < result.length; i++) {
-    cumulativeTotalTemp += int.parse(result[i]['total']);
-    computedCumulativeTotal.add(DayTotalTransaction(date: DateTime.parse(result[i]['date']), total: cumulativeTotalTemp));
+    cumulativeTotalTemp += result[i]['total'] as int;
+    computedCumulativeTotal.add(
+      DayTotalTransaction(
+        date: DateTime.parse(result[i]['date']),
+        total: cumulativeTotalTemp,
+      )
+    );
   }
   return computedCumulativeTotal;
 }
