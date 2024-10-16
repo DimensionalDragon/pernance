@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pernance/models/transaction.dart';
 import 'package:pernance/providers/transactions.dart';
 
 import 'package:pernance/routes/routes.dart';
@@ -77,6 +78,7 @@ class _TransactionsScreenConsumerState extends ConsumerState<TransactionsScreenC
                               TransactionsListSection(
                                 startDate: iDaysAgo,
                                 endDate: dayAfterIDaysAgo,
+                                transactions: transactionsData[iDaysAgo.toString().split(' ').first],
                                 label: (i == 0) ? 'Today' : (i == 1) ? 'Yesterday' : '$i Days Ago',
                               )
                             );
@@ -88,10 +90,19 @@ class _TransactionsScreenConsumerState extends ConsumerState<TransactionsScreenC
                         for(int i = 1; i <= numberOfWeeksToQuery - 1; i++) {
                           final iWeeksAgoEnd = midnightOf(DateTime.now().subtract(Duration(days: 7 * i)));
                           final iWeeksAgoStart = iWeeksAgoEnd.subtract(const Duration(days: 6));
+
+                          List<Transaction> iWeeksAgoTransactions = []; 
+                          for(DateTime d = iWeeksAgoEnd; d.isAfter(iWeeksAgoStart); d = d.subtract(const Duration(days: 1))) {
+                            if(transactionsData.containsKey(d.toString().split(' ').first)) {
+                              iWeeksAgoTransactions.addAll(transactionsData[d.toString().split(' ').first]!);
+                            }
+                          }
+
                           transactionsSections.add(
                             TransactionsListSection(
                               startDate: iWeeksAgoStart,
                               endDate: iWeeksAgoEnd,
+                              transactions: iWeeksAgoTransactions,
                               label: (i == 1) ? 'A Week Ago' : '$i Weeks Ago',
                             )
                           );

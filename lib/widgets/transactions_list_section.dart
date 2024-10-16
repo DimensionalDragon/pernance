@@ -19,12 +19,12 @@ class TransactionsListSection extends ConsumerWidget {
     final transactionsRef = ref.watch(transactionsNotifierProvider);
     return transactionsRef.when(
       data: (transactionsData) {
-        final List<Transaction> transactions = transactionsData.where((transaction) => (
+        final List<Transaction> transactionsToRender = transactions ?? transactionsData.where((transaction) => (
           transaction.date.isAfter(startDate) && transaction.date.isBefore(endDate.add(const Duration(days: 1))))
         ).toList();
         final dateLabelText = label;
 
-        if (transactions.isEmpty) {
+        if (transactionsToRender.isEmpty) {
           return const SizedBox(height: 0, width: 0);
         }
         return Padding(
@@ -36,7 +36,7 @@ class TransactionsListSection extends ConsumerWidget {
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: transactions.length,
+                itemCount: transactionsToRender.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 0),
@@ -45,7 +45,7 @@ class TransactionsListSection extends ConsumerWidget {
                         children: <Widget>[
                           Expanded(
                             flex: 3,
-                            child: Text(transactions[index].name, overflow: TextOverflow.ellipsis, maxLines: 1),
+                            child: Text(transactionsToRender[index].name, overflow: TextOverflow.ellipsis, maxLines: 1),
                           ),
                           Expanded(
                             flex: 2,
@@ -59,7 +59,7 @@ class TransactionsListSection extends ConsumerWidget {
                                 ),
                               ),
                               child: Text(
-                                transactions[index].categoryName,
+                                transactionsToRender[index].categoryName,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 11,
@@ -72,7 +72,7 @@ class TransactionsListSection extends ConsumerWidget {
                           Expanded(
                             flex: 2,
                             child: CurrencyText(
-                              amount: transactions[index].price,
+                              amount: transactionsToRender[index].price,
                               locale: 'id-ID',
                               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.end,
@@ -84,7 +84,7 @@ class TransactionsListSection extends ConsumerWidget {
                         showModalBottomSheet(
                           context: context,
                           useSafeArea: true,
-                          builder: (BuildContext context) => TransactionDetail(transactionID: transactions[index].id),
+                          builder: (BuildContext context) => TransactionDetail(transactionID: transactionsToRender[index].id),
                         );
                       }
                     ),
