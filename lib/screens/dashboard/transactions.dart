@@ -71,14 +71,11 @@ class _TransactionsScreenConsumerState extends ConsumerState<TransactionsScreenC
                       data: (transactionsData) {
                         final List<TransactionsListSection> transactionsSections = [];
                         for (int i = 0; i < 7; i++) {
-                          final iDaysAgo = midnightOf(DateTime.now().subtract(Duration(days: i)));
-                          final dayAfterIDaysAgo = iDaysAgo.add(const Duration(days: 1));
-                          if(transactionsData.containsKey(iDaysAgo.toString().split(' ').first)) {
+                          final iDaysAgoDateString = DateTime.now().subtract(Duration(days: i)).toString().split(' ')[0];
+                          if(transactionsData.containsKey(iDaysAgoDateString)) {
                             transactionsSections.add(
                               TransactionsListSection(
-                                startDate: iDaysAgo,
-                                endDate: dayAfterIDaysAgo,
-                                transactions: transactionsData[iDaysAgo.toString().split(' ').first],
+                                transactions: transactionsData[iDaysAgoDateString]!,
                                 label: (i == 0) ? 'Today' : (i == 1) ? 'Yesterday' : '$i Days Ago',
                               )
                             );
@@ -100,8 +97,6 @@ class _TransactionsScreenConsumerState extends ConsumerState<TransactionsScreenC
 
                           transactionsSections.add(
                             TransactionsListSection(
-                              startDate: iWeeksAgoStart,
-                              endDate: iWeeksAgoEnd,
                               transactions: iWeeksAgoTransactions,
                               label: (i == 1) ? 'A Week Ago' : '$i Weeks Ago',
                             )
