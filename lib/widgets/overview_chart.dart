@@ -21,6 +21,8 @@ class OverviewChart extends ConsumerWidget {
         final firstDateOfThisMonth = DateTime.parse('$currentYear-$currentMonth-01 00:00:00');
         final lastDateOfThisMonth = DateTime.parse('$currentYear-$nextMonth-01 00:00:00').subtract(const Duration(days: 1));
 
+        const graphPaddingY = 10000.0;
+
         return Card(
           elevation: 3,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -28,7 +30,8 @@ class OverviewChart extends ConsumerWidget {
           child: SizedBox(
             height: 100,
             child: SfCartesianChart(
-              primaryXAxis: const DateTimeAxis(intervalType: DateTimeIntervalType.days),
+              primaryXAxis: const DateTimeAxis(intervalType: DateTimeIntervalType.days, isVisible: false, rangePadding: ChartRangePadding.additional),
+              primaryYAxis: NumericAxis(isVisible: false, minimum: -graphPaddingY, maximum: totalBudget.toDouble() + graphPaddingY),
               margin: EdgeInsets.zero,
               series: <CartesianSeries>[
                 LineSeries<DayTotalTransaction, DateTime>(

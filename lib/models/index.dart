@@ -1,5 +1,5 @@
 import 'package:pernance/env/env.dart';
-import 'package:pernance/utils/error_codes.dart';
+import 'package:pernance/models/error_codes.dart';
 import 'package:powersync/powersync.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:path_provider/path_provider.dart';

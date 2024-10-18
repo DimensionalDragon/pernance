@@ -1,6 +1,6 @@
 import 'package:pernance/models/category.dart';
 import 'package:pernance/models/index.dart';
-import 'package:pernance/utils/get_user_id.dart';
+import 'package:pernance/utils/auth_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'categories.g.dart';
