@@ -80,6 +80,7 @@ Future<List<DayTotalTransaction>> cumulativeTotalTransaction(CumulativeTotalTran
   final now = DateTime.now();
   final currentMonth = now.month.toString().padLeft(2, '0');
   final currentYear = now.year;
+  final firstDayOfThisMonth = getFirstDayOfThisMonth();
 
   final result = await db.getAll(
     'SELECT SUM(price) AS total, date FROM transactions '
@@ -91,14 +92,18 @@ Future<List<DayTotalTransaction>> cumulativeTotalTransaction(CumulativeTotalTran
 
   List<DayTotalTransaction> computedCumulativeTotal = [];
   int cumulativeTotalTemp = 0;
-  for (int i = 0; i < result.length; i++) {
-    cumulativeTotalTemp += result[i]['total'] as int;
+  for (DateTime d = firstDayOfThisMonth; d.isBefore(now); d = d.add(const Duration(days: 1))) {
+    final row = result.firstWhereOrNull((row) => row['date'].split(' ').first == d.toString().split(' ').first);
+    if (row != null) {
+      cumulativeTotalTemp += row['total'] as int;
+    }
     computedCumulativeTotal.add(
       DayTotalTransaction(
-        date: DateTime.parse(result[i]['date']),
-        total: cumulativeTotalTemp,
+        date: d,
+        total: cumulativeTotalTemp
       )
     );
   }
+
   return computedCumulativeTotal;
 }

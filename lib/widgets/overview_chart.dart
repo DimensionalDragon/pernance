@@ -21,16 +21,17 @@ class OverviewChart extends ConsumerWidget {
         final firstDateOfThisMonth = DateTime.parse('$currentYear-$currentMonth-01 00:00:00');
         final lastDateOfThisMonth = DateTime.parse('$currentYear-$nextMonth-01 00:00:00').subtract(const Duration(days: 1));
 
-        const graphPaddingY = 10000.0;
+        const Duration graphPaddingX = Duration(days: 2);
+        const double graphPaddingY = 100000;
 
         return Card(
           elevation: 3,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           color: Colors.grey.shade100,
           child: SizedBox(
-            height: 100,
+            height: 125,
             child: SfCartesianChart(
-              primaryXAxis: const DateTimeAxis(intervalType: DateTimeIntervalType.days, isVisible: false, rangePadding: ChartRangePadding.additional),
+              primaryXAxis: DateTimeAxis(intervalType: DateTimeIntervalType.days, isVisible: false, minimum: firstDateOfThisMonth.subtract(graphPaddingX), maximum: lastDateOfThisMonth.add(graphPaddingX)),
               primaryYAxis: NumericAxis(isVisible: false, minimum: -graphPaddingY, maximum: totalBudget.toDouble() + graphPaddingY),
               margin: EdgeInsets.zero,
               series: <CartesianSeries>[
@@ -39,17 +40,17 @@ class OverviewChart extends ConsumerWidget {
                       DayTotalTransaction(date: firstDateOfThisMonth, total: 0),
                       DayTotalTransaction(date: lastDateOfThisMonth, total: totalBudget),
                     ],
-                    pointColorMapper: (_, __) => const Color.fromARGB(255, 223, 223, 223),
+                    pointColorMapper: (data, __) => const Color.fromARGB(255, 223, 223, 223),
                     xValueMapper: (data, __) => data.date,
                     yValueMapper: (data, __) => data.total,
                     animationDuration: 0,
                 ),
-                // LineSeries<DayTotalTransaction, DateTime>(
-                //   dataSource: overviewData,
-                //   pointColorMapper: (_, __) => const Color.fromARGB(255, 50, 50, 50),
-                //   xValueMapper: (data, _) => data.date,
-                //   yValueMapper: (data, _) => data.total,
-                // ),
+                LineSeries<DayTotalTransaction, DateTime>(
+                  dataSource: overviewData,
+                  pointColorMapper: (data, __) => (data.total < 0.75 * totalBudget) ? Colors.green : (data.total < 0.9 * totalBudget) ? Colors.yellow : Colors.red,
+                  xValueMapper: (data, _) => data.date,
+                  yValueMapper: (data, _) => data.total,
+                ),
               ],
             ),
           ),
