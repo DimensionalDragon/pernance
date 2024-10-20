@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pernance/widgets/overview_chart.dart';
+import 'package:pernance/widgets/recent_transactions.dart';
 
 // import 'package:pernance/widgets/categories_list.dart';
 // import 'package:pernance/routes/routes.dart';
@@ -24,6 +25,7 @@ class DashboardHomeScreen extends ConsumerWidget {
                 children: <Widget>[
                   OverviewChart(),
                   SizedBox(height: 7),
+                  RecentTransactions(),
                   // Others
                 ],
               ),

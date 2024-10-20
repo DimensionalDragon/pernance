@@ -20,7 +20,7 @@ class TransactionsNotifier extends _$TransactionsNotifier {
       'ON categories.id = transactions.category_id '
       'ORDER BY transactions.date DESC ',
     );
-    final transactions = result.map((row) => Transaction.fromRow(row)).toList();
+    final transactions = result.map(Transaction.fromRow).toList();
     return transactions;
   }
 
@@ -52,6 +52,19 @@ class TransactionsNotifier extends _$TransactionsNotifier {
 }
 
 @riverpod
+Future<List<Transaction>> recentTransactions(/*RecentTransactionsRef*/ ref, int daysAgo) async {
+  final result = await db.getAll(
+    'SELECT transactions.*, categories.name AS category_name '
+    'FROM transactions '
+    'LEFT JOIN categories '
+    'ON categories.id = transactions.category_id '
+    'ORDER BY transactions.date DESC '
+    'LIMIT 3 ',
+  );
+  return result.map(Transaction.fromRow).toList();
+}
+
+@riverpod
 Future<Map<String, List<Transaction>>> groupedTransactions(GroupedTransactionsRef ref, int daysAgo) async {
   final now = midnightOf(DateTime.now());
   final result = await db.getAll(
@@ -63,7 +76,7 @@ Future<Map<String, List<Transaction>>> groupedTransactions(GroupedTransactionsRe
     'ORDER BY transactions.date DESC ',
     [now.subtract(Duration(days: daysAgo)).toString()],
   );
-  final transactions = result.map((row) => Transaction.fromRow(row)).toList();
+  final transactions = result.map(Transaction.fromRow).toList();
   final groupedTransactions = groupBy<Transaction, String>(transactions, (transaction) => transaction.date.toString().split(' ')[0]);
   return groupedTransactions;
 }
