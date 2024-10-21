@@ -31,6 +31,9 @@ class TransactionsNotifier extends _$TransactionsNotifier {
     );
 
     ref.invalidateSelf();
+    ref.invalidate(groupedTransactionsProvider);
+    ref.invalidate(cumulativeTotalTransactionProvider);
+    ref.invalidate(recentTransactionsProvider);
     ref.invalidate(categoriesNotifierProvider);
     await future;
   }
@@ -52,7 +55,7 @@ class TransactionsNotifier extends _$TransactionsNotifier {
 }
 
 @riverpod
-Future<List<Transaction>> recentTransactions(/*RecentTransactionsRef*/ ref, int daysAgo) async {
+Future<List<Transaction>> recentTransactions(/*RecentTransactionsRef*/ ref) async {
   final result = await db.getAll(
     'SELECT transactions.*, categories.name AS category_name '
     'FROM transactions '

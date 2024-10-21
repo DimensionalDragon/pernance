@@ -6,8 +6,25 @@ part of 'transactions.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$recentTransactionsHash() =>
+    r'67e004dd1b0584dfea325b9d105a8e79a8f43574';
+
+/// See also [recentTransactions].
+@ProviderFor(recentTransactions)
+final recentTransactionsProvider =
+    AutoDisposeFutureProvider<List<Transaction>>.internal(
+  recentTransactions,
+  name: r'recentTransactionsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$recentTransactionsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef RecentTransactionsRef = AutoDisposeFutureProviderRef<List<Transaction>>;
 String _$groupedTransactionsHash() =>
-    r'95589bcb707fc89e3af4b51a839de004bd95eada';
+    r'a310ccd625ac3ba00fb4aaf1114102e22b7fa287';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -164,7 +181,7 @@ class _GroupedTransactionsProviderElement
 }
 
 String _$cumulativeTotalTransactionHash() =>
-    r'968d3061e60a1174bf94b2647af9a1b7aea96c61';
+    r'f64b64266bf9d6261efa281751df7df6307c7d36';
 
 /// See also [cumulativeTotalTransaction].
 @ProviderFor(cumulativeTotalTransaction)
@@ -182,7 +199,7 @@ final cumulativeTotalTransactionProvider =
 typedef CumulativeTotalTransactionRef
     = AutoDisposeFutureProviderRef<List<DayTotalTransaction>>;
 String _$transactionsNotifierHash() =>
-    r'03c2cb24d209ea042bd9762656a5c698e24727b0';
+    r'd775f4b744d19a814c63352df58f710d52ff72e2';
 
 /// See also [TransactionsNotifier].
 @ProviderFor(TransactionsNotifier)

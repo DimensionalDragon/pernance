@@ -170,41 +170,30 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
           const SizedBox(height: 20),
           Column(
             children: <Widget>[
-              if (_errorMessage != '')
-                Text(
-                  _errorMessage,
-                  style: const TextStyle(color: Colors.red),
-                ),
+              if (_errorMessage != '') Text(_errorMessage,style: const TextStyle(color: Colors.red)),
               SizedBox(
                 width: double.maxFinite,
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (_formKey.currentState!.validate() &&
-                        _selectedDate != null &&
-                        _selectedCategory != null) {
+                    if (_formKey.currentState!.validate() && _selectedDate != null && _selectedCategory != null) {
                       try {
                         // Add Transaction
-                        await ref
-                            .read(transactionsNotifierProvider.notifier)
-                            .addTransaction(
-                                name: _nameController.text,
-                                price: _priceController.text,
-                                categoryId: _selectedCategory!.id,
-                                date: _selectedDate);
+                        await ref.read(transactionsNotifierProvider.notifier).addTransaction(
+                          name: _nameController.text,
+                          price: _priceController.text,
+                          categoryId: _selectedCategory!.id,
+                          date: _selectedDate
+                        );
 
                         // Redirect back to transactions page
                         router.navigate(const TransactionsRoute());
                       } catch (e) {
-                        _errorMessage =
-                            'Something bad happened, please try again later';
+                        _errorMessage = 'Something bad happened, please try again later';
                       }
                     }
                   },
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(Colors.blue),
-                  ),
-                  child: const Text('Add Transaction',
-                      style: TextStyle(color: Colors.white)),
+                  style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.blue)),
+                  child: const Text('Add Transaction', style: TextStyle(color: Colors.white)),
                 ),
               ),
             ],
