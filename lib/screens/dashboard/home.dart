@@ -26,7 +26,8 @@ class DashboardHomeScreen extends ConsumerWidget {
                   OverviewChart(),
                   SizedBox(height: 7),
                   RecentTransactions(),
-                  // Others
+                  SizedBox(height: 7),
+                  // CategoriesOverview(),
                 ],
               ),
             ),
