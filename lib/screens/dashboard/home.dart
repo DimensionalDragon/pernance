@@ -24,9 +24,9 @@ class DashboardHomeScreen extends ConsumerWidget {
               child: Column(
                 children: <Widget>[
                   OverviewChart(),
-                  SizedBox(height: 7),
+                  SizedBox(height: 15),
                   RecentTransactions(),
-                  SizedBox(height: 7),
+                  SizedBox(height: 15),
                   // CategoriesOverview(),
                 ],
               ),

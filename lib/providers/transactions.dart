@@ -61,8 +61,9 @@ Future<List<Transaction>> recentTransactions(/*RecentTransactionsRef*/ ref) asyn
     'FROM transactions '
     'LEFT JOIN categories '
     'ON categories.id = transactions.category_id '
-    'ORDER BY transactions.date DESC '
-    'LIMIT 3 ',
+    'WHERE transactions.date >= ?'
+    'ORDER BY transactions.date DESC ',
+    [midnightOf(DateTime.now()).toString()]
   );
   return result.map(Transaction.fromRow).toList();
 }

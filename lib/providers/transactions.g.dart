@@ -7,7 +7,7 @@ part of 'transactions.dart';
 // **************************************************************************
 
 String _$recentTransactionsHash() =>
-    r'67e004dd1b0584dfea325b9d105a8e79a8f43574';
+    r'12b66debfb4a301a733b30756c4415d57322c4e3';
 
 /// See also [recentTransactions].
 @ProviderFor(recentTransactions)
