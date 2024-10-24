@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pernance/widgets/currency_text.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:pernance/providers/transactions.dart';
@@ -29,27 +30,46 @@ class OverviewChart extends ConsumerWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           color: Colors.grey.shade100,
           child: SizedBox(
-            height: 125,
-            child: SfCartesianChart(
-              primaryXAxis: DateTimeAxis(intervalType: DateTimeIntervalType.days, isVisible: false, minimum: firstDateOfThisMonth.subtract(graphPaddingX), maximum: lastDateOfThisMonth.add(graphPaddingX)),
-              primaryYAxis: NumericAxis(isVisible: false, minimum: -graphPaddingY, maximum: totalBudget.toDouble() + graphPaddingY),
-              margin: EdgeInsets.zero,
-              series: <CartesianSeries>[
-                LineSeries<DayTotalTransaction, DateTime>(
-                    dataSource: [
-                      DayTotalTransaction(date: firstDateOfThisMonth, total: 0),
-                      DayTotalTransaction(date: lastDateOfThisMonth, total: totalBudget),
-                    ],
-                    pointColorMapper: (data, __) => const Color.fromARGB(255, 223, 223, 223),
-                    xValueMapper: (data, __) => data.date,
-                    yValueMapper: (data, __) => data.total,
-                    animationDuration: 0,
+            height: 150,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    CurrencyText(amount: overviewData.last.total),
+                    const Text('Over/Under'),
+                  ]
                 ),
-                LineSeries<DayTotalTransaction, DateTime>(
-                  dataSource: overviewData,
-                  pointColorMapper: (data, __) => (data.total < 0.75 * totalBudget) ? Colors.green : (data.total < 0.9 * totalBudget) ? Colors.yellow : Colors.red,
-                  xValueMapper: (data, _) => data.date,
-                  yValueMapper: (data, _) => data.total,
+                const Row(
+                  children: [
+                    CurrencyText(amount: totalBudget),
+                    Text('Budgeted'),
+                  ]
+                ),
+                Expanded(
+                  child: SfCartesianChart(
+                    primaryXAxis: DateTimeAxis(intervalType: DateTimeIntervalType.days, isVisible: false, minimum: firstDateOfThisMonth.subtract(graphPaddingX), maximum: lastDateOfThisMonth.add(graphPaddingX)),
+                    primaryYAxis: NumericAxis(isVisible: false, minimum: -graphPaddingY, maximum: totalBudget.toDouble() + graphPaddingY),
+                    margin: EdgeInsets.zero,
+                    series: <CartesianSeries>[
+                      LineSeries<DayTotalTransaction, DateTime>(
+                          dataSource: [
+                            DayTotalTransaction(date: firstDateOfThisMonth, total: 0),
+                            DayTotalTransaction(date: lastDateOfThisMonth, total: totalBudget),
+                          ],
+                          pointColorMapper: (data, __) => const Color.fromARGB(255, 223, 223, 223),
+                          xValueMapper: (data, __) => data.date,
+                          yValueMapper: (data, __) => data.total,
+                          animationDuration: 0,
+                      ),
+                      LineSeries<DayTotalTransaction, DateTime>(
+                        dataSource: overviewData,
+                        pointColorMapper: (data, __) => (data.total < 0.75 * totalBudget) ? Colors.green : (data.total < 0.9 * totalBudget) ? Colors.yellow : Colors.red,
+                        xValueMapper: (data, _) => data.date,
+                        yValueMapper: (data, _) => data.total,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
