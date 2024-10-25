@@ -24,6 +24,15 @@ class TransactionsNotifier extends _$TransactionsNotifier {
     return transactions;
   }
 
+  Transaction getTransactionById(String id) {
+    // Access the state from build method to here
+    final transaction = state.whenOrNull(data: (transactions) => transactions.firstWhere((transaction) => transaction.id == id));
+    if(transaction == null) {
+      throw Error();
+    }
+    return transaction;
+  }
+
   Future<void> addTransaction({required name, required price, required categoryId, required date}) async {
     await db.execute(
       'INSERT INTO transactions(id, category_id, name, price, date, user_id) VALUES(gen_random_uuid(), ?, ?, ?, ?, ?)',
