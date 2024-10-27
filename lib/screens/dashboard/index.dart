@@ -38,36 +38,3 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 }
-
-// class _HomePageState extends State<HomePage> {
-//   final PageController _pageController = PageController();
-//   int _currentIndex = 0;
-
-//   void _onPageChanged(int index) {
-//     setState(() { _currentIndex = index; });
-//   }
-    
-//   void _onTap(int index) {
-//     _pageController.jumpToPage(index);
-//   }
-
-//   @override Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: PageView(
-//         controller: _pageController,
-//         onPageChanged: _onPageChanged,
-//         children: [ const TransactionsRoute(), SettingsRoute().buildPage(context), ProfileRoute().buildPage(context)],
-//       ),
-
-//       bottomNavigationBar: BottomNavigationBar(
-//         currentIndex: _currentIndex,
-//         onTap: _onTap,
-//         items: const [
-//           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-//           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
-//           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
-//         ]
-//       )
-//     );
-//   }
-// }
