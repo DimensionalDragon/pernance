@@ -15,51 +15,59 @@ class TransactionDetail extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = Navigator.of(context);
     final autoRouter = AutoRouter.of(context);
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    final transactionsRef = ref.watch(transactionsNotifierProvider);
+    return transactionsRef.when(
+      data: (transactionsData) {
+        final transaction = transactionsData.firstWhere((transaction) => transaction.id == transactionID);
+        return Column(
           children: <Widget>[
-            IconButton(onPressed: () => router.pop(), icon: const Icon(Icons.arrow_back, color: Colors.blue)),
-            IconButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Delete Confirmation'),
-                      content: const Text('Are you sure you want to delete this transaction?'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => router.pop(),
-                          child: const Text('No'),
-                        ),
-                        TextButton(
-                          onPressed: () async {
-                            await ref.read(transactionsNotifierProvider.notifier).deleteTransaction(transactionID);
-                            await autoRouter.navigate(const TransactionsRoute());
-                          },
-                          child: const Text('Yes'),
-                        ),
-                      ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(onPressed: () => router.pop(), icon: const Icon(Icons.arrow_back, color: Colors.blue)),
+                IconButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Delete Confirmation'),
+                          content: const Text('Are you sure you want to delete this transaction?'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => router.pop(),
+                              child: const Text('No'),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                await ref.read(transactionsNotifierProvider.notifier).deleteTransaction(transactionID);
+                                await autoRouter.navigate(const TransactionsRoute());
+                              },
+                              child: const Text('Yes'),
+                            ),
+                          ],
+                        );
+                      }
                     );
-                  }
-                );
-              },
-              icon: const Icon(Icons.delete, color: Colors.red)
+                  },
+                  icon: const Icon(Icons.delete, color: Colors.red)
+                ),
+              ],
             ),
-          ],
-        ),
-        const Column(
-          children: <Widget>[
-            CurrencyText(amount: 16000, locale: 'id-ID'), // TODO: make this editable
-            Text('Date here'),
-            Text('More Overview')
-          ],
-        ),
-        const Text('Graphs'),
-        const Text('More Infos')
-      ]
+            Column(
+              children: <Widget>[
+                CurrencyText(amount: transaction.price, locale: 'id-ID'), // TODO: make this editable
+                Text(transaction.date.toString()),
+                const Text('More Overview')
+              ],
+            ),
+            const Text('Graphs'),
+            const Text('More Infos')
+          ]
+        );
+      },
+      error: (error, stackTrace) => const Text('Something went wrong'),
+      loading: () => const Center(child: CircularProgressIndicator()),
     );
   }
 }
