@@ -73,16 +73,14 @@ class CategoriesChart extends ConsumerWidget {
                     series: <CircularSeries>[
                       DoughnutSeries(
                           dataSource: const ['dummy'],
-                          pointColorMapper: (_, __) =>
-                              const Color.fromARGB(255, 223, 223, 223),
+                          pointColorMapper: (_, __) => const Color.fromARGB(255, 223, 223, 223),
                           xValueMapper: (s, __) => s,
                           yValueMapper: (_, __) => 100,
                           innerRadius: '75%',
                           animationDuration: 0),
                       DoughnutSeries<Category, String>(
                         dataSource: categories,
-                        pointColorMapper: (category, _) =>
-                            category.name == '' ? Colors.transparent : null,
+                        pointColorMapper: (category, _) => category.name == '' ? Colors.transparent : null,
                         xValueMapper: (category, _) => category.name,
                         yValueMapper: (category, _) => category.spent,
                         innerRadius: '75%',

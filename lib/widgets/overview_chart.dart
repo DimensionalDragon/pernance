@@ -14,6 +14,7 @@ class OverviewChart extends ConsumerWidget {
     return overviewRef.when(
       data: (overviewData) {
         const totalBudget = 480000;
+        final budgetAndSpentDifference = totalBudget - overviewData.last.total;
 
         final now = DateTime.now();
         final currentMonth = now.month.toString().padLeft(2, '0');
@@ -32,17 +33,24 @@ class OverviewChart extends ConsumerWidget {
           child: SizedBox(
             height: 150,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CurrencyText(amount: overviewData.last.total),
-                    const Text('Over/Under'),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      child:CurrencyText(amount: budgetAndSpentDifference.abs(), locale: 'id-ID'),
+                    ),
+                    Text((budgetAndSpentDifference < 0) ? 'Over' : 'Under'),
                   ]
                 ),
                 const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CurrencyText(amount: totalBudget),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      child: CurrencyText(amount: totalBudget, locale: 'id-ID')
+                    ),
                     Text('Budgeted'),
                   ]
                 ),

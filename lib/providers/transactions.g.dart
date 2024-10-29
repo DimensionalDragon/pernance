@@ -199,7 +199,7 @@ final cumulativeTotalTransactionProvider =
 typedef CumulativeTotalTransactionRef
     = AutoDisposeFutureProviderRef<List<DayTotalTransaction>>;
 String _$transactionsNotifierHash() =>
-    r'd775f4b744d19a814c63352df58f710d52ff72e2';
+    r'f857a5e98088ac47b3fa318ecae5f0cac84180e8';
 
 /// See also [TransactionsNotifier].
 @ProviderFor(TransactionsNotifier)
