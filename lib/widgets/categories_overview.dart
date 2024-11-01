@@ -80,8 +80,15 @@ class CategoriesOverview extends ConsumerWidget {
                                 ],
                               ),
                             ),
-                            Text(category.name),
-                            CurrencyText(amount: category.budget, locale: 'id-ID'),
+                            Text(
+                              category.name,
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                            ),
+                            CurrencyText(
+                              amount: category.budget,
+                              locale: 'id-ID',
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+                            ),
                           ]
                         ),
                       );
