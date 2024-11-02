@@ -30,56 +30,67 @@ class OverviewChart extends ConsumerWidget {
           elevation: 3,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           color: Colors.grey.shade100,
-          child: SizedBox(
-            height: 150,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      child:CurrencyText(amount: budgetAndSpentDifference.abs(), locale: 'id-ID'),
-                    ),
-                    Text((budgetAndSpentDifference < 0) ? 'Over' : 'Under'),
-                  ]
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      child: CurrencyText(amount: totalBudget, locale: 'id-ID')
-                    ),
-                    Text('Budgeted'),
-                  ]
-                ),
-                Expanded(
-                  child: SfCartesianChart(
-                    primaryXAxis: DateTimeAxis(intervalType: DateTimeIntervalType.days, isVisible: false, minimum: firstDateOfThisMonth.subtract(graphPaddingX), maximum: lastDateOfThisMonth.add(graphPaddingX)),
-                    primaryYAxis: NumericAxis(isVisible: false, minimum: -graphPaddingY, maximum: totalBudget.toDouble() + graphPaddingY),
-                    margin: EdgeInsets.zero,
-                    series: <CartesianSeries>[
-                      LineSeries<DayTotalTransaction, DateTime>(
-                          dataSource: [
-                            DayTotalTransaction(date: firstDateOfThisMonth, total: 0),
-                            DayTotalTransaction(date: lastDateOfThisMonth, total: totalBudget),
-                          ],
-                          pointColorMapper: (data, __) => const Color.fromARGB(255, 223, 223, 223),
-                          xValueMapper: (data, __) => data.date,
-                          yValueMapper: (data, __) => data.total,
-                          animationDuration: 0,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: 150,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CurrencyText(
+                        amount: budgetAndSpentDifference.abs(),
+                        locale: 'id-ID',
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                       ),
-                      LineSeries<DayTotalTransaction, DateTime>(
-                        dataSource: overviewData,
-                        pointColorMapper: (data, __) => (data.total < 0.75 * totalBudget) ? Colors.green : (data.total < 0.9 * totalBudget) ? Colors.yellow : Colors.red,
-                        xValueMapper: (data, _) => data.date,
-                        yValueMapper: (data, _) => data.total,
+                      Text(
+                        (budgetAndSpentDifference < 0) ? ' over' : ' under',
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                       ),
-                    ],
+                    ]
                   ),
-                ),
-              ],
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CurrencyText(
+                        amount: totalBudget,
+                        locale: 'id-ID',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey),
+                      ),
+                      Text(
+                        ' budgeted',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Colors.grey),
+                      ),
+                    ]
+                  ),
+                  Expanded(
+                    child: SfCartesianChart(
+                      primaryXAxis: DateTimeAxis(intervalType: DateTimeIntervalType.days, isVisible: false, minimum: firstDateOfThisMonth.subtract(graphPaddingX), maximum: lastDateOfThisMonth.add(graphPaddingX)),
+                      primaryYAxis: NumericAxis(isVisible: false, minimum: -graphPaddingY, maximum: totalBudget.toDouble() + graphPaddingY),
+                      margin: EdgeInsets.zero,
+                      series: <CartesianSeries>[
+                        LineSeries<DayTotalTransaction, DateTime>(
+                            dataSource: [
+                              DayTotalTransaction(date: firstDateOfThisMonth, total: 0),
+                              DayTotalTransaction(date: lastDateOfThisMonth, total: totalBudget),
+                            ],
+                            pointColorMapper: (data, __) => const Color.fromARGB(255, 223, 223, 223),
+                            xValueMapper: (data, __) => data.date,
+                            yValueMapper: (data, __) => data.total,
+                            animationDuration: 0,
+                        ),
+                        LineSeries<DayTotalTransaction, DateTime>(
+                          dataSource: overviewData,
+                          pointColorMapper: (data, __) => (data.total < 0.75 * totalBudget) ? Colors.green : (data.total < 0.9 * totalBudget) ? Colors.yellow : Colors.red,
+                          xValueMapper: (data, _) => data.date,
+                          yValueMapper: (data, _) => data.total,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );

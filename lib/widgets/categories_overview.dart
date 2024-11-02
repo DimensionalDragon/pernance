@@ -39,6 +39,7 @@ class CategoriesOverview extends ConsumerWidget {
               ),
             ),
             SizedBox(
+              width: double.infinity,
               child: Card(
                 elevation: 3,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -65,8 +66,8 @@ class CategoriesOverview extends ConsumerWidget {
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 50,
-                              width: 50,
+                              height: 60,
+                              width: 60,
                               child: SfCircularChart(
                                 margin: EdgeInsets.zero,
                                 series: <CircularSeries>[
@@ -82,12 +83,20 @@ class CategoriesOverview extends ConsumerWidget {
                             ),
                             Text(
                               category.name,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                             ),
-                            CurrencyText(
-                              amount: category.budget,
-                              locale: 'id-ID',
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+                            Row(
+                              children: [
+                                CurrencyText(
+                                  amount: category.budget,
+                                  locale: 'id-ID',
+                                  style: const TextStyle(fontSize: 11),
+                                ),
+                                Text(
+                                  category.spent < category.budget ? ' under' : ' over',
+                                  style: const TextStyle(fontSize: 11),
+                                ),
+                              ]
                             ),
                           ]
                         ),
