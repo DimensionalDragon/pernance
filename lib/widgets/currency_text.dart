@@ -11,7 +11,7 @@ class CurrencyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var formatter = NumberFormat.simpleCurrency(locale: locale, decimalDigits: 0);
+    NumberFormat formatter = NumberFormat.simpleCurrency(locale: locale, decimalDigits: 0);
     return Text(formatter.format(amount), style: style, textAlign: textAlign);
   }
 }

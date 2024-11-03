@@ -101,13 +101,14 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
 
   _showDatePicker() async {
     DateTime? chosenDate = await showOmniDateTimePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        type: OmniDateTimePickerType.date);
+      context: context,
+      initialDate: DateTime.now(),
+      type: OmniDateTimePickerType.date
+    );
     setState(() {
       if (chosenDate != null) {
         _selectedDate = chosenDate;
-        _dateController.text = DateFormat('dd/MM/yyyy').format(chosenDate);
+        _dateController.text = DateFormat('d MMM yyyy').format(chosenDate);
       }
     });
   }
