@@ -149,6 +149,7 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
           const SizedBox(height: 10),
           TextFormField(
             readOnly: true,
+            textAlign: TextAlign.center,
             onTap: _showDatePicker,
             controller: _dateController,
             validator: (value) {
@@ -159,6 +160,7 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
             },
             decoration: const InputDecoration(
               labelText: 'Date of Purchase',
+              border: InputBorder.none,
             ),
           ),
           const SizedBox(height: 10),
