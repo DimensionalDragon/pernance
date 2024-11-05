@@ -47,7 +47,13 @@ class RecentTransactions extends ConsumerWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     title: Text(transactionsData[index].name),
-                    subtitle: Text(transactionsData[index].categoryName),
+                    subtitle: Text(
+                      transactionsData[index].categoryName,
+                      style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 10,
+                      ),
+                    ),
                     trailing: CurrencyText(
                       amount: transactionsData[index].price,
                       locale: 'id-ID',
