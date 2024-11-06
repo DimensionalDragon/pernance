@@ -15,6 +15,7 @@ class EditableText extends StatelessWidget {
       controller: controller,
       decoration: const InputDecoration(
         labelText: 'Transaction Name',
+        border: InputBorder.none,    
       ),
     );
   }
