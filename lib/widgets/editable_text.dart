@@ -13,8 +13,8 @@ class EditableText extends StatelessWidget {
       keyboardType: keyboardType,
       validator: validator,
       controller: controller,
+      textAlign: TextAlign.center,
       decoration: const InputDecoration(
-        labelText: 'Transaction Name',
         border: InputBorder.none,    
       ),
     );
