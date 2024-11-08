@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class EditableText extends StatelessWidget {
+class EditableText extends StatefulWidget {
   const EditableText({super.key, this.keyboardType = TextInputType.text, this.validator, this.controller});
 
   final TextInputType keyboardType;
@@ -8,14 +8,23 @@ class EditableText extends StatelessWidget {
   final TextEditingController? controller;
 
   @override
+  State<EditableText> createState() => EditableTextState();
+}
+
+class EditableTextState extends State<EditableText> {
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      keyboardType: keyboardType,
-      validator: validator,
-      controller: controller,
+      keyboardType: widget.keyboardType,
+      validator: widget.validator,
+      controller: widget.controller,
       textAlign: TextAlign.center,
+      cursorColor: Colors.grey,
+      cursorWidth: 1, // Adjust this later
       decoration: const InputDecoration(
         border: InputBorder.none,    
+        fillColor: Colors.transparent,
+        filled: true,
       ),
     );
   }
