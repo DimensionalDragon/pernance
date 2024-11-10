@@ -8,6 +8,7 @@ import 'package:pernance/models/category.dart';
 import 'package:pernance/models/index.dart';
 import 'package:pernance/providers/transactions.dart';
 import 'package:pernance/routes/routes.dart';
+import 'package:pernance/widgets/editable_text.dart';
 
 @RoutePage()
 class AddTransactionScreen extends StatelessWidget {
@@ -120,7 +121,20 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          TextFormField(
+          // TextFormField(
+          //   keyboardType: TextInputType.name,
+          //   validator: (value) {
+          //     if (value == null || value.isEmpty) {
+          //       return 'Please enter some text';
+          //     }
+          //     return null;
+          //   },
+          //   controller: _nameController,
+          //   decoration: const InputDecoration(
+          //     labelText: 'Transaction Name',
+          //   ),
+          // ),
+          PernanceEditableText(
             keyboardType: TextInputType.name,
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -129,8 +143,9 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
               return null;
             },
             controller: _nameController,
-            decoration: const InputDecoration(
-              labelText: 'Transaction Name',
+            style: const TextStyle(
+              fontSize: 15,
+              color: Colors.grey,
             ),
           ),
           TextFormField(

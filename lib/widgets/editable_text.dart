@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class EditableText extends StatefulWidget {
-  const EditableText({super.key, this.keyboardType = TextInputType.text, this.validator, this.controller, this.style});
+class PernanceEditableText extends StatefulWidget {
+  const PernanceEditableText({super.key, this.keyboardType = TextInputType.text, this.validator, this.controller, this.style});
 
   final TextInputType keyboardType;
   final FormFieldValidator? validator;
@@ -9,10 +9,10 @@ class EditableText extends StatefulWidget {
   final TextStyle? style;
 
   @override
-  State<EditableText> createState() => EditableTextState();
+  State<PernanceEditableText> createState() => EditableTextState();
 }
 
-class EditableTextState extends State<EditableText> {
+class EditableTextState extends State<PernanceEditableText> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
