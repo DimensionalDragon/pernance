@@ -88,7 +88,7 @@ class CategoriesOverview extends ConsumerWidget {
                             Row(
                               children: [
                                 CurrencyText(
-                                  amount: category.budget,
+                                  amount: (category.budget - category.spent).abs(),
                                   locale: 'id-ID',
                                   style: const TextStyle(fontSize: 11),
                                 ),
