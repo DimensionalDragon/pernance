@@ -74,8 +74,8 @@ class CategoriesOverview extends ConsumerWidget {
                                   DoughnutSeries<Category, String>(
                                       dataSource: chartCategories,
                                       pointColorMapper: (c, _) => c.name == '' ? const Color.fromARGB(255, 223, 223, 223) : Colors.green,
-                                      xValueMapper: (c, __) => c.name,
-                                      yValueMapper: (c, __) => c.spent,
+                                      xValueMapper: (c, _) => c.name,
+                                      yValueMapper: (c, _) => c.spent,
                                       innerRadius: '75%',
                                       animationDuration: 0),
                                 ],
@@ -86,7 +86,7 @@ class CategoriesOverview extends ConsumerWidget {
                               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                             ),
                             Row(
-                              children: [
+                              children: <Widget>[
                                 CurrencyText(
                                   amount: (category.budget - category.spent).abs(),
                                   locale: 'id-ID',

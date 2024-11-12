@@ -78,21 +78,21 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
 
-                final categories =
-                    snapshot.data!.map((row) => Category.fromRow(row)).toList();
+                final categories = snapshot.data!.map((row) => Category.fromRow(row)).toList();
 
-                return ListView(
-                  children: categories
-                      .map((Category category) => ListTile(
-                            title: Text(category.name),
-                            onTap: () {
-                              setState(() {
-                                _selectedCategory = category;
-                                Navigator.pop(context);
-                              });
-                            },
-                          ))
-                      .toList(),
+                return Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ListView(
+                    children: categories.map((Category category) => ListTile(
+                      title: Text(category.name),
+                      onTap: () {
+                        setState(() {
+                          _selectedCategory = category;
+                          Navigator.pop(context);
+                        });
+                      },
+                    )).toList(),
+                  ),
                 );
               }),
         );
