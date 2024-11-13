@@ -48,6 +48,7 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
   final _dateController = TextEditingController();
   DateTime? _selectedDate;
   Category? _selectedCategory;
+  bool _isMultipleTransaction = false;
 
   // Subtransactions management
   final List<Widget> _subtransactionFormsList = [];
@@ -184,7 +185,16 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
             child: Text(_selectedCategory?.name ?? 'Choose Category'),
           ),
           const SizedBox(height: 20),
-          ElevatedButton(onPressed: _addSubtransactionForm, child: const Text('Add a specific item to this purchase')),
+          // ElevatedButton(onPressed: _addSubtransactionForm, child: const Text('Add a specific item to this purchase')),
+          CheckboxListTile(
+            title: const Text('This is a multiple transaction'), // Replace with your item text
+            value: _isMultipleTransaction,
+            onChanged: (newValue) {
+              setState(() {
+                _isMultipleTransaction = newValue!; 
+              });
+            },
+          ),
           const SizedBox(height: 20),
           Column(
             children: <Widget>[
