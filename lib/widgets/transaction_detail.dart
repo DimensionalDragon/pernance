@@ -56,6 +56,10 @@ class TransactionDetail extends ConsumerWidget {
             ),
             Column(
               children: <Widget>[
+                Text(
+                  transaction.name,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
                 CurrencyText(
                   amount: transaction.price,
                   locale: 'id-ID',
