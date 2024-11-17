@@ -66,7 +66,7 @@ class TransactionDetail extends ConsumerWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ), // TODO: make this editable
                 Text(
-                  'Date: ${transaction.date.toString()}',
+                  'Date: ${transaction.date.toString().split(' ')}',
                   style: const TextStyle(fontSize: 12),
                 ),
                 const Text('More Overview')
