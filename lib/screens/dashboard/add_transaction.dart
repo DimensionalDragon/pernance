@@ -135,6 +135,13 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
           //     labelText: 'Transaction Name',
           //   ),
           // ),
+          const Text(
+            'Add A New Transaction',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+            ),
+          ),
           PernanceEditableText(
             keyboardType: TextInputType.name,
             validator: (value) {
@@ -144,9 +151,11 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
               return null;
             },
             controller: _nameController,
+            placeholder: 'Transaction Name',
             style: const TextStyle(
-              fontSize: 15,
-              color: Colors.grey,
+              fontSize: 20,
+              color: Colors.black,
+              fontWeight: FontWeight.bold
             ),
           ),
           TextFormField(
