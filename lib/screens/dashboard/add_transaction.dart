@@ -56,6 +56,14 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
   // Error message state
   String _errorMessage = '';
 
+  @override
+  void initState() {
+    super.initState();
+    final now = DateTime.now();
+    _selectedDate = now;
+    _dateController.text = DateFormat('d MMM yyyy').format(now);
+  }
+
   void _addSubtransactionForm() {
     setState(() {
       _subtransactionFormsList.add(
