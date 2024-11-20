@@ -191,10 +191,6 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
               }
               return null;
             },
-            decoration: const InputDecoration(
-              labelText: 'Date of Purchase',
-              border: InputBorder.none,
-            ),
           ),
           const SizedBox(height: 10),
           ElevatedButton(
