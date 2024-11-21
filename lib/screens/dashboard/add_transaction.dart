@@ -195,6 +195,15 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
           const SizedBox(height: 10),
           ElevatedButton(
             onPressed: _showCategoryModal,
+            style: const ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Colors.white),
+              textStyle: WidgetStatePropertyAll(
+                TextStyle(
+                  fontSize: 10,
+                  color: Colors.blue,
+                )
+              ),
+            ),
             child: Text(_selectedCategory?.name ?? 'Choose Category'),
           ),
           const SizedBox(height: 20),
