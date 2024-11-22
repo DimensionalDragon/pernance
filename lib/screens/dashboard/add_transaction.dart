@@ -216,6 +216,7 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
                 _isMultipleTransaction = newValue!; 
               });
             },
+            controlAffinity: ListTileControlAffinity.leading,
           ),
           const SizedBox(height: 20),
           Column(
