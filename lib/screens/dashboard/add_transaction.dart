@@ -209,7 +209,12 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
           const SizedBox(height: 20),
           // ElevatedButton(onPressed: _addSubtransactionForm, child: const Text('Add a specific item to this purchase')),
           CheckboxListTile(
-            title: const Text('This is a multiple transaction'), // Replace with your item text
+            title: const Text(
+              'This is a multiple transaction',
+              style: TextStyle(
+                fontSize: 10,
+              ),
+            ),
             value: _isMultipleTransaction,
             onChanged: (newValue) {
               setState(() {
