@@ -223,6 +223,8 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
             },
             controlAffinity: ListTileControlAffinity.leading,
           ),
+          if (_isMultipleTransaction)
+            const Text('Multiple transaction active'),
           const SizedBox(height: 20),
           Column(
             children: <Widget>[
