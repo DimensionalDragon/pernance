@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:pernance/providers/categories.dart';
 import 'package:pernance/routes/routes.dart';
+import 'package:pernance/widgets/editable_text.dart';
 
 @RoutePage()
 class AddCategoryScreen extends StatelessWidget {
@@ -49,7 +50,27 @@ class AddCategoryFormState extends ConsumerState<AddCategoryForm> {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          TextFormField(
+          // TextFormField(
+          //   keyboardType: TextInputType.name,
+          //   validator: (value) {
+          //     if (value == null || value.isEmpty) {
+          //       return 'Please enter some text';
+          //     }
+          //     return null;
+          //   },
+          //   controller: _nameController,
+          //   decoration: const InputDecoration(
+          //     labelText: 'Category Name',
+          //   ),
+          // ),
+          const Text(
+            'Add A New Transaction',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+            ),
+          ),
+          PernanceEditableText(
             keyboardType: TextInputType.name,
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -58,8 +79,11 @@ class AddCategoryFormState extends ConsumerState<AddCategoryForm> {
               return null;
             },
             controller: _nameController,
-            decoration: const InputDecoration(
-              labelText: 'Category Name',
+            placeholder: 'Category Name',
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+              fontWeight: FontWeight.bold
             ),
           ),
           TextFormField(
