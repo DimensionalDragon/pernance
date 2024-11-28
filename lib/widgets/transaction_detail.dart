@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import 'package:pernance/providers/transactions.dart';
 import 'package:pernance/routes/routes.dart';
@@ -66,7 +67,7 @@ class TransactionDetail extends ConsumerWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ), // TODO: make this editable
                 Text(
-                  'Date: ${transaction.date.toString().split(' ')}',
+                  DateFormat('d MMM yyyy').format(transaction.date),
                   style: const TextStyle(fontSize: 12),
                 ),
                 const Text('More Overview')
