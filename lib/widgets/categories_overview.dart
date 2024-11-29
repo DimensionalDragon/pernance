@@ -48,6 +48,7 @@ class CategoriesOverview extends ConsumerWidget {
                   child: Row(
                     children: categories.map((category) {
                       final chartCategories = [category]; // Start with just the category
+                      final gaugeColor = category.spent / category.budget < 0.5 ? Colors.green : category.spent / category.budget < 0.5 ? Colors.yellow : Colors.red;
                       /* If total spent in this category is less than budgeted, create a dummy "no color" category */
                       if (category.budget - category.spent > 0) {
                         final dummyEmptyCategory = Category(
@@ -73,7 +74,7 @@ class CategoriesOverview extends ConsumerWidget {
                                 series: <CircularSeries>[
                                   DoughnutSeries<Category, String>(
                                       dataSource: chartCategories,
-                                      pointColorMapper: (c, _) => c.name == '' ? const Color.fromARGB(255, 223, 223, 223) : Colors.green,
+                                      pointColorMapper: (c, _) => c.name == '' ? const Color.fromARGB(255, 223, 223, 223) : gaugeColor,
                                       xValueMapper: (c, _) => c.name,
                                       yValueMapper: (c, _) => c.spent,
                                       innerRadius: '75%',
