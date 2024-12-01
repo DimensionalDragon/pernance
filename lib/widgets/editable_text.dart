@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pernance/widgets/currency_text.dart';
 
 class PernanceEditableText extends StatefulWidget {
   const PernanceEditableText({
@@ -8,7 +9,7 @@ class PernanceEditableText extends StatefulWidget {
     this.controller,
     this.style,
     this.placeholder,
-    this.isCurrency = false
+    this.currencyAmount
   });
 
   final TextInputType keyboardType;
@@ -16,7 +17,7 @@ class PernanceEditableText extends StatefulWidget {
   final TextEditingController? controller;
   final TextStyle? style;
   final String? placeholder;
-  final bool isCurrency;
+  final int? currencyAmount;
 
   @override
   State<PernanceEditableText> createState() => EditableTextState();
@@ -25,21 +26,10 @@ class PernanceEditableText extends StatefulWidget {
 class EditableTextState extends State<PernanceEditableText> {
   @override
   Widget build(BuildContext context) {
-    return widget.isCurrency ? TextFormField(
-      keyboardType: widget.keyboardType,
-      validator: widget.validator,
-      controller: widget.controller,
-      textAlign: TextAlign.center,
-      cursorColor: Colors.grey,
-      cursorWidth: 1, // Adjust this later
+    return widget.currencyAmount != null ? CurrencyText(
+      amount: widget.currencyAmount!,
+      locale: 'id-ID',
       style: widget.style,
-      decoration: InputDecoration(
-        border: InputBorder.none,    
-        fillColor: Colors.transparent,
-        filled: true,
-        hintText: widget.placeholder,
-        hintStyle: const TextStyle(color: Colors.black12),
-      ),
     ) : TextFormField(
       keyboardType: widget.keyboardType,
       validator: widget.validator,
