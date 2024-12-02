@@ -224,7 +224,15 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
             controlAffinity: ListTileControlAffinity.leading,
           ),
           if (_isMultipleTransaction)
-            Column(children: _subtransactionFormsList + [const SizedBox(height: 20)]),
+            Column(
+              children: _subtransactionFormsList + [
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: _addSubtransactionForm,
+                ),
+                const SizedBox(height: 20),
+              ]
+            ),
           const SizedBox(height: 20),
           Column(
             children: <Widget>[
