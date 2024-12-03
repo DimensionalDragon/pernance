@@ -226,9 +226,15 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
           if (_isMultipleTransaction)
             Column(
               children: _subtransactionFormsList + [
-                IconButton(
-                  icon: const Icon(Icons.add),
+                FilledButton(
                   onPressed: _addSubtransactionForm,
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.add),
+                      Text('Add Item'),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20),
               ]
