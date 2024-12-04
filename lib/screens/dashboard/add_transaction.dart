@@ -67,7 +67,33 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
   void _addSubtransactionForm() {
     setState(() {
       _subtransactionFormsList.add(
-        const SizedBox(height: 10),
+        Card(
+          elevation: 3,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          color: Colors.grey.shade100,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              height: 150,
+              child: Column(
+                children: [
+                  TextFormField(
+                    keyboardType: TextInputType.name,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Item Name',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
       );
     });
   }
