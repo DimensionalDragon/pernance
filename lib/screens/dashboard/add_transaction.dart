@@ -89,6 +89,18 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
                       labelText: 'Item Name',
                     ),
                   ),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter the item price';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Price',
+                    ),
+                  ),
                 ],
               ),
             ),
