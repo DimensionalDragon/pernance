@@ -77,6 +77,16 @@ class AddTransactionFormState extends ConsumerState<AddTransactionForm> {
               height: 150,
               child: Column(
                 children: [
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          print('Item deleted');
+                        },
+                        icon: const Icon(Icons.close),
+                      ),
+                    ]
+                  ),
                   TextFormField(
                     keyboardType: TextInputType.name,
                     validator: (value) {
