@@ -15,7 +15,13 @@ class TransactionHistoryScreen extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Text('Transaction History'),
+              child: Scaffold(
+                body: SafeArea(
+                  child: Column(
+                    children: [Text('Transaction History')],
+                  )
+                ),
+              ),
             ),
           ],
         ),
