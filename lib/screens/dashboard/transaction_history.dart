@@ -18,7 +18,20 @@ class TransactionHistoryScreen extends StatelessWidget {
               child: Scaffold(
                 body: SafeArea(
                   child: Column(
-                    children: [Text('Transaction History')],
+                    children: [
+                      Text('Transaction History'),
+                      SizedBox(height: 7),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [Text('List of monthly transaction overviews')],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   )
                 ),
               ),
