@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
-class TransactionHistoryScreen extends StatelessWidget {
+class TransactionHistoryScreen extends ConsumerWidget {
   const TransactionHistoryScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return const Scaffold(
       body: Center(
         child: Column(
@@ -26,7 +27,9 @@ class TransactionHistoryScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                           child: SingleChildScrollView(
                             child: Column(
-                              children: [Text('List of monthly transaction overviews')],
+                              children: [
+                                Text('List of monthly transaction overviews')
+                              ],
                             ),
                           ),
                         ),
