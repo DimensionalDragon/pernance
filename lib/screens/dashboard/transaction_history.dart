@@ -28,7 +28,14 @@ class TransactionHistoryScreen extends ConsumerWidget {
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
-                                Text('List of monthly transaction overviews')
+                                Row(
+                                  children: [
+                                    Text('December'),
+                                    Text('Budget: x'),
+                                    Text('Spent: y'),
+                                    Text('Progress Bar'),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
