@@ -133,3 +133,22 @@ Future<List<DayTotalTransaction>> cumulativeTotalTransaction(CumulativeTotalTran
 
   return computedCumulativeTotal;
 }
+
+@riverpod
+Future<List<Transaction>> monthlyTransaction(ref, DateTime month) async {
+  final monthStartDate = getFirstDayOfMonth(month);
+  final monthEndDate = getFirstDayOfMonth(monthStartDate.add(const Duration(days: 31)));
+
+  final result = await db.getAll(
+    'SELECT transactions.*, categories.name AS category_name '
+    'FROM transactions '
+    'LEFT JOIN categories '
+    'ON categories.id = transactions.category_id '
+    'WHERE transactions.date > ? AND transactions.date < ?'
+    'ORDER BY transactions.date DESC ',
+    [monthStartDate.toString(), monthEndDate.toString()],
+  );
+
+  final transactions = result.map(Transaction.fromRow).toList();
+  return transactions;
+}
