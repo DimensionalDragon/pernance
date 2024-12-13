@@ -134,6 +134,17 @@ Future<List<DayTotalTransaction>> cumulativeTotalTransaction(CumulativeTotalTran
   return computedCumulativeTotal;
 }
 
+class MonthlyTransaction {
+  final DateTime month;
+  final List<Transaction> transactions;
+
+  int get totalSpent {
+    return transactions.fold(0, (value, element) => value + element.price);
+  }
+
+  MonthlyTransaction({required this.month, required this.transactions});
+}
+
 @riverpod
 Future<List<Transaction>> monthlyTransaction(ref, DateTime month) async {
   final monthStartDate = getFirstDayOfMonth(month);
