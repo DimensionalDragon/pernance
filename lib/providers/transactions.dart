@@ -142,6 +142,10 @@ class MonthlyTransaction {
     return transactions.fold(0, (value, element) => value + element.price);
   }
 
+  int get budget {
+    return 480000;
+  }
+
   MonthlyTransaction({required this.month, required this.transactions});
 }
 
