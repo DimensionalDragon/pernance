@@ -150,9 +150,8 @@ class MonthlyTransaction {
 }
 
 @riverpod
-Future<List<Transaction>> monthlyTransaction(ref, DateTime month) async {
-  final monthStartDate = getFirstDayOfMonth(month);
-  final monthEndDate = getFirstDayOfMonth(monthStartDate.add(const Duration(days: 31)));
+Future<List<MonthlyTransaction>> monthlyTransactions(ref) async {
+  final currentYear = DateTime.now().year;
 
   final result = await db.getAll(
     'SELECT transactions.*, categories.name AS category_name '
@@ -161,7 +160,7 @@ Future<List<Transaction>> monthlyTransaction(ref, DateTime month) async {
     'ON categories.id = transactions.category_id '
     'WHERE transactions.date > ? AND transactions.date < ?'
     'ORDER BY transactions.date DESC ',
-    [monthStartDate.toString(), monthEndDate.toString()],
+    ['$currentYear-01-01 00:00:00', '${currentYear + 1}-01-01 00:00:00'],
   );
 
   final transactions = result.map(Transaction.fromRow).toList();
