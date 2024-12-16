@@ -151,7 +151,9 @@ class MonthlyTransaction {
 
 @riverpod
 Future<List<MonthlyTransaction>> monthlyTransactions(ref) async {
-  final currentYear = DateTime.now().year;
+  final now = DateTime.now();
+  final currentYear = now.year;
+  final currentMonth = now.month;
 
   final result = await db.getAll(
     'SELECT transactions.*, categories.name AS category_name '
@@ -164,5 +166,15 @@ Future<List<MonthlyTransaction>> monthlyTransactions(ref) async {
   );
 
   final transactions = result.map(Transaction.fromRow).toList();
-  return transactions;
+  List<MonthlyTransaction> monthlyTransactions = [];
+  for (int i = 1; i <= currentMonth; i++) {
+    monthlyTransactions.add(
+      MonthlyTransaction(
+        month: DateTime(currentYear, i),
+        transactions: transactions.where((transaction) {
+          return transaction.date.isAfter(DateTime(currentYear, i, 1)) && transaction.date.isBefore(DateTime(currentYear, i, 1));
+        }).toList(),
+    ));
+  }
+  return monthlyTransactions;
 }
