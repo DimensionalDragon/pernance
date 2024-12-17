@@ -172,7 +172,7 @@ Future<List<MonthlyTransaction>> monthlyTransactions(ref) async {
       MonthlyTransaction(
         month: DateTime(currentYear, i),
         transactions: transactions.where((transaction) {
-          return transaction.date.isAfter(DateTime(currentYear, i, 1)) && transaction.date.isBefore(DateTime(currentYear, i, 1));
+          return transaction.date.month == i;
         }).toList(),
     ));
   }
