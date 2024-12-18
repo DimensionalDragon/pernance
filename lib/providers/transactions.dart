@@ -135,7 +135,8 @@ Future<List<DayTotalTransaction>> cumulativeTotalTransaction(CumulativeTotalTran
 }
 
 class MonthlyTransaction {
-  final DateTime month;
+  final int year;
+  final int month;
   final List<Transaction> transactions;
 
   int get totalSpent {
@@ -146,7 +147,7 @@ class MonthlyTransaction {
     return 480000;
   }
 
-  MonthlyTransaction({required this.month, required this.transactions});
+  MonthlyTransaction({required this.year, required this.month, required this.transactions});
 }
 
 @riverpod
@@ -170,11 +171,11 @@ Future<List<MonthlyTransaction>> monthlyTransactions(ref) async {
   for (int i = 1; i <= currentMonth; i++) {
     monthlyTransactions.add(
       MonthlyTransaction(
-        month: DateTime(currentYear, i),
-        transactions: transactions.where((transaction) {
-          return transaction.date.month == i;
-        }).toList(),
-    ));
+        year: currentYear,
+        month: i,
+        transactions: transactions.where((transaction) => transaction.date.month == i).toList(),
+      )
+    );
   }
   return monthlyTransactions;
 }
