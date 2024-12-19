@@ -190,6 +190,25 @@ class RegisterRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [TransactionHistoryScreen]
+class TransactionHistoryRoute extends PageRouteInfo<void> {
+  const TransactionHistoryRoute({List<PageRouteInfo>? children})
+      : super(
+          TransactionHistoryRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TransactionHistoryRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return TransactionHistoryScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [TransactionsScreen]
 class TransactionsRoute extends PageRouteInfo<void> {
   const TransactionsRoute({List<PageRouteInfo>? children})

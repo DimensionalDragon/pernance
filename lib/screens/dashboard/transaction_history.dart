@@ -3,8 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
-class TransactionHistoryScreen extends ConsumerWidget {
+class TransactionHistoryScreen extends StatelessWidget {
   const TransactionHistoryScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const TransactionHistory();
+  }
+}
+
+class TransactionHistory extends ConsumerWidget {
+  const TransactionHistory({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

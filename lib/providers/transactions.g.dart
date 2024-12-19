@@ -198,6 +198,24 @@ final cumulativeTotalTransactionProvider =
 
 typedef CumulativeTotalTransactionRef
     = AutoDisposeFutureProviderRef<List<DayTotalTransaction>>;
+String _$monthlyTransactionsHash() =>
+    r'caebea7ce8f26f7bc41ff8cdf65122876df16ffd';
+
+/// See also [monthlyTransactions].
+@ProviderFor(monthlyTransactions)
+final monthlyTransactionsProvider =
+    AutoDisposeFutureProvider<List<MonthlyTransaction>>.internal(
+  monthlyTransactions,
+  name: r'monthlyTransactionsProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$monthlyTransactionsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef MonthlyTransactionsRef
+    = AutoDisposeFutureProviderRef<List<MonthlyTransaction>>;
 String _$transactionsNotifierHash() =>
     r'f857a5e98088ac47b3fa318ecae5f0cac84180e8';
 

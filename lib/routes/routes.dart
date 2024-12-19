@@ -13,6 +13,7 @@ import 'package:pernance/screens/dashboard/transactions.dart';
 import 'package:pernance/screens/dashboard/add_transaction.dart';
 import 'package:pernance/screens/dashboard/categories.dart';
 import 'package:pernance/screens/dashboard/add_category.dart';
+import 'package:pernance/screens/dashboard/transaction_history.dart';
 
 part 'routes.gr.dart';
 
