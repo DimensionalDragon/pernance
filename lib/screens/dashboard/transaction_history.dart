@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pernance/providers/transactions.dart';
 
 @RoutePage()
 class TransactionHistoryScreen extends StatelessWidget {
@@ -17,6 +18,10 @@ class TransactionHistory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final router = Navigator.of(context);
+    final autoRouter = AutoRouter.of(context);
+    final MonthlyTransactionsRef = ref.watch(monthlyTransactionsProvider);
+
     return const Scaffold(
       body: Center(
         child: Column(
