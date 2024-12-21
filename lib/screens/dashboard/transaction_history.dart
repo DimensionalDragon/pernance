@@ -20,49 +20,55 @@ class TransactionHistory extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = Navigator.of(context);
     final autoRouter = AutoRouter.of(context);
-    final MonthlyTransactionsRef = ref.watch(monthlyTransactionsProvider);
+    final monthlyTransactionsRef = ref.watch(monthlyTransactionsProvider);
 
-    return const Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Scaffold(
-                body: SafeArea(
-                  child: Column(
-                    children: [
-                      Text('Transaction History'),
-                      SizedBox(height: 7),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Row(
+    return monthlyTransactionsRef.when(
+      data: (monthlyTransactions) {
+        return const Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  child: Scaffold(
+                    body: SafeArea(
+                      child: Column(
+                        children: [
+                          Text('Transaction History'),
+                          SizedBox(height: 7),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                              child: SingleChildScrollView(
+                                child: Column(
                                   children: [
-                                    Text('December'),
-                                    Text('Budget: x'),
-                                    Text('Spent: y'),
-                                    Text('Progress Bar'),
+                                    Row(
+                                      children: [
+                                        Text('December'),
+                                        Text('Budget: x'),
+                                        Text('Spent: y'),
+                                        Text('Progress Bar'),
+                                      ],
+                                    ),
                                   ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ],
-                  )
+                        ],
+                      )
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );  
+      },
+      error: (error, stackTrace) => const Text('Something went wrong'),
+      loading: () => const Center(child: CircularProgressIndicator()),
     );
   }
 }
