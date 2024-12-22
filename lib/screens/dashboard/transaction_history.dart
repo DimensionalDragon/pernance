@@ -24,7 +24,7 @@ class TransactionHistory extends ConsumerWidget {
 
     return monthlyTransactionsRef.when(
       data: (monthlyTransactions) {
-        return const Scaffold(
+        return Scaffold(
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -43,16 +43,16 @@ class TransactionHistory extends ConsumerWidget {
                               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                               child: SingleChildScrollView(
                                 child: Column(
-                                  children: [
-                                    Row(
+                                  children: monthlyTransactions.map((monthlyTransaction) {
+                                    return Row(
                                       children: [
                                         Text('December'),
-                                        Text('Budget: x'),
+                                        Text('Budget: $monthlyTransaction.budget'),
                                         Text('Spent: y'),
                                         Text('Progress Bar'),
                                       ],
-                                    ),
-                                  ],
+                                    );
+                                  }).toList(),
                                 ),
                               ),
                             ),
