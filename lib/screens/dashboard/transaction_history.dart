@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pernance/providers/transactions.dart';
+import 'package:pernance/utils/date_utils.dart';
 
 @RoutePage()
 class TransactionHistoryScreen extends StatelessWidget {
@@ -46,7 +47,7 @@ class TransactionHistory extends ConsumerWidget {
                                   children: monthlyTransactions.map((monthlyTransaction) {
                                     return Row(
                                       children: [
-                                        Text('December'),
+                                        Text(getMonthName(monthlyTransaction.month)),
                                         Text('Budget: $monthlyTransaction.budget'),
                                         Text('Spent: y'),
                                         Text('Progress Bar'),

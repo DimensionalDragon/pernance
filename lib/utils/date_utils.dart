@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 DateTime midnightOf(DateTime date) {
   return DateTime.parse('${date.toString().split(' ').first} 00:00:00');
 }
@@ -20,4 +22,12 @@ DateTime getFirstDayOfThisMonth() {
 
 DateTime getLastDayOfThisMonth() {
   return getLastDayOfMonth(DateTime.now());
+}
+
+String getMonthName(int month) {
+  if(month < 1 || month > 12) {
+    throw RangeError('Month must be between 1 and 12');
+  }
+  final date = DateTime(2024, month, 1);
+  return DateFormat('MMMM').format(date);
 }
