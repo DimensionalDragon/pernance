@@ -48,8 +48,8 @@ class TransactionHistory extends ConsumerWidget {
                                     return Row(
                                       children: [
                                         Text(getMonthName(monthlyTransaction.month)),
-                                        Text('Budget: $monthlyTransaction.budget'),
-                                        Text('Spent: y'),
+                                        Text('Budget: ${monthlyTransaction.budget}'),
+                                        Text('Spent: ${monthlyTransaction.totalSpent}'),
                                         Text('Progress Bar'),
                                       ],
                                     );
