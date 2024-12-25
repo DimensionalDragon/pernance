@@ -19,8 +19,8 @@ class TransactionHistory extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = Navigator.of(context);
-    final autoRouter = AutoRouter.of(context);
+    // final router = Navigator.of(context);
+    // final autoRouter = AutoRouter.of(context);
     final monthlyTransactionsRef = ref.watch(monthlyTransactionsProvider);
 
     return monthlyTransactionsRef.when(
@@ -32,16 +32,16 @@ class TransactionHistory extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Scaffold(
                     body: SafeArea(
                       child: Column(
-                        children: [
-                          Text('Transaction History'),
-                          SizedBox(height: 7),
+                        children: <Widget>[
+                          const Text('Transaction History'),
+                          const SizedBox(height: 7),
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                               child: SingleChildScrollView(
                                 child: Column(
                                   children: monthlyTransactions.map((monthlyTransaction) {
@@ -50,7 +50,7 @@ class TransactionHistory extends ConsumerWidget {
                                         Text(getMonthName(monthlyTransaction.month)),
                                         Text('Budget: ${monthlyTransaction.budget}'),
                                         Text('Spent: ${monthlyTransaction.totalSpent}'),
-                                        Text('Progress Bar'),
+                                        const Text('Progress Bar'),
                                       ],
                                     );
                                   }).toList(),
