@@ -44,7 +44,11 @@ class TransactionHistory extends ConsumerWidget {
                               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                               child: SingleChildScrollView(
                                 child: Column(
-                                  children: monthlyTransactions.map((monthlyTransaction) {
+                                  children: <Widget>[
+                                    const Text('Month'),
+                                    const Text('Budget'),
+                                    const Text('Spent'),
+                                  ] + monthlyTransactions.map((monthlyTransaction) {
                                     return Row(
                                       children: [
                                         Text(getMonthName(monthlyTransaction.month)),
