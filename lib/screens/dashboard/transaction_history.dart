@@ -48,22 +48,23 @@ class TransactionHistory extends ConsumerWidget {
                                     const Text('Month'),
                                     const Text('Budget'),
                                     const Text('Spent'),
-                                  ] + monthlyTransactions.map((monthlyTransaction) {
-                                    return Row(
-                                      children: [
-                                        Text(getMonthName(monthlyTransaction.month)),
-                                        Text('Budget: ${monthlyTransaction.budget}'),
-                                        Text('Spent: ${monthlyTransaction.totalSpent}'),
-                                        LinearProgressIndicator(
-                                          value: monthlyTransaction.totalSpent / monthlyTransaction.budget,
-                                          backgroundColor: Colors.grey,
-                                          valueColor: AlwaysStoppedAnimation(monthlyTransaction.totalSpent / monthlyTransaction.budget <= 0.25 ? Colors.lightGreen : monthlyTransaction.totalSpent / monthlyTransaction.budget <= 0.75 ? Colors.yellow : Colors.red),
-                                          minHeight: 8,
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                      ],
-                                    );
-                                  }).toList(),
+                                    ...monthlyTransactions.map((monthlyTransaction) {
+                                      return Row(
+                                        children: <Widget>[
+                                          Text(getMonthName(monthlyTransaction.month)),
+                                          Text('Budget: ${monthlyTransaction.budget}'),
+                                          Text('Spent: ${monthlyTransaction.totalSpent}'),
+                                          LinearProgressIndicator(
+                                            value: monthlyTransaction.totalSpent / monthlyTransaction.budget,
+                                            backgroundColor: Colors.grey,
+                                            valueColor: AlwaysStoppedAnimation(monthlyTransaction.totalSpent / monthlyTransaction.budget <= 0.25 ? Colors.lightGreen : monthlyTransaction.totalSpent / monthlyTransaction.budget <= 0.75 ? Colors.yellow : Colors.red),
+                                            minHeight: 8,
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ],
                                 ),
                               ),
                             ),
