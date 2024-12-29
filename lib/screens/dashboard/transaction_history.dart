@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pernance/providers/transactions.dart';
 import 'package:pernance/utils/date_utils.dart';
+import 'package:pernance/widgets/currency_text.dart';
 
 @RoutePage()
 class TransactionHistoryScreen extends StatelessWidget {
@@ -52,8 +53,8 @@ class TransactionHistory extends ConsumerWidget {
                                       return Row(
                                         children: <Widget>[
                                           Text(getMonthName(monthlyTransaction.month)),
-                                          Text('Budget: ${monthlyTransaction.budget}'),
-                                          Text('Spent: ${monthlyTransaction.totalSpent}'),
+                                          CurrencyText(amount: monthlyTransaction.budget),
+                                          CurrencyText(amount: monthlyTransaction.totalSpent),
                                           LinearProgressIndicator(
                                             value: monthlyTransaction.totalSpent / monthlyTransaction.budget,
                                             backgroundColor: Colors.grey,
