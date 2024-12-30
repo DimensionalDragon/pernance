@@ -49,6 +49,13 @@ class TransactionHistory extends ConsumerWidget {
                                     const Text('Month'),
                                     const Text('Budget'),
                                     const Text('Spent'),
+                                    ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: monthlyTransactions.length,
+                                      itemBuilder: (BuildContext context, int index) {
+                                        return const Row(children: [Text('ListView based here')]);
+                                      },
+                                    ),
                                     ...monthlyTransactions.map((monthlyTransaction) {
                                       return Row(
                                         children: <Widget>[
