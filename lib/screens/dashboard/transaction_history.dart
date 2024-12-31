@@ -53,25 +53,38 @@ class TransactionHistory extends ConsumerWidget {
                                       shrinkWrap: true,
                                       itemCount: monthlyTransactions.length,
                                       itemBuilder: (BuildContext context, int index) {
-                                        return const Row(children: [Text('ListView based here')]);
+                                        return Row(
+                                          children: <Widget>[
+                                            Text(getMonthName(monthlyTransactions[index].month)),
+                                            CurrencyText(amount: monthlyTransactions[index].budget),
+                                            CurrencyText(amount: monthlyTransactions[index].totalSpent),
+                                            LinearProgressIndicator(
+                                              value: monthlyTransactions[index].totalSpent / monthlyTransactions[index].budget,
+                                              backgroundColor: Colors.grey,
+                                              valueColor: AlwaysStoppedAnimation(monthlyTransactions[index].totalSpent / monthlyTransactions[index].budget <= 0.25 ? Colors.lightGreen : monthlyTransactions[index].totalSpent / monthlyTransactions[index].budget <= 0.75 ? Colors.yellow : Colors.red),
+                                              minHeight: 8,
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                          ],
+                                        );
                                       },
                                     ),
-                                    ...monthlyTransactions.map((monthlyTransaction) {
-                                      return Row(
-                                        children: <Widget>[
-                                          Text(getMonthName(monthlyTransaction.month)),
-                                          CurrencyText(amount: monthlyTransaction.budget),
-                                          CurrencyText(amount: monthlyTransaction.totalSpent),
-                                          LinearProgressIndicator(
-                                            value: monthlyTransaction.totalSpent / monthlyTransaction.budget,
-                                            backgroundColor: Colors.grey,
-                                            valueColor: AlwaysStoppedAnimation(monthlyTransaction.totalSpent / monthlyTransaction.budget <= 0.25 ? Colors.lightGreen : monthlyTransaction.totalSpent / monthlyTransaction.budget <= 0.75 ? Colors.yellow : Colors.red),
-                                            minHeight: 8,
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                        ],
-                                      );
-                                    }),
+                                    // ...monthlyTransactions.map((monthlyTransaction) {
+                                    //   return Row(
+                                    //     children: <Widget>[
+                                    //       Text(getMonthName(monthlyTransaction.month)),
+                                    //       CurrencyText(amount: monthlyTransaction.budget),
+                                    //       CurrencyText(amount: monthlyTransaction.totalSpent),
+                                    //       LinearProgressIndicator(
+                                    //         value: monthlyTransaction.totalSpent / monthlyTransaction.budget,
+                                    //         backgroundColor: Colors.grey,
+                                    //         valueColor: AlwaysStoppedAnimation(monthlyTransaction.totalSpent / monthlyTransaction.budget <= 0.25 ? Colors.lightGreen : monthlyTransaction.totalSpent / monthlyTransaction.budget <= 0.75 ? Colors.yellow : Colors.red),
+                                    //         minHeight: 8,
+                                    //         borderRadius: BorderRadius.circular(10),
+                                    //       ),
+                                    //     ],
+                                    //   );
+                                    // }),
                                   ],
                                 ),
                               ),
