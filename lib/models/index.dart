@@ -29,6 +29,8 @@ Future<void> openDatabase() async {
   await Supabase.initialize(url: Env.supabaseProjectURL, anonKey: Env.supabaseAPIKey);
 
   SupabaseConnector? currentConnector;
+  print(Env.supabaseAPIKey);
+  print(Env.supabaseProjectURL);
 
   if (isLoggedIn()) {
     // This will run when first opening the app

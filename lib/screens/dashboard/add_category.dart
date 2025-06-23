@@ -64,7 +64,7 @@ class AddCategoryFormState extends ConsumerState<AddCategoryForm> {
           //   ),
           // ),
           const Text(
-            'Add A New Transaction',
+            'Add A New Category',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,

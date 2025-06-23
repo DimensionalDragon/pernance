@@ -203,7 +203,7 @@ class TransactionHistoryRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return TransactionHistoryScreen();
+      return const TransactionHistoryScreen();
     },
   );
 }

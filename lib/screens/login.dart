@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
                     router.push(const RegisterRoute());
                   },
                   style: ButtonStyle(padding: WidgetStateProperty.all(EdgeInsets.zero)),
-                  child: const Text("Register", style: TextStyle(color: Colors.blue),),
+                  child: const Text("Register", style: TextStyle(color: Colors.blue)),
                 ),
               ],
             )
@@ -52,7 +52,6 @@ class LoginForm extends StatefulWidget {
     return LoginFormState();
   }
 }
-
 
 class LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
@@ -105,13 +104,13 @@ class LoginFormState extends State<LoginForm> {
                   child: ElevatedButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        try {                     
+                        try {
                           // Login
                           await Supabase.instance.client.auth.signInWithPassword(
                             email: _emailController.text,
                             password: _passwordController.text,
                           );
-                          
+
                           // Redirect to dashboard
                           router.replace(const DashboardRoute());
                         } on AuthException catch (e) {
@@ -119,7 +118,9 @@ class LoginFormState extends State<LoginForm> {
                             if (e.code == 'user_not_found' || e.code == 'invalid_credentials') {
                               _errorMessage = 'Invalid email or password';
                             } else {
-                                _errorMessage = 'Something bad happened, please try again later';
+                              // _errorMessage = 'Something bad happened, please try again later';
+                              print(e.message);
+                              _errorMessage = e.message;
                             }
                           });
                         }
@@ -128,7 +129,7 @@ class LoginFormState extends State<LoginForm> {
                     style: ButtonStyle(
                       backgroundColor: WidgetStateProperty.all(Colors.blue),
                     ),
-                    child: const Text('Login', style: TextStyle(color: Colors.white)),
+                    child: const Text('Login',style: TextStyle(color: Colors.white)),
                   ),
                 ),
               ],
